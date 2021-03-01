@@ -1,0 +1,151 @@
+-- 01 march 2021
+
+
+Create database MyAamdhani
+use MyAamdhani
+
+
+CREATE TABLE [dbo].[Users](
+	[Id] [int] IDENTITY(1,1) Primary key NOT NULL,
+	[UserName] [varchar](50) NULL,
+	[Email] [varchar](100) NOT NULL,
+	[Password] [varchar](500) NULL,
+	[MenuRights] [varchar](500) NULL,
+	[UserType] [int] NOT NULL,
+	[ForgotPasswordCode] [varchar](100) NULL,
+	[ForgotPasswordTime] [datetime] NULL,
+	[BranchId] [int] NULL,
+	[CompanyId] [int] NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsDelete] [bit] NOT NULL,
+	[DateAdded] [datetime] NOT NULL,
+	[DateModified] [datetime] NOT NULL,
+	[OTPCode] [nvarchar](50) NULL,
+	[IsOTPVerified] [bit] NULL,
+	[OTPVerifiedValidDate] [datetime] NULL,
+	[FirebaseTokenId] [nvarchar](500) NULL,
+	[WebFirebaseTokenId] [nvarchar](1000) NULL,
+	[LoginOTPCode] [nvarchar](50) NULL,
+	[LoginOTPValidDate] [datetime] NULL,
+)
+
+CREATE TABLE [dbo].[UserDetail](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[UserId] [int]  FOREIGN KEY REFERENCES users(Id) NOT NULL,
+	[FirstName] [varchar](50) NULL,
+	[MiddleName] [varchar](50) NULL,
+	[LastName] [varchar](50) NULL,
+	[FatherName] [varchar](100) NULL,
+	[ImageLogo] [varchar](max) NULL,
+	[DOB] [date] NULL,
+	[Gender] [varchar](5) NULL,
+	[Mobile] [varchar](20) NOT NULL,
+	[Address] [varchar](max) NOT NULL,
+
+	[IsActive] [bit] NOT NULL,
+	[IsDelete] [bit] NOT NULL,
+	[DateAdded] [datetime] NOT NULL,
+	[DateModified] [datetime] NOT NULL,
+)
+
+
+
+CREATE TABLE [dbo].[Products](
+	[Id] [int] primary key identity(1,1) NOT NULL,
+	[Name] [nvarchar](200) NULL,
+	[Description] [nvarchar](max) NULL,
+	[Price] [decimal](20, 2) NULL,
+	[Type] [int] NULL,
+	[UniqueKey] [nvarchar](100) NULL,
+	[DateAdded] [datetime] NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsDelete] [bit] NOT NULL,
+	[DateModified] [datetime] NULL
+	
+)
+
+CREATE TABLE [dbo].[MenuTab](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[Name] [nvarchar](150) NULL,
+	[SubMenuId] [int] NULL,
+	[Url] [nvarchar](250) NULL,
+	[Icon] [nvarchar](150) NULL,
+	[MenuType] [int] NULL,
+	[Order] [int] NULL,
+	[Roles] [nvarchar](250) NULL,
+	[ViewInRights] [bit] NOT NULL,
+	[IsActive] [bit] NOT NULL,
+)
+CREATE TABLE [dbo].[ValidateLogin](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[SessionId] [varchar](500) NULL,
+	[IpAddress] [varchar](200) NULL,
+	[UserId] [int] NULL,
+	[DateAdded] [datetime] NULL,
+	[IsActive] [bit] NULL,
+	[LogoutReason] [varchar](800) NULL,
+)
+CREATE TABLE [dbo].[Customer](
+	[Id] [int] IDENTITY(1,1) Primary Key NOT NULL,
+	[CustomerName] [nvarchar](500) NULL,
+	[Email] [nvarchar](500) NULL,
+	[ClientKey] [nvarchar](200) NULL,
+	[EmpId] [int] NULL,
+	[Phone] [nvarchar](max) NULL,
+	[AddressJson] [nvarchar](max) NULL,
+	[DateAdded] [datetime] NULL,
+	[IsActive] [bit] Not NULL,
+	[IsDelete] [bit] Not NULL,
+	[BillingAddress] [varchar](800) NULL,
+	[Shipping] [varchar](800) NULL,
+)
+
+CREATE TABLE [dbo].[ProductRating](
+	[Id] [int] IDENTITY(1,1) Primary Key   NOT NULL,
+	[ProductId] [int] NULL,
+	[UserId] [int] NULL,
+	[Ratings] [int] NOT NULL,
+	[Comment] [nvarchar](max) NULL,
+	[DateAdded] [datetime] NULL,
+	[DateModified] [datetime] NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsDelete] [bit] NOT NULL
+)
+
+
+
+CREATE TABLE [dbo].[SEO](
+	[Id] [int] IDENTITY(1,1) Primary key NOT NULL,
+	[ProductId] [int] NULL,
+	[Title] [nvarchar](max) NULL,
+	[Description] [nvarchar](max) NULL,
+	[Keywords] [nvarchar](max) NULL,
+	[GoogleTagManager] [nvarchar](max) NULL,
+	[URLMapping] [nvarchar](max) NULL,
+	[PropertyTypeId] [int] NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsDelete] [bit] NOT NULL,
+	[DateAdded] [datetime] NULL,
+	[DateModified] [datetime] NULL,
+)
+
+CREATE TABLE [dbo].[City](
+	[CityId] [int] IDENTITY(1,1) Primary key NOT NULL,
+	[CityName] [varchar](50) NOT NULL,
+	[StateId] [int] NOT NULL,
+)
+
+
+CREATE TABLE [dbo].[States](
+	[StateId] [int] primary key NOT NULL,
+	[StateName] [varchar](50) NOT NULL,
+
+)
+
+CREATE TABLE [dbo].[Country](
+	[CountryId] [int] IDENTITY(1,1) Primary key NOT NULL,
+	[CountryName] [varchar](50) NULL,
+	[ShortCountryName] [varchar](50) NOT NULL,
+)
+
+

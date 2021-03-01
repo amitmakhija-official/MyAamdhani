@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,6 +81,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -203,8 +206,44 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MenuTab.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyAamdhani.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyAamdhani.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyAamdhani.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyAamdhani.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyAamdhani.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductRating.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserDetail.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ValidateLogin.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -2602,6 +2641,16 @@
     <Content Include="fonts\ico\icofont.eot" />
     <Content Include="fonts\ico\icofont.ttf" />
     <Content Include="fonts\ico\icofont.woff" />
+    <Content Include="Models\MyAamdhani.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyAamdhani.edmx</DependentUpon>
+      <LastGenOutput>MyAamdhani.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\MyAamdhani.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyAamdhani.edmx</DependentUpon>
+      <LastGenOutput>MyAamdhani.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\admin-customizer.js" />
     <Content Include="Scripts\admin-reports.js" />
     <Content Include="Scripts\admin-script.js" />
@@ -3404,6 +3453,13 @@
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\zoom-gallery.js" />
     <Content Include="Scripts\zoom-scripts.js" />
+    <EntityDeploy Include="Models\MyAamdhani.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MyAamdhani.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\MyAamdhani.edmx.diagram">
+      <DependentUpon>MyAamdhani.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -3452,6 +3508,9 @@
     <None Include="Project_Readme.html" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
