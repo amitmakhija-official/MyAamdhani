@@ -21,5 +21,6 @@ namespace MyAamdhani.Models
         public Nullable<System.DateTime> DateAdded { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string LogoutReason { get; set; }
+        public int Type { get; set; }
     }
 }

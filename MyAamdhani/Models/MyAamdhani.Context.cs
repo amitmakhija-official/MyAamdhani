@@ -32,5 +32,10 @@ namespace MyAamdhani.Models
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ValidateLogin> ValidateLogins { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<LogingHistory> LogingHistories { get; set; }
+        public virtual DbSet<SEO> SEOs { get; set; }
+        public virtual DbSet<State> States { get; set; }
     }
 }

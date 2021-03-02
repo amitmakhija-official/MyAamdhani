@@ -147,5 +147,15 @@ CREATE TABLE [dbo].[Country](
 	[CountryName] [varchar](50) NULL,
 	[ShortCountryName] [varchar](50) NOT NULL,
 )
+ -- 02 march 2021
 
-
+CREATE TABLE [dbo].[LogingHistory](
+	[Id] [int] IDENTITY(1,1) Primary key NOT NULL,
+	[LoginId] [int] NOT NULL,
+	[Url] [varchar](500) NULL,
+	[RightId] [int] NOT NULL,
+	[Params] [varchar](5000) NULL,
+	[DateAdded] [datetime] NOT NULL,
+	[DateModified] [datetime] NOT NULL,
+)
+alter table validatelogin add Type int Not null
