@@ -10,10 +10,10 @@ namespace MyAamdhani
 
         public enum UserType
         {
-            Admin = 0,
-            SalesManager = 1,
-            SalesPerson = 2,
-            User = 3
+            Admin = 0,            
+            //SalesManager = 1,
+            //SalesPerson = 2,
+            User = 1
         }
     }
 }
