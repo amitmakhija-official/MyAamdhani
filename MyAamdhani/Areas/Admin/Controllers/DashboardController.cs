@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MyAamdhani.Controllers
+namespace MyAamdhani.Areas.Admin.Controllers
 {
     public class DashboardController : Controller
     {
-        // GET: Dashboard
+        // GET: Admin/Dashboard
         public ActionResult Index()
         {
             return View();

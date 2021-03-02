@@ -13,6 +13,10 @@ namespace MyAamdhani.Controllers
             return View();
         }
 
+        public ActionResult _MenuBar() {
+            return PartialView();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
