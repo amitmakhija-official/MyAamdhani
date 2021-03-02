@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyAamdhani.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,23 @@ namespace MyAamdhani.Areas.Admin.Controllers
         // GET: Admin/Dashboard
         public ActionResult Index()
         {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
+                }
+            }
             return View();
         }
     }
