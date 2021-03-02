@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -78,6 +84,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -143,9 +152,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -202,16 +208,36 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Globals.cs" />
+    <Compile Include="HelperClasses\Constant.cs" />
+    <Compile Include="HelperClasses\EncryptDecrypt.cs" />
+    <Compile Include="HelperClasses\Helpers.cs" />
+    <Compile Include="HelperClasses\SecurityClass.cs" />
+    <Compile Include="HelperClasses\SessionHandler.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CampaignModel.cs" />
+    <Compile Include="Models\City.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CommonFunctions.cs" />
+    <Compile Include="Models\Country.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Customer.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LogingHistory.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuTab.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
@@ -235,6 +261,12 @@
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductRating.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SEO.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\State.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
@@ -3508,6 +3540,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
   <ItemGroup>

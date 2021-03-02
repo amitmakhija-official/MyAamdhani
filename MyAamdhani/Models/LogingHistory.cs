@@ -12,15 +12,14 @@ namespace MyAamdhani.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ValidateLogin
+    public partial class LogingHistory
     {
         public int Id { get; set; }
-        public string SessionId { get; set; }
-        public string IpAddress { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public Nullable<System.DateTime> DateAdded { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public string LogoutReason { get; set; }
-        public int Type { get; set; }
+        public int LoginId { get; set; }
+        public string Url { get; set; }
+        public int RightId { get; set; }
+        public string Params { get; set; }
+        public System.DateTime DateAdded { get; set; }
+        public System.DateTime DateModified { get; set; }
     }
 }

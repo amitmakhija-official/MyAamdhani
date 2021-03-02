@@ -109,4 +109,24 @@ namespace MyAamdhani.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class LoginByOTPModel
+    {
+        [Display(Name = "LoginOTP")]
+        [Required(ErrorMessage = "Enter your OTP number*")]
+        public string LoginOTP { get; set; }
+        public int UserID { get; set; }
+        public string LoginMachinIP { get; set; }
+        public string ReturnUrl { get; set; }
+        public bool IsCompanyHaveIpBasedAuthentication { get; set; }
+
+    }
+
+
+    public class UserCredentials
+    {
+        public string Email { get; set; }
+        public string PassWord { get; set; }
+    }
+
 }

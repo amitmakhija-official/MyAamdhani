@@ -12,15 +12,19 @@ namespace MyAamdhani.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ValidateLogin
+    public partial class SEO
     {
         public int Id { get; set; }
-        public string SessionId { get; set; }
-        public string IpAddress { get; set; }
-        public Nullable<int> UserId { get; set; }
+        public Nullable<int> ProductId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Keywords { get; set; }
+        public string GoogleTagManager { get; set; }
+        public string URLMapping { get; set; }
+        public Nullable<int> PropertyTypeId { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDelete { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public string LogoutReason { get; set; }
-        public int Type { get; set; }
+        public Nullable<System.DateTime> DateModified { get; set; }
     }
 }

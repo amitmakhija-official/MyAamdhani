@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -13,10 +14,36 @@ using MyAamdhani.Models;
 namespace MyAamdhani.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        public void InitializeController(System.Web.Routing.RequestContext context)
+        {
+            base.Initialize(context);
+        }
+
+
+        public void GetUserRights(string menuRights)
+        {
+            try
+            {
+                var menus = new List<MenuTab>();
+                if (!string.IsNullOrEmpty(menuRights))
+                {
+                    CommonFunctions.ListMenuTab.ForEach(x =>
+                    {
+                        if (menuRights.Split(',').Any(x.Id.ToString().Equals))
+                            menus.Add(x);
+                    });
+                }
+                Session[HelperClasses.Constants.Menus] = menus;
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex);
+            }
+        }
 
         public AccountController()
         {
