@@ -15,5 +15,11 @@ namespace MyAamdhani
             //SalesPerson = 2,
             User = 1
         }
+        public enum TitleType
+        {
+            Mr =1,
+            Ms = 2
+        
+        }
     }
 }
