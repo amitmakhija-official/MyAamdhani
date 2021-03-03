@@ -6669,7 +6669,9 @@ a.text-dark:hover, a.text-dark:focus {
   text-shadow: none;
   background-color: transparent;
   border: 0; }
-
+.hide{
+    display:none;
+}
 .visible {
   visibility: visible !important; }
 
