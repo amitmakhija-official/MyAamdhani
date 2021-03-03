@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*-----------------------------------------------------------------------------------
 
     Template Name:Multikart
@@ -19185,7 +19185,7 @@ table tbody .border-bottom-warning td {
     max-width: 900px; }
     .authentication-box .container .bg-primary {
       padding: 50px;
-      background-image: url("../images/dashboard/login-bg.png");
+      background-image: url("Images/dashboard/login-bg.png");
       background-position: center;
       -webkit-box-shadow: 1px 5px 24px 0 rgba(255, 128, 132, 0.8);
               box-shadow: 1px 5px 24px 0 rgba(255, 128, 132, 0.8); }
