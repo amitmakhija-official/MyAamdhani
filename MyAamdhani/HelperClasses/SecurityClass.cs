@@ -187,6 +187,7 @@ namespace MyAamdhani.HelperClasses
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             if (httpContext.Items["isAuthorized"] != null)

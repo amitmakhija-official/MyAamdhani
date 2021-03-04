@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
 namespace MyAamdhani.Models
 {
+
     public class LoginViewModel
     {
+        MyAamdhaniEntities db = new MyAamdhaniEntities();
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
@@ -21,8 +25,34 @@ namespace MyAamdhani.Models
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
         [Display(Name = "Enter OTP")]
-        public string OTP { get; set; }
+        public string EnterOTP { get; set; }
+
+        public bool AddUser(string phoneNumber, string password)
+        {
+            int res = 0;
+            bool flag = false;
+            using (SqlConnection connection = new SqlConnection(db.Database.Connection.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("", connection))
+                {
+                    cmd.Parameters.AddWithValue("@phoneNumber", phoneNumber);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.Parameters.AddWithValue("@Type", "Add");
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    res = cmd.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            if (res > 0)
+                flag = true;
+            else
+                flag = false;
+            return flag;
+        }
     }
+
+
 
     //public class RegisterViewModel
     //{

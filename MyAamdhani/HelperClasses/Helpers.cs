@@ -27,9 +27,9 @@ namespace MyAamdhani.HelperClasses
                 if (!string.IsNullOrEmpty(_result))
                     _result = string.Format("{0:#,0}", Convert.ToDecimal(_result));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return _result;
         }
@@ -46,7 +46,7 @@ namespace MyAamdhani.HelperClasses
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return _result;
         }

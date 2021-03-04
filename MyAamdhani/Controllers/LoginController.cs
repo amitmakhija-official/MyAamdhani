@@ -12,6 +12,7 @@ namespace MyAamdhani.Controllers
     public class LoginController : Controller
     {
         MyAamdhaniEntities entities = new MyAamdhaniEntities();
+        LoginViewModel login = new LoginViewModel();
         // GET: Login
         public ActionResult Index(string returnUrl)
         {
@@ -145,7 +146,7 @@ namespace MyAamdhani.Controllers
                 }
                 catch (Exception ex)
                 {
-
+                    var error = ex.ToString();
                 }
             }
             return View();
@@ -187,19 +188,63 @@ namespace MyAamdhani.Controllers
 
         //
         // POST: /Login/Register
-        [HttpPost]
-        //[AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        [HttpPost]                
         [Route("{id?}")]
-        public ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(string PhoneNumber, string Password)
         {
-            if (ModelState.IsValid)
+            try
             {
-                                
+                var value = login.AddUser(PhoneNumber, Password);
+                if (value)
+                {
+                    TempData["SuccessMsg"] = "Registration Sucessfully";
+                    return Json(new { success = true, msg = "Registration Sucessfully" });
+                }
+                else
+                {
+                    TempData["ErrorMsg"] = "Registration Failed";
+                    return Json(new { success = false, msg = "Registration Failed" });
+                }
             }
+            catch (Exception ex)
+            {
+                var error = ex.ToString();
+                TempData["ErrorMsg"] = "Some Thing Went Wrong While processing Your Request.Please Try Again.";
+                return View("Index");
+            }            
+            
+        }
+        [HttpPost]
+        public ActionResult SendOTP(string phonenumber, string OTPType)
+        {
+            try
+            {
+                int smsResponse = 0;
+                Random generator = new Random();
+                var OTP = "12345";
+                //var OTP = generator.Next(0, 999999).ToString("D6");
+                //var OTPCheck = string.Empty;
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+                smsResponse = 1;
+                if (smsResponse == 1)
+                {
+                    TempData["SuccessMsg"] = "OTP Sent To "+phonenumber;
+                    return Json(new { success = true, msg = "OTP Sent To " + phonenumber, confirmOTP = OTP.ToString() });
+                }
+                else
+                {
+                    TempData["ErrorMsg"] = "OTP Can't Send.";
+                    return Json(new { success = false, msg = "OTP Can't Send.", confirmOTP = OTP.ToString() });
+                }
+
+
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMsg"] = "Some Thing Went Wrong While processing Your Request.Please Try Again.";
+                return View("Index");
+            }
+            
         }
     }
 }

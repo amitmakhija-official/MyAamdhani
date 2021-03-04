@@ -208,6 +208,7 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CustomValidatorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -216,6 +217,7 @@
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="HelperClasses\Constant.cs" />
+    <Compile Include="HelperClasses\DBHelper.cs" />
     <Compile Include="HelperClasses\EncryptDecrypt.cs" />
     <Compile Include="HelperClasses\Helpers.cs" />
     <Compile Include="HelperClasses\SecurityClass.cs" />
@@ -3542,6 +3544,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\CustomValidators\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
