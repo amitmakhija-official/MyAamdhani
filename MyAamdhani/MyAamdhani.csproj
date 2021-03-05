@@ -225,6 +225,9 @@
     <Compile Include="HelperClasses\SessionHandler.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CampaignModel.cs" />
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\City.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
@@ -235,6 +238,7 @@
     <Compile Include="Models\Customer.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LogingHistory.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
@@ -269,6 +273,9 @@
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\State.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SubCategory.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">

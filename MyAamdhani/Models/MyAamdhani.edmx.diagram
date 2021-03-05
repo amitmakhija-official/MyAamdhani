@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1419d54a532e4f8189affd25382da87e" Name="Diagram1">
+      <Diagram DiagramId="1419d54a532e4f8189affd25382da87e" Name="Diagram1" ZoomLevel="91">
         <EntityTypeShape EntityType="MyAamdhaniModel.Customer" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.MenuTab" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.ProductRating" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
@@ -18,6 +18,8 @@
         <EntityTypeShape EntityType="MyAamdhaniModel.LogingHistory" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="MyAamdhaniModel.SEO" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="MyAamdhaniModel.State" Width="1.5" PointX="2.75" PointY="10.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.Category" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.SubCategory" Width="1.5" PointX="11.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

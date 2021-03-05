@@ -37,5 +37,7 @@ namespace MyAamdhani.Models
         public virtual DbSet<LogingHistory> LogingHistories { get; set; }
         public virtual DbSet<SEO> SEOs { get; set; }
         public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<SubCategory> SubCategories { get; set; }
     }
 }
