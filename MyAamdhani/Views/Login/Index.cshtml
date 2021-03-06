@@ -178,7 +178,7 @@
                                         @*<form class="form-horizontal auth-form">*@
                                         @using (Html.BeginForm("Index", "Login", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "LoginManage", @class = "form-horizontal auth-form", enctype = "multipart/form-data" }))
                                         {
-                                            @Html.AntiForgeryToken()
+
                                             <div class="form-group" id="divEmail">
                                                 @Html.TextBoxFor(m => m.Email, new { @onkeyup = "checkUserId(this)", @class = "form-control", name = "email", id = "email", @size = "50", @placeholder = "Email or Phone Number" })
                                                 @*<input required="" name="login[username]" type="email" class="form-control" placeholder="Username" id="exampleInputEmail1">*@
@@ -252,18 +252,18 @@
                                                 </div>
                                             </div>
 
-                                                <div class="form-footer" style="display:flex" id="divFooter">
-                                                    <h6 class="btn btn-default forgot-pass" style="padding-top:30px;font-weight:bold;color:#ff8084">New To MyAamdhani ? </h6>
-                                                    <button id="notExistUser" onclick="UserLogin(this.id)" type="button" class="btn btn-primary"> Create an Account</button>
-                                                    @*<input type="button" value="Request OTP" class="btn btn-primary"/>*@
-                                                    @*<span>Or Login up with social platforms</span>
-                                                        <ul class="social">
-                                                            <li><a class="icon-facebook" href=""></a></li>
-                                                            <li><a class="icon-twitter" href=""></a></li>
-                                                            <li><a class="icon-instagram" href=""></a></li>
-                                                            <li><a class="icon-pinterest" href=""></a></li>
-                                                        </ul>*@
-                                                </div>
+                                            <div class="form-footer" style="display:flex" id="divFooter">
+                                                <h6 class="btn btn-default forgot-pass" style="padding-top:30px;font-weight:bold;color:#ff8084">New To MyAamdhani ? </h6>
+                                                <button id="notExistUser" onclick="UserLogin(this.id)" type="button" class="btn btn-primary"> Create an Account</button>
+                                                @*<input type="button" value="Request OTP" class="btn btn-primary"/>*@
+                                                @*<span>Or Login up with social platforms</span>
+                                                    <ul class="social">
+                                                        <li><a class="icon-facebook" href=""></a></li>
+                                                        <li><a class="icon-twitter" href=""></a></li>
+                                                        <li><a class="icon-instagram" href=""></a></li>
+                                                        <li><a class="icon-pinterest" href=""></a></li>
+                                                    </ul>*@
+                                            </div>
                                         }
                                         @*</form>*@
                                     </div>
@@ -348,6 +348,8 @@
     @*<script src="../assets/js/admin-script.js"></script>*@
     <input type="hidden" id="hdnOTP" />
     <script type="text/javascript">
+        var checkEmailExist = 'No';
+        var checkPhoneExist = 'No';
         var regexEmail = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var regexPhoneNumber = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
         $('.single-item').slick({
@@ -424,19 +426,45 @@
                 }
                 else if ((regexPhoneNumber.test($('#email').val()) && $('#email').val().length >= 10 && $('#email').val().length <= 13)) {
                     $("#EmailError").css("display", "none");
+                    var formData = new FormData();
+
+                    var PhoneNum = $('#email').val();
+
+                    formData.append("PhoneNumber", PhoneNum);
+
                     $.ajax({
-                        url: "@Url.Action("CheckPhoneAvailability","CustomValidators")",
-                        type: "GET",
-                        data: { PhoneNumber: $('#email').val() },
-                        traditional: true,
+                        url: "@Url.Action("CheckPhoneNoAvailability", "CustomValidators")",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
                         success: function (result) {
-                            if (result == true) {
-                                checkEmailExist = 'No';
+
+                            if (result.success == true) {
+                                //$('#EmailError').text('Phone Number Already Exist');
+                                //$("#EmailError").css("display", "block");
+                                $("#divSignUp").css("display", "none");
+                                $("#EmailError").css("display", "none");
+                                $("#divEnterOTP").css("display", "none");
+                                $("#EmailError").css("display", "none");
+                                $("#divOTPResend").css("display", "none");
+                                $("#changeTag").css("display", "none");
+                                $("#email").prop('disabled', false);
+                                $("#divSignUp").css("display", "none");
+                                $("#divPassword").css("display", "block");
+                                $("#divExistUser").css("display", "block");
+                                $("#divForgetPassword").css("display", "block");
+                                $("#divFooter").css("display", "block");
+                                $("#divNotExistUser").css("display", "none");
+                                $("#password").attr("placeholder", "Enter Password");
+                                $("#email").attr("placeholder", "Enter Email/Phone Number");
+                                checkPhoneExist = 'Yes';
                             }
                             else {
-                                checkEmailExist = 'Yes';
-                                $('#EmailError').text('Email Id Already Exist ');
-                                $("#EmailError").css("display", "block");
+
+                                checkPhoneExist = 'No';
+
                             }
                         },
                         error: function () {
@@ -456,40 +484,98 @@
         });
 
         function loginSubmmit() {
-
-            if ($('#email').val() == '' && $('#password').val() == '') {
-                $('#EmailError').text('Email or Phone Number Required');
-                $("#EmailError").css("display", "block");
-                $('#PasswordError').text('Password Required');
-                $("#PasswordError").css("display", "block");
-            }
-            else if ($('#email').val() == '' && $('#password').val() != '') {
-                $('#EmailError').text('Email or Phone Number Required');
-                $("#EmailError").css("display", "block");
-                $("#PasswordError").css("display", "none");
-            }
-            else if ($('#email').val() != '' && $('#password').val() == '') {
-                $("#EmailError").css("display", "none");
-                $('#PasswordError').text('Password Required');
-                $("#PasswordError").css("display", "block");
-            }
-            else if ($('#email').val() != '' && $('#password').val() != '') {
-                $("#EmailError").css("display", "none");
-                $("#PasswordError").css("display", "none");
-                $("#EmailError").css("display", "none");
-                if (regexEmail.test($('#email').val()) || (regexPhoneNumber.test($('#email').val()) && $('#email').val().length >= 10 && $('#email').val().length <= 13)) {
-                    $("#EmailError").css("display", "none");
-                    document.getElementById('LoginManage').submit();
-                }
-                else {
-                    $('#EmailError').text('Invalid Email Id or Phone Number');
+            debugger;
+            if ($('#divPassword').css('display') == 'block') {
+                if ($('#email').val() == '' && $('#password').val() == '') {
+                    $('#EmailError').text('Email or Phone Number Required');
                     $("#EmailError").css("display", "block");
+                    $('#PasswordError').text('Password Required');
+                    $("#PasswordError").css("display", "block");
+                    
                 }
+                else if ($('#email').val() == '' && $('#password').val() != '') {
+                    $('#EmailError').text('Email or Phone Number Required');
+                    $("#EmailError").css("display", "block");
+                    $("#PasswordError").css("display", "none");
+                }
+                else if ($('#email').val() != '' && $('#password').val() == '') {
+                    $("#EmailError").css("display", "none");
+                    $('#PasswordError').text('Password Required');
+                    $("#PasswordError").css("display", "block");
+                }
+                else if ($('#email').val() != '' && $('#password').val() != '') {
+                    $("#EmailError").css("display", "none");
+                    $("#PasswordError").css("display", "none");
 
+                    if (regexEmail.test($('#email').val()) || (regexPhoneNumber.test($('#email').val()) && $('#email').val().length >= 10 && $('#email').val().length <= 13)) {
+                        $("#EmailError").css("display", "none");
+                        document.getElementById('LoginManage').submit();
+                    }
+                    else {
+                        $('#EmailError').text('Invalid Email Id or Phone Number');
+                        $("#EmailError").css("display", "block");
+                    }
+
+                }
+                else if ($('#email').val() != '' && $('#password').val() == '') {
+                    $("#EmailError").css("display", "none");
+                    $("#OTPError").css("display", "none");
+                    if (regexEmail.test($('#email').val()) || (regexPhoneNumber.test($('#email').val()) && $('#email').val().length >= 10 && $('#email').val().length <= 13)) {
+                        $("#EmailError").css("display", "none");
+                        
+                            document.getElementById('LoginManage').submit();
+                        
+                    }
+                    else {
+                        $('#EmailError').text('Invalid Email Id or Phone Number');
+                        $("#EmailError").css("display", "block");
+                    }
+
+                }
             }
+            else if ($('#divPassword').css('display') == 'none' && $('#divEnterOTP').css('display') == 'block') {
+                if ($('#email').val() == '' && $('#enterOTP').val() == '') {
+                    $('#EmailError').text('Email or Phone Number Required');
+                    $("#EmailError").css("display", "block");                    
+                    $('#OTPError').text('OTP Required');
+                    $("#OTPError").css("display", "block");
+                }
+                else if ($('#email').val() == '' && $('#enterOTP').val() != '') {
+                    $('#EmailError').text('Email or Phone Number Required');
+                    $("#EmailError").css("display", "block");
+                    $("#OTPError").css("display", "none");
+                }
+                else if ($('#email').val() != '' && $('#enterOTP').val() == '') {
+                    $("#EmailError").css("display", "none");
+                    $('#OTPError').text('OTP Required');
+                    $("#OTPError").css("display", "block");
+                }                
+                else if ($('#email').val() != '' && $('#enterOTP').val() != '') {
+                    $("#EmailError").css("display", "none");
+                    $("#OTPError").css("display", "none");
+                    if (regexEmail.test($('#email').val()) || (regexPhoneNumber.test($('#email').val()) && $('#email').val().length >= 10 && $('#email').val().length <= 13)) {
+                        $("#EmailError").css("display", "none");
+                        if ($('#enterOTP').val() == $('#hdnOTP').val()) {
+
+                            document.getElementById('LoginManage').submit();
+                        }
+                        else {
+                            $('#OTPError').text('Invalid OTP');
+                            $("#OTPError").css("display", "block");
+                        }
+                    }
+                    else {
+                        $('#EmailError').text('Invalid Email Id or Phone Number');
+                        $("#EmailError").css("display", "block");
+                    }
+
+                }
+            }
+            
         }
 
         function sendOTP(id) {
+            debugger;
             if ($('#email').val() == '') {
                 $('#EmailError').text('Phone Number Required');
                 $("#EmailError").css("display", "block");
@@ -499,14 +585,18 @@
                 $("#EmailError").css("display", "none");
                 if (regexPhoneNumber.test($('#email').val()) && $('#email').val().length >= 10 && $('#email').val().length <= 13) {
                     if (id == 'loginOTP') {
+
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("SendOTP", "Login")',
                             data: { 'phoneNumber': $("#email").val(), 'OTPType': 'loginOTP' },
                             dataType: 'json',
                             success: function (data) {
+                                alert(data.msg);
                                 if (data.success) {
                                     //$('.tooltips').powerTip();
+                                    $('#hdnOTP').val(data.confirmOTP);
+                                    alert($('#hdnOTP').val());
                                     $("#divSignUp").css("display", "none");
                                     $("#EmailError").css("display", "none");
                                     $("#divSignUp").css("display", "none");
@@ -516,7 +606,7 @@
                                     $("#changeTag").css("display", "block");
                                     $("#divForgetPassword").css("display", "none");
                                     $("#divFooter").css("display", "none");
-                                    $("#email").prop('disabled', true);
+                                     $('#email').attr('readonly', true);
                                     $('#loginOTP').prop('disabled', true);
                                     $("#divPassword").css("display", "none");
                                     $("#divNotExistUser").css("display", "none");
@@ -536,41 +626,38 @@
 
                     }
                     if (id == 'signUpOTP') {
-
-
-
-
-                        $.ajax({
-                            type: "POST",
-                            url: '@Url.Action("SendOTP", "Login")',
-                            data: { 'phoneNumber': $("#email").val(), 'OTPType': 'signUpOTP' },
-                            dataType: 'json',
-                            success: function (data) {
-                                if (data.success) {
-                                    //$('.tooltips').powerTip();
-                                    $('#hdnOTP').val(data.confirmOTP);
-                                    alert($('#hdnOTP').val());
-                                    $("#EmailError").css("display", "none");
-                                    $("#divSignUp").css("display", "block");
-                                    $("#divEnterOTP").css("display", "block");
-                                    $("#divOTPResend").css("display", "block");
-                                    $("#changeTag").css("display", "block");
-                                    $("#email").prop('disabled', true);
-                                    $("#divPassword").css("display", "block");
-                                    $("#divNotExistUser").css("display", "none");
-                                    $("#password").attr("placeholder", "Set Password");
+                        if (checkPhoneExist == 'No') {
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("SendOTP", "Login")',
+                                data: { 'phoneNumber': $("#email").val(), 'OTPType': 'signUpOTP' },
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.success) {
+                                        //$('.tooltips').powerTip();
+                                        $('#hdnOTP').val(data.confirmOTP);
+                                        alert($('#hdnOTP').val());
+                                        $("#EmailError").css("display", "none");
+                                        $("#divSignUp").css("display", "block");
+                                        $("#divEnterOTP").css("display", "block");
+                                        $("#divOTPResend").css("display", "block");
+                                        $("#changeTag").css("display", "block");
+                                        $("#email").prop('disabled', true);
+                                        $("#divPassword").css("display", "block");
+                                        $("#divNotExistUser").css("display", "none");
+                                        $("#password").attr("placeholder", "Set Password");
+                                    }
+                                    else {
+                                        //Toastrtimer(data.success, data.msg);
+                                        alert('Failed');
+                                    }
+                                    //window.location.href = '@Url.Action("Index", "Notice")';
+                                },
+                                error: function (data) {
+                                    //$('#dvloader').hide();
                                 }
-                                else {
-                                    //Toastrtimer(data.success, data.msg);
-                                    alert('Failed');
-                                }
-                                //window.location.href = '@Url.Action("Index", "Notice")';
-                            },
-                            error: function (data) {
-                                //$('#dvloader').hide();
-                            }
-                        });
-
+                            });
+                        }
                     }
 
                     //document.getElementById('LoginManage').submit();

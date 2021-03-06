@@ -28,27 +28,31 @@ namespace MyAamdhani.Controllers
         {
             try
             {
+                DataTable dt = new DataTable();
                 using (var db = new MyAamdhaniEntities())
                 {
-                    DataTable dt = new DataTable();
-                    SqlParameter[] param = new SqlParameter[2];
-                    param[0] = new SqlParameter("@Email", Email);
-                    param[1] = new SqlParameter("@UserId", UserId);
-                    dt = DBHelper.BindDataTableWithParams(DBHelper.LoadStoredProcedure(db, ""), param);
-                    if (dt.Rows.Count > 0)
+                    using (SqlConnection con = new SqlConnection(db.Database.Connection.ConnectionString))
                     {
-                        return Json("Email Already Exists");
+                        using (SqlCommand cmd = new SqlCommand("Sp_CheckAvailability", con))
+                        {
+                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+                            adapter.SelectCommand.Parameters.Add(new SqlParameter("@Email", Email));
+                            adapter.SelectCommand.Parameters.Add(new SqlParameter("PhoneNumber", ""));
+                            adapter.Fill(dt);
+                        }
                     }
-                    else
-                    {
-                        return Json(true);
-                    }
-
                 }
+                if (dt.Rows.Count > 0)                
+                    return Json(true);
+                
+                else                
+                    return Json(false);
+                
             }
             catch (Exception ex)
             {
-                var error = ex.ToString();              
+                var error = ex.ToString();
                 return Json("Sorry,Please try again.");
             }
         }
@@ -60,32 +64,36 @@ namespace MyAamdhani.Controllers
         /// </summary>        
         /// <param name="Email">Name to be checked</param>
         /// Created by AmIT
-
-        public ActionResult CheckPhoneNoAvailability(string PhoneNumber, int UserId)
+        [HttpPost]
+        public ActionResult CheckPhoneNoAvailability(string PhoneNum)
         {
             try
             {
+                DataTable dt = new DataTable();
                 using (var db = new MyAamdhaniEntities())
                 {
-                    DataTable dt = new DataTable();
-                    SqlParameter[] param = new SqlParameter[2];
-                    param[0] = new SqlParameter("@PhoneNumber", PhoneNumber);
-                    param[1] = new SqlParameter("@UserId", UserId);
-                    dt = DBHelper.BindDataTableWithParams(DBHelper.LoadStoredProcedure(db, ""), param);
-                    if (dt.Rows.Count > 0)
+                    using (SqlConnection con = new SqlConnection(db.Database.Connection.ConnectionString))
                     {
-                        return Json("Phone Number Already Exists");
+                        using (SqlCommand cmd = new SqlCommand("Sp_CheckAvailability", con))
+                        {
+                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+                            adapter.SelectCommand.Parameters.Add(new SqlParameter("@Email", ""));
+                            adapter.SelectCommand.Parameters.Add(new SqlParameter("PhoneNumber", PhoneNum));
+                            adapter.Fill(dt);
+                        }
                     }
-                    else
-                    {
-                        return Json(true);
-                    }
-
                 }
+                if (dt.Rows.Count > 0)
+                    return Json(new { success = true});
+
+                else
+                    return Json(new { success = false });
+
             }
             catch (Exception ex)
             {
-                var error = ex.ToString();       
+                var error = ex.ToString();
                 return Json("Sorry,Please try again.");
             }
         }

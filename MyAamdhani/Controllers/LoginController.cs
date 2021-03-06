@@ -20,135 +20,168 @@ namespace MyAamdhani.Controllers
             return View();
         }
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Index(LoginViewModel model, string returnUrl)
         {
 
-            if (!ModelState.IsValid)
+            User loginUser = null;
+            try
             {
-                return View(model);
-            }
-            if (ModelState.IsValid)
-            {
-                User loginUser = null;
-                try
+                if (model.EnterOTP != null)
                 {
-                    int LoginIdType = Regex.Matches(model.Email, @"[a-zA-Z]").Count;
-                    if (LoginIdType > 0)
+                    loginUser = entities.Users.Where(x => x.PhoneNumber == model.Email).FirstOrDefault();
+                    if (loginUser == null)
                     {
-                        var regexEmail = new Regex(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$", RegexOptions.Compiled);
-                        Match match = regexEmail.Match(model.Email);
-                        if (match.Success)
-                        {
-                            loginUser = entities.Users.Where(x => x.Email == model.Email).Where(x => x.Password == model.Password).FirstOrDefault();
-
-                            if (loginUser == null)
-                            {
-                                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-                                TempData["ErrorMsg"] = "InCorrect Email Id or Password";
-                                return View(model);
-                            }
-                            else
-                            {
-                                if (loginUser.IsActive == false && loginUser.IsDelete == false)
-                                {
-                                    ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-                                    TempData["ErrorMsg"] = "Your Account is Deactivated";
-                                    return View(model);
-                                }
-                                if (loginUser.IsActive == false && loginUser.IsDelete == true)
-                                {
-                                    ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-                                    TempData["ErrorMsg"] = "Your Account is Deleted";
-                                    return View(model);
-                                }
-                                else
-                                {
-                                    //var userType = Enum.GetName(typeof(UserType),loginUser.UserType);
-                                    if (loginUser.UserType == 0)
-                                    {
-                                        TempData["SuccessMsg"] = "Login Successfully";
-                                        return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
-                                    }
-                                    if (loginUser.UserType == 1)
-                                    {
-                                        TempData["SuccessMsg"] = "Login Successfully";
-                                        return RedirectToAction("Index", "Home", new { Area = "Admin" });
-                                    }
-
-                                }
-                            }
-                        }
+                        ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                        TempData["ErrorMsg"] = "InCorrect Email Id or Password";
+                        return View(model);
                     }
-                    else if (LoginIdType == 0)
+                    else
                     {
-                        var regexPhoneNumber = new Regex(@"^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$", RegexOptions.Compiled);
-                        Match match = regexPhoneNumber.Match(model.Email);
-                        if (match.Success && (model.Email.Length >= 10 && model.Email.Length <= 13))
+                        if (loginUser.IsActive == false && loginUser.IsDelete == false)
                         {
-
-                            loginUser = entities.Users.Where(x => x.Email == model.Email).Where(x => x.Password == model.Password).FirstOrDefault();
-                            if (loginUser == null)
-                            {
-                                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                                TempData["ErrorMsg"] = "Incorrect Login Id or Password";
-                                return View(model);
-                            }
-                            else
-                            {
-                                if (loginUser.IsActive == false && loginUser.IsDelete == false)
-                                {
-                                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                                    TempData["ErrorMsg"] = "Your Account is Deactivated";
-                                    return View(model);
-                                }
-                                else if (loginUser.IsActive == false && loginUser.IsDelete == true)
-                                {
-                                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                                    TempData["ErrorMsg"] = "Your Account is Deleted";
-                                    return View(model);
-                                }
-                                else
-                                {
-                                    //var userType = Enum.GetName(typeof(UserType),loginUser.UserType);
-                                    if (loginUser.UserType == 0)
-                                    {
-                                        TempData["SuccessMsg"] = "Login Successfully";
-                                        return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
-                                    }
-                                    if (loginUser.UserType == 1)
-                                    {
-                                        TempData["SuccessMsg"] = "Login Successfully";
-                                        return RedirectToAction("Index", "Home", new { Area = "Admin" });
-                                    }
-                                    else
-                                    {
-                                        TempData["ErrorMsg"] = "Unauthorized Access";
-                                        return View(model);
-                                    }
-                                }
-                            }
+                            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                            TempData["ErrorMsg"] = "Your Account is Deactivated";
+                            return View(model);
+                        }
+                        if (loginUser.IsActive == false && loginUser.IsDelete == true)
+                        {
+                            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                            TempData["ErrorMsg"] = "Your Account is Deleted";
+                            return View(model);
                         }
                         else
                         {
-                            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                            TempData["ErrorMsg"] = "Invalid Phone Number";
+                            //var userType = Enum.GetName(typeof(UserType),loginUser.UserType);
+                            if (loginUser.UserType == 0)
+                            {
+                                TempData["SuccessMsg"] = "Login Successfully";
+                                return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
+                            }
+                            if (loginUser.UserType == 1)
+                            {
+                                TempData["SuccessMsg"] = "Login Successfully";
+                                return RedirectToAction("Index", "Home");
+                            }
+
+                        }
+                    }
+                }
+
+                int LoginIdType = Regex.Matches(model.Email, @"[a-zA-Z]").Count;
+                if (LoginIdType > 0)
+                {
+                    var regexEmail = new Regex(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$", RegexOptions.Compiled);
+                    Match match = regexEmail.Match(model.Email);
+                    if (match.Success)
+                    {
+                        loginUser = entities.Users.Where(x => x.Email == model.Email).Where(x => x.Password == model.Password).FirstOrDefault();
+
+                        if (loginUser == null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                            TempData["ErrorMsg"] = "InCorrect Email Id or Password";
                             return View(model);
+                        }
+                        else
+                        {
+                            if (loginUser.IsActive == false && loginUser.IsDelete == false)
+                            {
+                                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                                TempData["ErrorMsg"] = "Your Account is Deactivated";
+                                return View(model);
+                            }
+                            if (loginUser.IsActive == false && loginUser.IsDelete == true)
+                            {
+                                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                                TempData["ErrorMsg"] = "Your Account is Deleted";
+                                return View(model);
+                            }
+                            else
+                            {
+                                //var userType = Enum.GetName(typeof(UserType),loginUser.UserType);
+                                if (loginUser.UserType == 0)
+                                {
+                                    TempData["SuccessMsg"] = "Login Successfully";
+                                    return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
+                                }
+                                if (loginUser.UserType == 1)
+                                {
+                                    TempData["SuccessMsg"] = "Login Successfully";
+                                    return RedirectToAction("Index", "Home");
+                                }
+
+                            }
+                        }
+                    }
+                }
+                else if (LoginIdType == 0)
+                {
+                    var regexPhoneNumber = new Regex(@"^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$", RegexOptions.Compiled);
+                    Match match = regexPhoneNumber.Match(model.Email);
+                    if (match.Success && (model.Email.Length >= 10 && model.Email.Length <= 13))
+                    {
+
+                        loginUser = entities.Users.Where(x => x.PhoneNumber == model.Email).Where(x => x.Password == model.Password).FirstOrDefault();
+                        if (loginUser == null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                            TempData["ErrorMsg"] = "Incorrect Login Id or Password";
+                            return View(model);
+                        }
+                        else
+                        {
+                            if (loginUser.IsActive == false && loginUser.IsDelete == false)
+                            {
+                                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                                TempData["ErrorMsg"] = "Your Account is Deactivated";
+                                return View(model);
+                            }
+                            else if (loginUser.IsActive == false && loginUser.IsDelete == true)
+                            {
+                                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                                TempData["ErrorMsg"] = "Your Account is Deleted";
+                                return View(model);
+                            }
+                            else
+                            {
+                                //var userType = Enum.GetName(typeof(UserType),loginUser.UserType);
+                                if (loginUser.UserType == 0)
+                                {
+                                    TempData["SuccessMsg"] = "Login Successfully";
+                                    return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
+                                }
+                                if (loginUser.UserType == 1)
+                                {
+                                    TempData["SuccessMsg"] = "Login Successfully";
+                                    return RedirectToAction("Index", "Home");
+                                }
+                                else
+                                {
+                                    TempData["ErrorMsg"] = "Unauthorized Access";
+                                    return View(model);
+                                }
+                            }
                         }
                     }
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                        TempData["ErrorMsg"] = "Invalid Email or Phone Number";
+                        TempData["ErrorMsg"] = "Invalid Phone Number";
                         return View(model);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    var error = ex.ToString();
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    TempData["ErrorMsg"] = "Invalid Email or Phone Number";
+                    return View(model);
                 }
             }
+            catch (Exception ex)
+            {
+                var error = ex.ToString();
+            }
+
             return View();
         }
 
@@ -159,7 +192,7 @@ namespace MyAamdhani.Controllers
         {
             var model = new RegisterViewModel();
             try
-            {                
+            {
                 //List<Country> countryList = new List<Country>();
                 //List<Country> stateList = new List<Country>();
                 //List<Country> cityList = new List<Country>();
@@ -176,8 +209,8 @@ namespace MyAamdhani.Controllers
                 //                         Value = Convert.ToInt32(item).ToString()
                 //                     };
 
-                
-                
+
+
             }
             catch (Exception ex)
             {
@@ -188,7 +221,7 @@ namespace MyAamdhani.Controllers
 
         //
         // POST: /Login/Register
-        [HttpPost]                
+        [HttpPost]
         [Route("{id?}")]
         public ActionResult Register(string PhoneNumber, string Password)
         {
@@ -211,8 +244,8 @@ namespace MyAamdhani.Controllers
                 var error = ex.ToString();
                 TempData["ErrorMsg"] = "Some Thing Went Wrong While processing Your Request.Please Try Again.";
                 return View("Index");
-            }            
-            
+            }
+
         }
         [HttpPost]
         public ActionResult SendOTP(string phonenumber, string OTPType)
@@ -228,13 +261,13 @@ namespace MyAamdhani.Controllers
                 smsResponse = 1;
                 if (smsResponse == 1)
                 {
-                    TempData["SuccessMsg"] = "OTP Sent To "+phonenumber;
-                    return Json(new { success = true, msg = "OTP Sent To " + phonenumber, confirmOTP = OTP.ToString() });
+                    TempData["SuccessMsg"] = "OTP Sent To " + phonenumber;
+                    return Json(new { success = true, msg = "OTP Sent", confirmOTP = OTP.ToString() });
                 }
                 else
                 {
                     TempData["ErrorMsg"] = "OTP Can't Send.";
-                    return Json(new { success = false, msg = "OTP Can't Send.", confirmOTP = OTP.ToString() });
+                    return Json(new { success = false, msg = "OTP Can't Sent", confirmOTP = OTP.ToString() });
                 }
 
 
@@ -244,7 +277,7 @@ namespace MyAamdhani.Controllers
                 TempData["ErrorMsg"] = "Some Thing Went Wrong While processing Your Request.Please Try Again.";
                 return View("Index");
             }
-            
+
         }
     }
 }
