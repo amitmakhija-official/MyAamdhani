@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MyAamdhaniModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="CityId" />
@@ -93,6 +105,8 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="DateModified" Type="datetime" />
+          <Property Name="Category" Type="int" />
+          <Property Name="Subcategory" Type="int" />
         </EntityType>
         <EntityType Name="SEO">
           <Key>
@@ -117,6 +131,19 @@
           </Key>
           <Property Name="StateId" Type="int" Nullable="false" />
           <Property Name="StateName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="UserDetail">
           <Key>
@@ -190,6 +217,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MyAamdhaniModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
@@ -199,6 +227,7 @@
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SEO" EntityType="Self.SEO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetail" EntityType="Self.UserDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ValidateLogin" EntityType="Self.ValidateLogin" Schema="dbo" store:Type="Tables" />
@@ -271,6 +300,8 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="Category" Type="Int32" />
+          <Property Name="Subcategory" Type="Int32" />
         </EntityType>
         <EntityType Name="ValidateLogin">
           <Key>
@@ -296,12 +327,8 @@
           <EntitySet Name="LogingHistories" EntityType="MyAamdhaniModel.LogingHistory" />
           <EntitySet Name="SEOs" EntityType="MyAamdhaniModel.SEO" />
           <EntitySet Name="States" EntityType="MyAamdhaniModel.State" />
-          <EntitySet Name="UserDetails" EntityType="MyAamdhaniModel.UserDetail" />
-          <EntitySet Name="Users" EntityType="MyAamdhaniModel.User" />
-          <AssociationSet Name="FK__UserDetai__UserI__1273C1CD" Association="MyAamdhaniModel.FK__UserDetai__UserI__1273C1CD">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UserDetail" EntitySet="UserDetails" />
-          </AssociationSet>
+          <EntitySet Name="Categories" EntityType="MyAamdhaniModel.Category" />
+          <EntitySet Name="SubCategories" EntityType="MyAamdhaniModel.SubCategory" />
         </EntityContainer>
         <EntityType Name="City">
           <Key>
@@ -355,66 +382,31 @@
           <Property Name="StateId" Type="Int32" Nullable="false" />
           <Property Name="StateName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="UserDetail">
+        <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FatherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ImageLogo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DOB" Type="DateTime" Precision="0" />
-          <Property Name="Gender" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="User" Relationship="MyAamdhaniModel.FK__UserDetai__UserI__1273C1CD" FromRole="UserDetail" ToRole="User" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="ImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="SubCategory">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="MenuRights" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="UserType" Type="Int32" Nullable="false" />
-          <Property Name="ForgotPasswordCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ForgotPasswordTime" Type="DateTime" Precision="3" />
-          <Property Name="BranchId" Type="Int32" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="OTPCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsOTPVerified" Type="Boolean" />
-          <Property Name="OTPVerifiedValidDate" Type="DateTime" Precision="3" />
-          <Property Name="FirebaseTokenId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="WebFirebaseTokenId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="LoginOTPCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LoginOTPValidDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="UserDetails" Relationship="MyAamdhaniModel.FK__UserDetai__UserI__1273C1CD" FromRole="User" ToRole="UserDetail" />
+          <Property Name="ImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK__UserDetai__UserI__1273C1CD">
-          <End Type="MyAamdhaniModel.User" Role="User" Multiplicity="1" />
-          <End Type="MyAamdhaniModel.UserDetail" Role="UserDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserDetail">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -473,6 +465,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="MyAamdhaniModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Subcategory" ColumnName="Subcategory" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -557,50 +551,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserDetails">
-            <EntityTypeMapping TypeName="MyAamdhaniModel.UserDetail">
-              <MappingFragment StoreEntitySet="UserDetail">
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="ImageLogo" ColumnName="ImageLogo" />
-                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="MyAamdhaniModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="LoginOTPValidDate" ColumnName="LoginOTPValidDate" />
-                <ScalarProperty Name="LoginOTPCode" ColumnName="LoginOTPCode" />
-                <ScalarProperty Name="WebFirebaseTokenId" ColumnName="WebFirebaseTokenId" />
-                <ScalarProperty Name="FirebaseTokenId" ColumnName="FirebaseTokenId" />
-                <ScalarProperty Name="OTPVerifiedValidDate" ColumnName="OTPVerifiedValidDate" />
-                <ScalarProperty Name="IsOTPVerified" ColumnName="IsOTPVerified" />
-                <ScalarProperty Name="OTPCode" ColumnName="OTPCode" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+          <EntitySetMapping Name="SubCategories">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.SubCategory">
+              <MappingFragment StoreEntitySet="SubCategory">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-                <ScalarProperty Name="ForgotPasswordTime" ColumnName="ForgotPasswordTime" />
-                <ScalarProperty Name="ForgotPasswordCode" ColumnName="ForgotPasswordCode" />
-                <ScalarProperty Name="UserType" ColumnName="UserType" />
-                <ScalarProperty Name="MenuRights" ColumnName="MenuRights" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

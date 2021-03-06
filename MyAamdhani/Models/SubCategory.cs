@@ -12,19 +12,15 @@ namespace MyAamdhani.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class SubCategory
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<int> Type { get; set; }
-        public string UniqueKey { get; set; }
+        public Nullable<int> CategoryId { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
+        public Nullable<System.DateTime> DateUpdated { get; set; }
         public bool IsActive { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> DateModified { get; set; }
-        public Nullable<int> Category { get; set; }
-        public Nullable<int> Subcategory { get; set; }
+        public string ImagePath { get; set; }
     }
 }

@@ -159,3 +159,58 @@ CREATE TABLE [dbo].[LogingHistory](
 	[DateModified] [datetime] NOT NULL,
 )
 alter table validatelogin add Type int Not null
+
+--5 march 2021
+
+CREATE TABLE [dbo].[Category](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[Name] [nvarchar](250) NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsDelete] [bit] NOT NULL,
+	[DateAdded] [datetime] NULL,
+	[DateUpdated] [datetime] NULL,
+)
+
+CREATE TABLE [dbo].[SubCategory](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[Name] [nvarchar](250) NULL,
+	[CategoryId] [int] NULL,
+	[DateAdded] [datetime] NULL,
+	[DateUpdated] [datetime] NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsDelete] [bit] NOT NULL,
+ )
+
+
+
+
+alter table products add Category int null
+alter table products add Subcategory int null
+
+-----------Data Script------------------- For Subcategory items
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (1, 'Saree', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (2, 'Kurti', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (3, 'Salwar', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (4, 'Jeans', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (5, 'Tshirt', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (6, 'Shirt', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (7, 'Shirt', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (8, 'Shirt', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (9, 'Shirt', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (10, 'Shirt', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (11, 'Shirt', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (12, 'Shirt', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
+
+-----------------------------------------------------------------------------

@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using log4net;
 using MyAamdhani.Models;
+using MyAamdhani.HelperClasses;
+
 namespace MyAamdhani.Controllers
 {
     public class BaseController : Controller

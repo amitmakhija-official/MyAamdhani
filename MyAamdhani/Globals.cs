@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -19,6 +21,13 @@ namespace MyAamdhani
         {
             Mr =1,
             Ms = 2
+        
+        }
+        
+        public enum Category
+        {
+            [Display(Name = "Women Ethnic Wear")]
+            Women_Ethnic_Wear=1
         
         }
     }
