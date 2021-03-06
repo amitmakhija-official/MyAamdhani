@@ -272,6 +272,9 @@
     <Compile Include="Models\SEO.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Sp_CheckAvailability_Result.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\State.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
@@ -3496,6 +3499,11 @@
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\zoom-gallery.js" />
     <Content Include="Scripts\zoom-scripts.js" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <EntityDeploy Include="Models\MyAamdhani.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MyAamdhani.Designer.cs</LastGenOutput>
@@ -3503,11 +3511,6 @@
     <Content Include="Models\MyAamdhani.edmx.diagram">
       <DependentUpon>MyAamdhani.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
