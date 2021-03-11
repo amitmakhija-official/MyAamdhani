@@ -20,6 +20,5 @@ namespace MyAamdhani.Models
         public bool IsDelete { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
-        public string ImagePath { get; set; }
     }
 }

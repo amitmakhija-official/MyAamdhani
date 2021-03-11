@@ -10,16 +10,9 @@
 namespace MyAamdhani.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class User
+    public partial class Sp_CheckAvailability_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.UserDetails = new HashSet<UserDetail>();
-        }
-    
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
@@ -42,8 +35,5 @@ namespace MyAamdhani.Models
         public string WebFirebaseTokenId { get; set; }
         public string LoginOTPCode { get; set; }
         public Nullable<System.DateTime> LoginOTPValidDate { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserDetail> UserDetails { get; set; }
     }
 }

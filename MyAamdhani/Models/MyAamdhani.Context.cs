@@ -42,6 +42,19 @@ namespace MyAamdhani.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ValidateLogin> ValidateLogins { get; set; }
     
+        public virtual ObjectResult<Sp_CheckAvailability_Result> Sp_CheckAvailability(string email, string phoneNumber)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var phoneNumberParameter = phoneNumber != null ?
+                new ObjectParameter("PhoneNumber", phoneNumber) :
+                new ObjectParameter("PhoneNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_CheckAvailability_Result>("Sp_CheckAvailability", emailParameter, phoneNumberParameter);
+        }
+    
         public virtual int Sp_UserManage(Nullable<int> userId, string email, string userName, string phoneNumber, string password, string userType, string menuRights, string manageType, string firstName, string lastName, string fatherName, string imageLogo, Nullable<System.DateTime> dOB, string gender, string address)
         {
             var userIdParameter = userId.HasValue ?

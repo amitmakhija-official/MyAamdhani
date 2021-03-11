@@ -184,8 +184,8 @@ CREATE TABLE [dbo].[SubCategory](
 
 
 
-alter table products add Category int null
-alter table products add Subcategory int null
+alter table products add CategoryId int null
+alter table products add SubCategoryId int null
 
 -----------Data Script------------------- For Subcategory items
 

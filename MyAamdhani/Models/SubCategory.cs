@@ -17,10 +17,10 @@ namespace MyAamdhani.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> CategoryId { get; set; }
-        public string ImagePath { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public bool IsActive { get; set; }
         public bool IsDelete { get; set; }
+        public string ImagePath { get; set; }
     }
 }

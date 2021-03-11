@@ -24,7 +24,7 @@ namespace MyAamdhani.Models
         public bool IsActive { get; set; }
         public bool IsDelete { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
-        public Nullable<int> Category { get; set; }
-        public Nullable<int> Subcategory { get; set; }
+        public Nullable<int> CategoryId { get; set; }
+        public Nullable<int> SubCategoryId { get; set; }
     }
 }
