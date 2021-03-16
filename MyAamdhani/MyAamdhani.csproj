@@ -264,22 +264,36 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyAamdhani.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\MyAamdhaniCommon.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductEntityModel.cs" />
     <Compile Include="Models\ProductRating.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SEO.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Sp_CheckAvailability_Result.cs">
-      <DependentUpon>MyAamdhani.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\State.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SubCategory.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_ClothStyle.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Color.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Fabric.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Pattern.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_SareeBorder.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
@@ -327,6 +341,12 @@
     <Content Include="Content\dropzone.css" />
     <Content Include="Content\flag-icon.css" />
     <Content Include="Content\fontawesome.css" />
+    <Content Include="Content\footable\footable.core.css" />
+    <Content Include="Content\icheck\skins\flat\red%402x.png" />
+    <Content Include="Content\icheck\skins\flat\red.css" />
+    <Content Include="Content\icheck\skins\flat\red.png" />
+    <Content Include="Content\icheck\skins\flat\_all.css" />
+    <Content Include="Content\icheck\skins\line\line%402x.png" />
     <Content Include="Content\icofont.css" />
     <Content Include="Content\Images\2.jpg" />
     <Content Include="Content\Images\20.jpg" />
@@ -2729,9 +2749,6 @@
     <Content Include="Scripts\chart\peity-chart\peity.jquery.js" />
     <Content Include="Scripts\chart\sparkline\sparkline.js" />
     <Content Include="Scripts\clipboard\clipboard.min.js" />
-    <Content Include="Scripts\counter\counter-custom.js" />
-    <Content Include="Scripts\counter\jquery.counterup.min.js" />
-    <Content Include="Scripts\counter\jquery.waypoints.min.js" />
     <Content Include="Scripts\custom-card\custom-card.js" />
     <Content Include="Scripts\dashboard\default.js" />
     <Content Include="Scripts\dashboard\form-validation-custom.js" />
@@ -3423,8 +3440,11 @@
     <Content Include="Scripts\editor\ckeditor\styles.js" />
     <Content Include="Scripts\exit.js" />
     <Content Include="Scripts\fly-cart.js" />
+    <Content Include="Scripts\footable\footable.all.min.js" />
     <Content Include="Scripts\footer-reveal.min.js" />
     <Content Include="Scripts\height-equal.js" />
+    <Content Include="Scripts\icheck\icheck.js" />
+    <Content Include="Scripts\icheck\icheck.min.js" />
     <Content Include="Scripts\icons\feather-icon\feather-icon.js" />
     <Content Include="Scripts\icons\feather-icon\feather.min.js" />
     <Content Include="Scripts\imagesloaded.pkgd.min.js" />
@@ -3489,6 +3509,10 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\script.js" />
+    <Content Include="Scripts\select2\select2.css" />
+    <Content Include="Scripts\select2\select2.js" />
+    <Content Include="Scripts\select2\select2.min.css" />
+    <Content Include="Scripts\select2\select2.min.js" />
     <Content Include="Scripts\sidebar-menu.js" />
     <Content Include="Scripts\slick.js" />
     <Content Include="Scripts\snow.js" />
@@ -3513,6 +3537,7 @@
     <Content Include="Models\MyAamdhani.edmx.diagram">
       <DependentUpon>MyAamdhani.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\Product\Manage.cshtml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

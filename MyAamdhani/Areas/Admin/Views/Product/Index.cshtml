@@ -2,7 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Content/jsgrid.css" rel="stylesheet" />
+@*<link href="~/Content/jsgrid.css" rel="stylesheet" />*@
 
 <div class="page-body">
     <!-- Container-fluid starts-->
@@ -37,7 +37,11 @@
                         <h5>Product Lists</h5>
                     </div>
                     <div class="card-body">
-                        <div id="basicScenario" class="product-list digital-product"></div>
+                        <div id="divProduct" class="table-responsive">
+                            
+                        </div>
+                        <br />
+                        <div id="divProductPaging" style="padding:0px 10px 10px 0px;">                            
                     </div>
                 </div>
             </div>
@@ -46,6 +50,101 @@
     <!-- Container-fluid Ends-->
 </div>
 
-<script src="~/Scripts/jsgrid/jsgrid.min.js"></script>
-<script src="~/Scripts/jsgrid/griddata-productlist-digital.js"></script>
-<script src="~/Scripts/jsgrid/jsgrid-list.js"></script>
+<style type="text/css">
+    
+    .footable tbody tr td {
+        vertical-align: top !important;
+        }
+</style>
+
+@section Scripts{
+    <script type="text/javascript">
+        var searchOrder = '';
+        var searchComp = '';
+        $(document).ready(function () {
+            
+            $('.dvloader').fadeIn();            
+            var success = '@TempData["Success"]';
+            var msg = '@TempData["Msg"]';
+            if (success == 'True') { Toastrtimer(true, msg); }
+            else if (success == 'False') {Toastrtimer(false, msg);}  
+            if ($('#ProductSearch').val() == '') {
+                SearchFilter(1, '', '')
+            }
+            else if ($('#ProductSearch').val() != '') {
+                SearchFilter(1, $('#ProductSearch').val(), '')
+            }            
+            $('th.footable-sortable').click(function (e) {
+                if ($(this).hasClass('footable-sorted')) // asc
+                {
+                    searchOrder = 'desc'
+                } else {
+                    searchOrder = 'asc'
+                }
+                searchComp = $(this)[0].id;
+            });
+            $('.dvloader').fadeOut();
+        });
+
+        function SearchFilter(pageNum, Filter) {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("BindProductList", "Product")',
+                data: {
+                    'pageNo': pageNum,
+                    'whereQuery': '',
+                    'orderByQuery': searchComp + ' ' + searchOrder,
+                    'Search': Filter
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status) {
+                        alert(data.html)
+                        alert(data.htmlPaging)
+                        $("#divProduct").html(data.html);
+                        $("#divProductPaging").html(data.htmlPaging);
+                    }
+
+                    $('.iCheck-helper').iCheck({
+                        checkboxClass: 'icheckbox_flat-red',
+                        radioClass: 'iradio_flat-red'
+                    });
+                    $('.iCheck-helper').on("click", function () {
+
+                        var ProductId = $(this).siblings()[0].id.split('_')[1];
+                        var ProductName = $(this).siblings()[0].id.split('_')[2];
+                        var Status = $(this).siblings()[0].checked;
+                        $('#dynamic_body').html("Are you sure you want to Change the Status of '" + ProductName + "' Product ?");
+                        $('#hdnUpdateId').val(ProductId);
+                        $('#hdnStatus').val(Status);
+                        $('#Mdl_UpdateStatus').modal('show');
+                    });
+
+                    //$('[data-toggle="tooltip"]').tooltip({ 'placement': 'top' });
+                    //$('.tooltips').powerTip();
+                    $('.footable').footable({
+                        paginate: false
+                    });
+
+                    $(window).trigger('resize');
+
+                    $('th.footable-sortable').click(function (e) {
+                        if ($(this).hasClass('footable-sorted')) // asc
+                        {
+                            searchOrder = 'desc'
+                        } else {
+                            searchOrder = 'asc'
+                        }
+                        searchComp = $(this)[0].id;
+                        SearchFilter(pageNum, Filter);
+                    });
+                },
+                error: function (data) {
+                    //$('#dvloader').hide();
+                }
+            });
+        };
+
+    </script>
+    }
