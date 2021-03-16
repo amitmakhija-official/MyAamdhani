@@ -14,23 +14,19 @@
     <!--Google font-->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
-    <!-- Icons -->
-    <link href="~/Content/fontawesome.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/css")
 
     <!--Slick slider css-->
     <link href="~/Content/slick.css" rel="stylesheet" />
     <link href="~/Content/slick-theme.css" rel="stylesheet" />
 
     <!-- Animate icon -->
-    <link href="~/Content/animate.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/animate")
+   
 
     <!-- Themify icon -->
-    <link href="~/Content/themify-icons.css" rel="stylesheet" />
-
-    <!-- Bootstrap css -->
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-
-
+    @Styles.Render("~/bundles/themify")
+   
     <!-- Theme css -->
     <link href="~/Content/color1.css" rel="stylesheet" media="screen" id="color" />
 
@@ -41,7 +37,7 @@
 <body>
 
     <div>
-@RenderBody()
+        @RenderBody()
 
     </div>
     <!-- footer -->
@@ -1239,51 +1235,32 @@
     <!-- tap to top end -->
     <!-- latest jquery-->
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
+    @Scripts.Render("~/bundles/jquery-3.3.1")
     <!-- fly cart ui jquery-->
-    <script src="~/Scripts/jquery-ui.min.js"></script>
-
+    @Scripts.Render("~/bundles/flycart")
     <!-- portfolio js -->
-    <script src="~/Scripts/jquery.magnific-popup.js"></script>
-    <script src="~/Scripts/zoom-gallery.js"></script>
-    
+    @Scripts.Render("~/bundles/portfolio")
+
     <!-- exitintent jquery-->
-    <script src="~/Scripts/jquery.exitintent.js"></script>
-    <script src="~/Scripts/exit.js"></script>
-
+    @Scripts.Render("~/bundles/exitintentjs")
     <!-- popper js-->
-    <script src="~/Scripts/popper.min.js"></script>
-
+    @Scripts.Render("~/bundles/popper")
     <!-- slick js-->
+    @*@Scripts.Render("~/bundles/slick")*@
     <script src="~/Scripts/slick.js"></script>
-
     <!-- menu js-->
-    <script src="~/Scripts/menu.js"></script>
-
-
-
+    @Scripts.Render("~/bundles/menu")
     <!-- lazyload js-->
-    <script src="~/Scripts/lazysizes.min.js"></script>
-
+    @Scripts.Render("~/bundles/lazysizes")
     <!-- Bootstrap js-->
-    <script src="~/Scripts/bootstrap.js"></script>
-
+    @Scripts.Render("~/bundles/bootstrap")
     <!-- Bootstrap Notification js-->
-    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap-notify")
 
     <!-- Fly cart js-->
-    <script src="~/Scripts/fly-cart.js"></script>
-
-    <!-- Bootstrap Notification js-->
-    
-    <script src="~/Scripts/bootstrap-notify.min.js"></script>
-
-
-    <!-- Theme js-->    
-    <script src="~/Scripts/script.js"></script>
-
-
+    @Scripts.Render("~/bundles/flycart")
+    <!-- Theme js-->
+    @Scripts.Render("~/bundles/script")
     <script type="text/javascript">
         //$(document).ready(function (){
         //    setTimeout(function () {
