@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3bf6cf1ba2804c29aebc7be3d7f9c1af" Name="Diagram1">
+      <Diagram DiagramId="6f7bf6bf0616455086e86c26f636f299" Name="Diagram1">
         <EntityTypeShape EntityType="MyAamdhaniModel.Category" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.City" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.Country" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
@@ -12,7 +12,6 @@
         <EntityTypeShape EntityType="MyAamdhaniModel.LogingHistory" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.MenuTab" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.ProductRating" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.Product" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.SEO" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.State" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.SubCategory" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
@@ -20,6 +19,12 @@
         <EntityTypeShape EntityType="MyAamdhaniModel.User" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.ValidateLogin" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
         <AssociationConnector Association="MyAamdhaniModel.FK__UserDetai__UserI__1273C1CD" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_ClothStyle" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Fabric" Width="1.5" PointX="11.375" PointY="11.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Pattern" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_SareeBorder" Width="1.5" PointX="13.375" PointY="3.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.Product" Width="1.5" PointX="7.375" PointY="10.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Color" Width="1.5" PointX="13.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
