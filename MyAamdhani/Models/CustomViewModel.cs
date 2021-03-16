@@ -12,9 +12,14 @@ namespace MyAamdhani.Models
     }
     public class SubCategoryItems
     {
-        public int Id { get; set; }
+        public int? SubCategoryId { get; set; }
+        public int? ProductId { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
         public DateTime DateAdded { get; set; }
+        public string TypeName { get; set; }
+        public decimal? Price { get; set; }
     }
+
+    
 }

@@ -3552,6 +3552,7 @@
     <Content Include="Views\Home\_MenuBar.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\ShowProduct\Index.cshtml" />
+    <Content Include="Views\ShowProduct\ProductGallery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

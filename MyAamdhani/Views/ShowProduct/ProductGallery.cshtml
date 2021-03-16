@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
- <!-- header start -->
+<!-- header start -->
 <header>
     <div class="mobile-fix-option"></div>
     <div class="top-header">
@@ -245,10 +245,7 @@
     </div>
 </div>
 <!-- breadcrumb End -->
-
-
-
-    <!-- Our Project Start -->
+<!-- Our Project Start -->
 <section class="portfolio-section portfolio-padding grid-portfolio ratio2_3">
     <div class="container">
         <div class="row">
@@ -256,21 +253,24 @@
                 <h3>@Model.Title</h3>
             </div>
         </div>
-        <br/>
-        <hr/>
+        <br />
+        <hr />
 
         <div class="row  zoom-gallery">
             @foreach (var item in Model.SubcategoryItemList)
             {
                 <div class="isotopeSelector filter fashion col-lg-3 col-sm-6">
-                    <div>
+                    <div class="overlay">
                         <div class="border-portfolio">
-                            <a onclick="gotodetails(this)"  data-subcatid="@item.SubCategoryId" style="cursor: pointer">
+                            <a href="@item.ImagePath">
+                                @*<div class="overlay-background">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </div>*@
                                 <img src="@item.ImagePath"
                                      class="img-fluid blur-up lazyload bg-img">
                             </a>
                             <div class="text-center">
-                                <strong class="details">@item.Name</strong>
+                                <strong>@item.Name</strong>
                             </div>
                         </div>
                     </div>
@@ -281,13 +281,4 @@
         </div>
     </div>
 </section>
-<script>
-    function gotodetails(e) {
-        debugger 
-        var url = "../ShowProduct/ProductGallery/?subCatId=" + $(e).attr("data-subcatid");
-        debugger
-
-        location.href = url;
-    };
-</script>
-    <!-- Our Project End -->
+<!-- Our Project End -->
