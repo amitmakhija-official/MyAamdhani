@@ -14,26 +14,14 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Font Awesome-->
-    @*<link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">*@
-    <link href="~/Content/fontawesome.css" rel="stylesheet" />
-    <!-- Flag icon-->
-    @*<link rel="stylesheet" type="text/css" href="../assets/css/flag-icon.css">*@
-    <link href="~/Content/flag-icon.css" rel="stylesheet" />
-    <!-- ico-font-->
-    @*<link rel="stylesheet" type="text/css" href="../assets/css/icofont.css">*@
-    <link href="~/Content/icofont.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/css")
+    @Styles.Render("~/bundles/themify")
     <!-- Prism css-->
-    <link href="~/Content/prism.css" rel="stylesheet" />
-    @*<link rel="stylesheet" type="text/css" href="../assets/css/prism.css">*@
+    @Styles.Render("~/bundles/prism")
     <!-- Chartist css -->
-    @*<link rel="stylesheet" type="text/css" href="../assets/css/chartist.css">*@
-    <link href="~/Content/chartist.css" rel="stylesheet" />
-    <!-- Bootstrap css-->
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    @*<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">*@
+    @Styles.Render("~/bundles/chartist")
     <!-- App css-->
-    <link href="~/Content/admin.css" rel="stylesheet" />
-    @*<link rel="stylesheet" type="text/css" href="../assets/css/admin.css">*@
+   @Styles.Render("~/bundles/admin")
 </head>
 <body>
     <!-- page-wrapper Start-->
@@ -128,12 +116,12 @@
                 <div class="main-header-left d-none d-lg-block">
                     <div class="logo-wrapper"><a href="index.html"><img class="blur-up lazyloaded" src="~/Content/Images/dashboard/multikart-logo.png" alt=""></a></div>
                 </div>
-                
+
                 <div class="sidebar custom-scrollbar">
                     <div class="sidebar-user text-center">
                         <div>
                             <img class="img-60 rounded-circle lazyloaded blur-up" src="~/Content/Images/dashboard/man.png" alt="#">
-                            <img  />
+                            <img />
                         </div>
                         <h6 class="mt-3 f-14">JOHN</h6>
                         <p>general manager.</p>
@@ -337,67 +325,38 @@
         </div>
     </div>
     <!-- latest jquery-->
-    @*<script src="../assets/js/jquery-3.3.1.min.js"></script>*@
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    @Scripts.Render("~/bundles/jquery")
     <!-- Bootstrap js-->
-    @*<script src="../assets/js/popper.min.js"></script>*@
-    <script src="~/Scripts/popper.min.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    @*<script src="../assets/js/bootstrap.js"></script>*@
+    @Scripts.Render("~/bundles/popper")
+    @Scripts.Render("~/bundles/bootstrap")
     <!-- feather icon js-->
-    <script src="~/Scripts/icons/feather-icon/feather.min.js"></script>
-    <script src="~/Scripts/icons/feather-icon/feather-icon.js"></script>
-    
-    @*<script src="../assets/js/icons/feather-icon/feather.min.js"></script>
-    <script src="../assets/js/icons/feather-icon/feather-icon.js"></script>*@
+    @Scripts.Render("~/bundles/feather")
     <!-- Sidebar jquery-->
-    @*<script src="../assets/js/sidebar-menu.js"></script>*@
-    <script src="~/Scripts/sidebar-menu.js"></script>
-    <!--chartjs js-->
-    <script src="~/Scripts/chart/chartjs/chart.min.js"></script>
-    <!--chartist js-->
-    <script src="~/Scripts/chart/chartist/chartist.js"></script>
+    @Scripts.Render("~/bundles/menu")
+    @Scripts.Render("~/bundles/sidebar")
+    @Scripts.Render("~/bundles/chart")
     <!-- lazyload js-->
-    @*<script src="../assets/js/lazysizes.min.js"></script>*@
-    <script src="~/Scripts/lazysizes.min.js"></script>
+    @Scripts.Render("~/bundles/lazysizes")
     <!--copycode js-->
-    @*<script src="../assets/js/prism/prism.min.js"></script>*@
-    @*<script src="../assets/js/clipboard/clipboard.min.js"></script>*@
-    <script src="~/Scripts/prism/prism.min.js"></script>
-    <script src="~/Scripts/clipboard/clipboard.min.js"></script>
-    @*<script src="../assets/js/custom-card/custom-card.js"></script>*@
-    <script src="~/Scripts/custom-card/custom-card.js"></script>
+    @Scripts.Render("~/bundles/copycode")
     <!--counter js-->
-    @*<script src="../assets/js/counter/jquery.waypoints.min.js"></script>
-    <script src="../assets/js/counter/jquery.counterup.min.js"></script>
-    <script src="../assets/js/counter/counter-custom.js"></script>*@
-    <script src="~/Scripts/counter/jquery.waypoints.min.js"></script>
-    <script src="~/Scripts/counter/jquery.counterup.min.js"></script>
-    <script src="~/Scripts/counter/counter-custom.js"></script>    
+    @Scripts.Render("~/bundles/counter")
     <!--peity chart js-->
-    @*<script src="../assets/js/chart/peity-chart/peity.jquery.js"></script>*@
-    <script src="~/Scripts/chart/peity-chart/peity.jquery.js"></script>
+    @Scripts.Render("~/bundles/peity")
     <!--sparkline chart js-->
-    <script src="~/Scripts/chart/sparkline/sparkline.js"></script>
-    @*<script src="../assets/js/chart/sparkline/sparkline.js"></script>*@
+    @Scripts.Render("~/bundles/sparkline")
     <!--Customizer admin-->
-
-    @*<script src="../assets/js/admin-customizer.js"></script>*@
-    <script src="~/Scripts/admin-customizer.js"></script>
+    @Scripts.Render("~/bundles/admin")
     <!--dashboard custom js-->
-    <script src="~/Scripts/dashboard/default.js"></script>
-
-    @*<script src="../assets/js/dashboard/default.js"></script>*@
+    @Scripts.Render("~/bundles/dashboard")
     <!--right sidebar js-->
-    @*<script src="../assets/js/chat-menu.js"></script>*@
-    <script src="~/Scripts/chat-menu.js"></script>
+    @Scripts.Render("~/bundles/chat-menu")
     <!--height equal js-->
-    <script src="~/Scripts/height-equal.js"></script>
-    @*<script src="../assets/js/height-equal.js"></script>*@
+    @Scripts.Render("~/bundles/height-equal")
     <!-- lazyload js-->
-    @*<script src="../assets/js/lazysizes.min.js"></script>*@
+    @Scripts.Render("~/bundles/lazysizes")
     <!--script admin-->
-    @*<script src="../assets/js/admin-script.js"></script>*@
-    <script src="~/Scripts/admin-script.js"></script>
+    @Scripts.Render("~/bundles/admin-script")
+
 </body>
 </html>
