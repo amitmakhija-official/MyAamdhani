@@ -16,10 +16,15 @@
     <!-- Font Awesome-->
     @Styles.Render("~/bundles/css")
     @Styles.Render("~/bundles/themify")
-    <!-- Prism css-->
+    <link href="~/Content/footable/footable.core.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.0/css/dropify.css" integrity="sha512-qUMSYO847N+tb7z309XwrpigVtsY7zyMG0dVhZqhJK5hlXVoNqOXhIRKDFNcNBCFF8nbfcCVNOhKiULMU9lFlA==" crossorigin="anonymous" />
+
+    <link href="~/Content/icheck/skins/flat/red.css" rel="stylesheet" />
+    <link href="~/Content/icheck/skins/flat/_all.css" rel="stylesheet" />
+     <!-- Prism css-->
     @Styles.Render("~/bundles/prism")
     <!-- Chartist css -->
-    @Styles.Render("~/bundles/chartist")
+    @*@Styles.Render("~/bundles/chartist")*@
     <!-- App css-->
    @Styles.Render("~/bundles/admin")
 </head>
@@ -334,7 +339,7 @@
     <!-- Sidebar jquery-->
     @Scripts.Render("~/bundles/menu")
     @Scripts.Render("~/bundles/sidebar")
-    @Scripts.Render("~/bundles/chart")
+    @*@Scripts.Render("~/bundles/chart")*@
     <!-- lazyload js-->
     @Scripts.Render("~/bundles/lazysizes")
     <!--copycode js-->
@@ -354,9 +359,13 @@
     <!--height equal js-->
     @Scripts.Render("~/bundles/height-equal")
     <!-- lazyload js-->
-    @Scripts.Render("~/bundles/lazysizes")
+            @Scripts.Render("~/bundles/lazysizes")
+            <script src="~/Scripts/footable/footable.all.min.js"></script>
+        <script src="~/Scripts/icheck/icheck.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.0/js/dropify.min.js" integrity="sha512-5lwTm2lltwGLuFpI0jqcCxGS4Y7cJn3ylGb0BTJty5xGt2lqT9/efUhQV1dyOXpQ/PbvmE6EUP+zRIPGiccFng==" crossorigin="anonymous"></script>
     <!--script admin-->
     @Scripts.Render("~/bundles/admin-script")
 
+    @RenderSection("scripts", required: false)
 </body>
 </html>
