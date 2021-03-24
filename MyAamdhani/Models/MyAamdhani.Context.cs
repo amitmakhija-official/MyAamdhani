@@ -44,8 +44,9 @@ namespace MyAamdhani.Models
         public virtual DbSet<tbl_Fabric> tbl_Fabric { get; set; }
         public virtual DbSet<tbl_Pattern> tbl_Pattern { get; set; }
         public virtual DbSet<tbl_SareeBorder> tbl_SareeBorder { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<tbl_Color> tbl_Color { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<tbl_ICRWithProduct> tbl_ICRWithProduct { get; set; }
         public virtual DbSet<ProductColor> ProductColors { get; set; }
         public virtual DbSet<tbl_RelationsProductColor> tbl_RelationsProductColor { get; set; }
     

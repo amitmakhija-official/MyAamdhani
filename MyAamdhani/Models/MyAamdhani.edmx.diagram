@@ -23,10 +23,9 @@
         <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Fabric" Width="1.5" PointX="11.375" PointY="11.75" />
         <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Pattern" Width="1.5" PointX="12.375" PointY="0.75" />
         <EntityTypeShape EntityType="MyAamdhaniModel.tbl_SareeBorder" Width="1.5" PointX="13.375" PointY="3.75" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.Product" Width="1.5" PointX="7.375" PointY="10.75" />
         <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Color" Width="1.5" PointX="13.375" PointY="6.75" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.ProductColor" Width="1.5" PointX="13.75" PointY="10.75" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_RelationsProductColor" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.Product" Width="1.5" PointX="7.375" PointY="10.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_ICRWithProduct" Width="1.5" PointX="13.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
