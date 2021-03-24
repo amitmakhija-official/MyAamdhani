@@ -12,14 +12,14 @@ namespace MyAamdhani.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class ProductColor
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDelete { get; set; }
+        public int ProductId { get; set; }
+        public string ColorCode { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
-        public string ImagePath { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDelete { get; set; }
     }
 }

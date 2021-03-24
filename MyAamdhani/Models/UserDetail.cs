@@ -28,6 +28,7 @@ namespace MyAamdhani.Models
         public bool IsDelete { get; set; }
         public System.DateTime DateAdded { get; set; }
         public System.DateTime DateModified { get; set; }
+        public string Mobile { get; set; }
     
         public virtual User User { get; set; }
     }

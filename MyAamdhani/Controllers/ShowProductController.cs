@@ -12,46 +12,49 @@ namespace MyAamdhani.Controllers
     public class ShowProductController : BaseController
     {
         // GET: ShowProduct
+       
+        [HttpGet]
         public ActionResult Index()
         {
-            var dataModel = new SubCategoryViewModel();
+            var dataModel = new CategoryViewModel();
             try
             {
-                var subcategoryItems = Db.SubCategories
-                    .Where(x => x.CategoryId == (int)Globals.Category.Women_Ethnic_Wear && !x.IsDelete && x.IsActive)
+                var categories = Db.Categories
+                    .Where(x =>!x.IsDelete && x.IsActive)
                     .OrderBy(x => x.Name);
-                var list = new List<SubCategoryItems>();
-                foreach (var items in subcategoryItems)
+                var list = new List<CategoryItems>();
+                foreach (var items in categories)
                 {
-                    var data = new SubCategoryItems
+                    var data = new CategoryItems
                     {
                         DateAdded = items.DateAdded.GetValueOrDefault(),
-                        SubCategoryId = items.Id,
+                        CategoryId = items.Id,
                         Name = items.Name,
-                        ImagePath =    items.ImagePath
+                        ImagePath = items.ImagePath
 
                     };
                     list.Add(data);
                 }
 
                 dataModel.Title = Globals.Category.Women_Ethnic_Wear.DisplayName();
-                dataModel.SubcategoryItemList = list;
+                dataModel.CategoryItems = list;
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Log.Debug(e);
             }
             return View(dataModel);
         }
+        
         [HttpGet]
-        public ActionResult ProductGallery(int subCatId)
+        public ActionResult ProductGallery(int catId)
         {
             var dataModel = new SubCategoryViewModel();
             try
             {
-                var Products = Db.Products.Where(x => x.SubCategoryId == subCatId).OrderBy(x => x.Name).ToList();
-                var subCategory = Db.SubCategories.FirstOrDefault(x => x.Id == subCatId);
+                var Products = Db.Products.Where(x => x.CategoryId == catId).OrderBy(x => x.Name).ToList();
+                var subCategory = Db.SubCategories.FirstOrDefault(x => x.CategoryId == catId);
                     dataModel.Title= !ReferenceEquals(subCategory,null)? Db.Categories.FirstOrDefault(x => x.Id == subCategory.CategoryId).Name:"";
                 if (Products.Count > 0)
                 {
@@ -69,6 +72,7 @@ namespace MyAamdhani.Controllers
                                 SubCategoryId = product.SubCategoryId,
                                 ProductId = product.Id,
                                 Name = product.Name,
+                                ProductUniqueKey = product.UniqueKey,
                                ImagePath = "//placehold.it/150x60"
                             };
                             list.Add(data);
@@ -84,6 +88,56 @@ namespace MyAamdhani.Controllers
             }
             return View(dataModel);
         }
+        public ActionResult ShowCategory(int subCatId)
+        {
+            var dataModel = new SubCategoryViewModel();
+            try
+            {
+                var Products = Db.Products.Where(x => x.SubCategoryId == subCatId).OrderBy(x => x.Name).ToList();
+                var list = new List<SubCategoryItems>();
+                foreach (var items in Products)
+                {
+                    var data = new SubCategoryItems
+                    {
+                        DateAdded = items.DateAdded.GetValueOrDefault(),
+                        SubCategoryId = items.Id,
+                        Name = items.Name,
+                        ImagePath = items.Image1,
+                        ProductUniqueKey = items.UniqueKey
+                    };
+                    list.Add(data);
+                }
+                dataModel.Title = Globals.Category.Women_Ethnic_Wear.DisplayName();
+                dataModel.SubcategoryItemList = list;
 
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+            }
+            return View(dataModel);
+        }
+        [HttpGet]
+        public ActionResult ProductDetails(string prodKey)
+        {
+            var Details = new ProductDetails();
+            try
+            {
+                var product = Db.Products.FirstOrDefault(x => x.UniqueKey == prodKey && x.IsActive && !x.IsDelete);
+                if (!ReferenceEquals(product,null))
+                {
+                    Details.ProductUniqueKey = product.UniqueKey;
+                    Details.ImagePath = product.Image1;
+                    Details.DateAdded = product.DateAdded.GetValueOrDefault();
+                    Details.ProductName = product.Name;
+                    Details.Price = product.Price.GetValueOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+            }
+            return View(Details);
+        }
     }
 }

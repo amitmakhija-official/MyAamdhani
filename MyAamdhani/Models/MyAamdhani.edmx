@@ -15,6 +15,7 @@
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -75,6 +76,18 @@
           <Property Name="Roles" Type="nvarchar" MaxLength="250" />
           <Property Name="ViewInRights" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductColor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ColorCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductRating">
           <Key>
@@ -158,11 +171,11 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" />
           <Property Name="CategoryId" Type="int" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="1000" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
-          <Property Name="ImagePath" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="tbl_ClothStyle">
           <Key>
@@ -209,6 +222,18 @@
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="DateModified" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_RelationsProductColor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ColorCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ColorName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
         <EntityType Name="tbl_SareeBorder">
           <Key>
             <PropertyRef Name="SareeBorder_Id" />
@@ -233,6 +258,7 @@
           <Property Name="ImageLogo" Type="varchar(max)" />
           <Property Name="DOB" Type="date" />
           <Property Name="Gender" Type="varchar" MaxLength="5" />
+          <Property Name="Mobile" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
@@ -244,10 +270,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="250" />
-          <Property Name="Password" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="500" />
           <Property Name="MenuRights" Type="varchar" MaxLength="500" />
           <Property Name="UserType" Type="int" Nullable="false" />
           <Property Name="ForgotPasswordCode" Type="varchar" MaxLength="100" />
@@ -265,6 +290,7 @@
           <Property Name="WebFirebaseTokenId" Type="nvarchar" MaxLength="1000" />
           <Property Name="LoginOTPCode" Type="nvarchar" MaxLength="50" />
           <Property Name="LoginOTPValidDate" Type="datetime" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <EntityType Name="ValidateLogin">
           <Key>
@@ -279,7 +305,7 @@
           <Property Name="LogoutReason" Type="varchar" MaxLength="800" />
           <Property Name="Type" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__UserDetai__UserI__1273C1CD">
+        <Association Name="FK__UserDetai__UserI__398D8EEE">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -291,6 +317,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Sp_CheckAvailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Sp_GetAllProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+          <Parameter Name="WhereQuery" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="SortQuery" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="RowFrom" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="RowTo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Sp_UserManage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserName" Type="nvarchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserType" Type="nvarchar" Mode="In" />
+          <Parameter Name="MenuRights" Type="nvarchar" Mode="In" />
+          <Parameter Name="ManageType" Type="nvarchar" Mode="In" />
+          <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="FatherName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ImageLogo" Type="nvarchar" Mode="In" />
+          <Parameter Name="DOB" Type="datetime" Mode="In" />
+          <Parameter Name="Gender" Type="nvarchar" Mode="In" />
+          <Parameter Name="Address" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="MyAamdhaniModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
@@ -298,6 +352,7 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogingHistory" EntityType="Self.LogingHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuTab" EntityType="Self.MenuTab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductColor" EntityType="Self.ProductColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductRating" EntityType="Self.ProductRating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SEO" EntityType="Self.SEO" Schema="dbo" store:Type="Tables" />
@@ -307,11 +362,12 @@
           <EntitySet Name="tbl_Color" EntityType="Self.tbl_Color" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Fabric" EntityType="Self.tbl_Fabric" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Pattern" EntityType="Self.tbl_Pattern" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RelationsProductColor" EntityType="Self.tbl_RelationsProductColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_SareeBorder" EntityType="Self.tbl_SareeBorder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetail" EntityType="Self.UserDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ValidateLogin" EntityType="Self.ValidateLogin" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__UserDetai__UserI__1273C1CD" Association="Self.FK__UserDetai__UserI__1273C1CD">
+          <AssociationSet Name="FK__UserDetai__UserI__398D8EEE" Association="Self.FK__UserDetai__UserI__398D8EEE">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserDetail" EntitySet="UserDetail" />
           </AssociationSet>
@@ -330,6 +386,7 @@
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="ImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -461,16 +518,17 @@
           <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="Self.FK__UserDetai__UserI__1273C1CD" FromRole="UserDetail" ToRole="Users" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="MenuRights" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="UserType" Type="Int32" Nullable="false" />
           <Property Name="ForgotPasswordCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -539,6 +597,36 @@
           <EntitySet Name="tbl_SareeBorder" EntityType="MyAamdhaniModel.tbl_SareeBorder" />
           <EntitySet Name="Products" EntityType="MyAamdhaniModel.Product" />
           <EntitySet Name="tbl_Color" EntityType="MyAamdhaniModel.tbl_Color" />
+          <EntitySet Name="ProductColors" EntityType="MyAamdhaniModel.ProductColor" />
+          <EntitySet Name="tbl_RelationsProductColor" EntityType="MyAamdhaniModel.tbl_RelationsProductColor" />
+          <FunctionImport Name="Sp_CheckAvailability" ReturnType="Collection(MyAamdhaniModel.Sp_CheckAvailability_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_GetAllProduct">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="WhereQuery" Mode="In" Type="String" />
+            <Parameter Name="SortQuery" Mode="In" Type="String" />
+            <Parameter Name="RowFrom" Mode="In" Type="String" />
+            <Parameter Name="RowTo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_UserManage">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="UserType" Mode="In" Type="String" />
+            <Parameter Name="MenuRights" Mode="In" Type="String" />
+            <Parameter Name="ManageType" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="FatherName" Mode="In" Type="String" />
+            <Parameter Name="ImageLogo" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_ClothStyle">
           <Key>
@@ -633,6 +721,54 @@
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="ProductColor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ColorCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_RelationsProductColor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ColorCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ColorName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <ComplexType Name="Sp_CheckAvailability_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="MenuRights" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="UserType" Nullable="false" />
+          <Property Type="String" Name="ForgotPasswordCode" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="ForgotPasswordTime" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BranchId" Nullable="true" />
+          <Property Type="Int32" Name="CompanyId" Nullable="false" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsDelete" Nullable="false" />
+          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateModified" Nullable="false" Precision="23" />
+          <Property Type="String" Name="OTPCode" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="IsOTPVerified" Nullable="true" />
+          <Property Type="DateTime" Name="OTPVerifiedValidDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="FirebaseTokenId" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="WebFirebaseTokenId" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="LoginOTPCode" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="LoginOTPValidDate" Nullable="true" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -642,6 +778,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="MyAamdhaniModel.Category">
               <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -774,6 +911,7 @@
           <EntitySetMapping Name="UserDetails">
             <EntityTypeMapping TypeName="MyAamdhaniModel.UserDetail">
               <MappingFragment StoreEntitySet="UserDetail">
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -932,6 +1070,62 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductColors">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.ProductColor">
+              <MappingFragment StoreEntitySet="ProductColor">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="ColorCode" ColumnName="ColorCode" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_RelationsProductColor">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.tbl_RelationsProductColor">
+              <MappingFragment StoreEntitySet="tbl_RelationsProductColor">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ColorName" ColumnName="ColorName" />
+                <ScalarProperty Name="ColorCode" ColumnName="ColorCode" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_CheckAvailability" FunctionName="MyAamdhaniModel.Store.Sp_CheckAvailability">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyAamdhaniModel.Sp_CheckAvailability_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="MenuRights" ColumnName="MenuRights" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="ForgotPasswordCode" ColumnName="ForgotPasswordCode" />
+                <ScalarProperty Name="ForgotPasswordTime" ColumnName="ForgotPasswordTime" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="OTPCode" ColumnName="OTPCode" />
+                <ScalarProperty Name="IsOTPVerified" ColumnName="IsOTPVerified" />
+                <ScalarProperty Name="OTPVerifiedValidDate" ColumnName="OTPVerifiedValidDate" />
+                <ScalarProperty Name="FirebaseTokenId" ColumnName="FirebaseTokenId" />
+                <ScalarProperty Name="WebFirebaseTokenId" ColumnName="WebFirebaseTokenId" />
+                <ScalarProperty Name="LoginOTPCode" ColumnName="LoginOTPCode" />
+                <ScalarProperty Name="LoginOTPValidDate" ColumnName="LoginOTPValidDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_GetAllProduct" FunctionName="MyAamdhaniModel.Store.Sp_GetAllProduct" />
+          <FunctionImportMapping FunctionImportName="Sp_UserManage" FunctionName="MyAamdhaniModel.Store.Sp_UserManage" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
