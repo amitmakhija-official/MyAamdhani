@@ -319,10 +319,10 @@ namespace MyAamdhani.Areas.Admin.Controllers
                                 ColorId = ColorArray[j].ToString().Split('_')[0] != "" || ColorArray[j].ToString().Split('_')[0] != null ? Convert.ToInt32(ColorArray[j].ToString().Split('_')[0]) : 0;
                                 ColorName = ColorArray[j].ToString().Split('_')[1] != "" || ColorArray[j].ToString().Split('_')[1] != "Select Color" || ColorArray[j].ToString().Split('_')[0] != null ? Convert.ToString(ColorArray[j].ToString().Split('_')[1]) : "";
                                 var ProductImageColor = fileName + "_" + ColorId;
-                                var icr = new tbl_ICRWithProduct
-                                {
+                                //var icr = new tbl_ICRWithProduct
+                                //{
 
-                                };
+                                //};
                             }
                         }
                     }

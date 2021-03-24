@@ -23,12 +23,12 @@ namespace MyAamdhani.Models
         public string ImageLogo { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public string Gender { get; set; }
+        public string Mobile { get; set; }
         public string Address { get; set; }
         public bool IsActive { get; set; }
         public bool IsDelete { get; set; }
         public System.DateTime DateAdded { get; set; }
         public System.DateTime DateModified { get; set; }
-        public string Mobile { get; set; }
     
         public virtual User User { get; set; }
     }

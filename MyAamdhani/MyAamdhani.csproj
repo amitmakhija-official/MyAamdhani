@@ -89,6 +89,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -268,11 +269,17 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductColor.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductEntityModel.cs" />
     <Compile Include="Models\ProductRating.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SEO.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sp_CheckAvailability_Result.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\State.cs">
@@ -294,6 +301,9 @@
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_Pattern.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_RelationsProductColor.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_SareeBorder.cs">
@@ -3533,6 +3543,7 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Manage.cshtml" />
     <EntityDeploy Include="Models\MyAamdhani.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MyAamdhani.Designer.cs</LastGenOutput>
@@ -3540,7 +3551,6 @@
     <Content Include="Models\MyAamdhani.edmx.diagram">
       <DependentUpon>MyAamdhani.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\Product\Manage.cshtml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -3581,6 +3591,9 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\ShowProduct\Index.cshtml" />
     <Content Include="Views\ShowProduct\ProductGallery.cshtml" />
+    <Content Include="Views\ShowProduct\ShowCategory.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\ShowProduct\ProductDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3588,6 +3601,7 @@
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CustomValidators\" />
+    <Folder Include="Views\ssee\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

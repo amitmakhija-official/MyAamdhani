@@ -33,22 +33,22 @@ namespace MyAamdhani.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<LogingHistory> LogingHistories { get; set; }
         public virtual DbSet<MenuTab> MenuTabs { get; set; }
+        public virtual DbSet<ProductColor> ProductColors { get; set; }
         public virtual DbSet<ProductRating> ProductRatings { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<SEO> SEOs { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<SubCategory> SubCategories { get; set; }
+        public virtual DbSet<tbl_ClothStyle> tbl_ClothStyle { get; set; }
+        public virtual DbSet<tbl_Color> tbl_Color { get; set; }
+        public virtual DbSet<tbl_Fabric> tbl_Fabric { get; set; }
+        public virtual DbSet<tbl_ICRWithProduct> tbl_ICRWithProduct { get; set; }
+        public virtual DbSet<tbl_Pattern> tbl_Pattern { get; set; }
+        public virtual DbSet<tbl_RelationsProductColor> tbl_RelationsProductColor { get; set; }
+        public virtual DbSet<tbl_SareeBorder> tbl_SareeBorder { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ValidateLogin> ValidateLogins { get; set; }
-        public virtual DbSet<tbl_ClothStyle> tbl_ClothStyle { get; set; }
-        public virtual DbSet<tbl_Fabric> tbl_Fabric { get; set; }
-        public virtual DbSet<tbl_Pattern> tbl_Pattern { get; set; }
-        public virtual DbSet<tbl_SareeBorder> tbl_SareeBorder { get; set; }
-        public virtual DbSet<tbl_Color> tbl_Color { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<tbl_ICRWithProduct> tbl_ICRWithProduct { get; set; }
-        public virtual DbSet<ProductColor> ProductColors { get; set; }
-        public virtual DbSet<tbl_RelationsProductColor> tbl_RelationsProductColor { get; set; }
     
         public virtual ObjectResult<Sp_CheckAvailability_Result> Sp_CheckAvailability(string email, string phoneNumber)
         {

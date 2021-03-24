@@ -53,12 +53,12 @@ namespace MyAamdhani.Controllers
             var dataModel = new SubCategoryViewModel();
             try
             {
-                var Products = Db.Products.Where(x => x.CategoryId == catId).OrderBy(x => x.Name).ToList();
+                var products = Db.Products.Where(x => x.CategoryId == catId).OrderBy(x => x.Name).ToList();
                 var subCategory = Db.SubCategories.FirstOrDefault(x => x.CategoryId == catId);
                     dataModel.Title= !ReferenceEquals(subCategory,null)? Db.Categories.FirstOrDefault(x => x.Id == subCategory.CategoryId).Name:"";
-                if (Products.Count > 0)
+                if (products.Count() > 0)
                 {
-                    var distinctProducts = Products.Select(x => new  { x.Id,x.Type}).Distinct().ToList();
+                    var distinctProducts = products.Select(x => new  { x.Id,x.Type}).Distinct().ToList();
                     var list = new List<SubCategoryItems>();
                     foreach (var item in distinctProducts)
                     {
@@ -72,7 +72,7 @@ namespace MyAamdhani.Controllers
                                 SubCategoryId = product.SubCategoryId,
                                 ProductId = product.Id,
                                 Name = product.Name,
-                                ProductUniqueKey = product.UniqueKey,
+                                ProductUniqueKey = product.UniqueId.ToString(),
                                ImagePath = "//placehold.it/150x60"
                             };
                             list.Add(data);
@@ -102,8 +102,8 @@ namespace MyAamdhani.Controllers
                         DateAdded = items.DateAdded.GetValueOrDefault(),
                         SubCategoryId = items.Id,
                         Name = items.Name,
-                        ImagePath = items.Image1,
-                        ProductUniqueKey = items.UniqueKey
+                        ImagePath = "//placehold.it/150x60",
+                        ProductUniqueKey = items.UniqueId.ToString()
                     };
                     list.Add(data);
                 }
@@ -123,14 +123,14 @@ namespace MyAamdhani.Controllers
             var Details = new ProductDetails();
             try
             {
-                var product = Db.Products.FirstOrDefault(x => x.UniqueKey == prodKey && x.IsActive && !x.IsDelete);
+                var product = Db.Products.FirstOrDefault(x => x.UniqueId.ToString() == prodKey && x.IsActive==true && !x.IsDelete==false);
                 if (!ReferenceEquals(product,null))
                 {
-                    Details.ProductUniqueKey = product.UniqueKey;
-                    Details.ImagePath = product.Image1;
+                    Details.ProductUniqueKey = product.UniqueId.ToString();
+                    Details.ImagePath = "//placehold.it/150x60";
                     Details.DateAdded = product.DateAdded.GetValueOrDefault();
                     Details.ProductName = product.Name;
-                    Details.Price = product.Price.GetValueOrDefault();
+                    Details.Price = product.PricePerPiece.GetValueOrDefault();
                 }
             }
             catch (Exception e)
