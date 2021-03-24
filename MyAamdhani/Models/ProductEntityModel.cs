@@ -45,8 +45,22 @@ namespace MyAamdhani.Models
         {
             try
             {
-                var Pattern = db.tbl_Pattern.Select(s => new { PatternId = s.Pattern_Id, PatternName = s.Pattern_Name}).ToList();
+                var Pattern = db.tbl_Pattern.Select(s => new { PatternId = s.Pattern_Id, PatternName = s.Pattern_Name }).ToList();
                 return Pattern;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+        public object GetColor()
+        {
+            try
+            {
+                var Color = db.tbl_Color.Select(s => new { ColorId = s.Color_Id, ColorName = s.Color_Name }).ToList();
+                return Color;
             }
             catch (Exception ex)
             {
@@ -69,6 +83,34 @@ namespace MyAamdhani.Models
             }
         }
 
+        public object GetCategory()
+        {
+            try
+            {
+                var Category = db.Categories.Select(s => new { CategoryId = s.Id, CategoryName = s.Name }).ToList();
+                return Category;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+        public object GetSubCategory()
+        {
+            try
+            {
+                var SubCategory = db.SubCategories.Select(s => new { SubCategoryId = s.Id, SubCategoryName = s.Name }).ToList();
+                return SubCategory;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+
         public object GetStyle()
         {
             try
@@ -83,9 +125,16 @@ namespace MyAamdhani.Models
             }
         }
 
+        
+
         public List<SelectListItem> GetLength()
         {
-            List<SelectListItem> items = new List<SelectListItem>();
+            var items = new List<SelectListItem>()
+    {
+        new SelectListItem() { Text = "Item 1", Value = "#" },
+        new SelectListItem() { Text = "Item 2", Value = "#" },
+    };
+
             items.Add(new SelectListItem
             {
                 Text = "5.25 m",
@@ -102,6 +151,37 @@ namespace MyAamdhani.Models
                 Value = "3"
             });
             return items;
+        }
+
+        public DataTable ManageProduct(DataTable table)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection())
+                {
+                    SqlCommand cmd = new SqlCommand("Sp_ProductManage", con);
+                    SqlParameter param = new SqlParameter("@ProductData", SqlDbType.Structured)
+                    {
+                        TypeName = "dbo.TT_Product",
+                        Value = (table.Rows.Count > 0 ? table : null)
+                    };
+                    cmd.Parameters.Add(param);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = cmd;
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    con.Close();
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public List<SelectAllProduct> GetProduct(int skip, int take, string whereQuery, string SortQuery)
@@ -128,13 +208,6 @@ namespace MyAamdhani.Models
                     }
                     connection.Close();
                 }
-                //SqlParameter[] param = new SqlParameter[5];
-                //param[0] = new SqlParameter("@ProductId", 0);
-                //param[1] = new SqlParameter("@WhereQuery", whereQuery);
-                //param[2] = new SqlParameter("@SortQuery", SortQuery);
-                //param[3] = new SqlParameter("@RowFrom", skip + 1);
-                //param[4] = new SqlParameter("@RowTo", skip + take);
-                //dt = DBHelper.BindDataTableWithParams(DBHelper.LoadStoredProcedure(db, "Sp_GetAllProducts"), param);
                 List<SelectAllProduct> productList = new List<SelectAllProduct>();
                 productList = new List<SelectAllProduct>(from DataRow dr in dt.Rows
                                                          select new SelectAllProduct()

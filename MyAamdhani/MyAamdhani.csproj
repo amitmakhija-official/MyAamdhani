@@ -290,6 +290,9 @@
     <Compile Include="Models\tbl_Fabric.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_ICRWithProduct.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_Pattern.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>

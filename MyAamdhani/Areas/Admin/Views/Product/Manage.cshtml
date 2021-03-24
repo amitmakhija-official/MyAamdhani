@@ -58,6 +58,7 @@
         <link href="~/Content/admin.css" rel="stylesheet" />
     </head>
     <body>
+
         <!-- page-wrapper Start-->
         <div class="page-wrapper">
             <!-- Page Header Start-->
@@ -380,48 +381,56 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-form-label"><span>*</span> Categories</label>
-                                                <select class="custom-select" required="">
-                                                    <option value="">--Select--</option>
-                                                    <option value="1">eBooks</option>
-                                                    <option value="2">Graphic Design</option>
-                                                    <option value="3">3D Impact</option>
-                                                    <option value="4">Application</option>
-                                                    <option value="5">Websites</option>
-                                                </select>
+                                                <label class="d-block" for="Category_Id">
+                                                    @Html.DropDownList("Select Category", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "Select Category", new { @class = "form-control select2", @id = "Category_Id", @style = "width:223px" })
+
+                                                </label>
+                                                @*<label class="col-form-label"><span>*</span> Categories</label>
+                                                    <select class="custom-select" required="">
+                                                        <option value="">--Select--</option>
+                                                        <option value="1">eBooks</option>
+                                                        <option value="2">Graphic Design</option>
+                                                        <option value="3">3D Impact</option>
+                                                        <option value="4">Application</option>
+                                                        <option value="5">Websites</option>
+                                                    </select>*@
                                             </div>
 
 
                                             <div class="form-group">
-                                                <label class="col-form-label"><span>*</span> Sub-Categories</label>
-                                                <select class="custom-select" required="">
-                                                    <option value="">--Select--</option>
-                                                    <option value="1">eBooks</option>
-                                                    <option value="2">Graphic Design</option>
-                                                    <option value="3">3D Impact</option>
-                                                    <option value="4">Application</option>
-                                                    <option value="5">Websites</option>
-                                                </select>
+                                                <label class="d-block" for="SubCategory_Id">
+                                                    @Html.DropDownList("Select Sub-Category", (IEnumerable<SelectListItem>)ViewBag.SubCategoryList, "Select Sub-Category", new { @class = "form-control select2", @id = "SubCategory_Id", @style = "width:223px" })
+
+                                                </label>
+                                                @*<label class="col-form-label"><span>*</span> Sub-Categories</label>
+                                                    <select class="custom-select" required="">
+                                                        <option value="">--Select--</option>
+                                                        <option value="1">eBooks</option>
+                                                        <option value="2">Graphic Design</option>
+                                                        <option value="3">3D Impact</option>
+                                                        <option value="4">Application</option>
+                                                        <option value="5">Websites</option>
+                                                    </select>*@
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-form-label">Sort Summary</label>
-                                                <textarea rows="5" cols="12"></textarea>
+                                                <textarea rows="5" cols="12" id="product_Description" class="form-control" style="max-width:100%;resize:none;height:85px"></textarea>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label class="col-form-label"><span>*</span> Status</label>
-                                                <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
-                                                    <label class="d-block" for="edo-ani">
-                                                        <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani">
-                                                        Active
-                                                    </label>
-                                                    <label class="d-block" for="edo-ani1">
-                                                        <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani">
-                                                        InActive
-                                                    </label>
-                                                </div>
-                                            </div>
+                                            @*<div class="form-group">
+                                                    <label class="col-form-label"><span>*</span> Status</label>
+                                                    <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
+                                                        <label class="d-block" for="edo-ani">
+                                                            <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani">
+                                                            Active
+                                                        </label>
+                                                        <label class="d-block" for="edo-ani1">
+                                                            <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani">
+                                                            InActive
+                                                        </label>
+                                                    </div>
+                                                </div>*@
 
                                         </div>
                                     </div>
@@ -436,16 +445,16 @@
                                     <div class="card-body">
                                         <div class="digital-add needs-validation">
                                             <div class="form-group">
-                                                <label for="txt_productName" class="col-form-label pt-0"><span>*</span> Min. sets to order</label>
+                                                <label for="txt_minOrder" class="col-form-label pt-0"><span>*</span> Min. sets to order</label>
                                                 <input class="form-control" id="txt_minOrder" type="text" required="">
                                             </div>
                                             <div class="form-group">
-                                                <label for="txt_priceperPrice" class="col-form-label pt-0"><span>*</span> Price per piece(Min 150Rs.)</label>
-                                                <input class="form-control" id="txt_priceperPrice" type="text" required="">
+                                                <label for="txt_priceperPiece" class="col-form-label pt-0"><span>*</span> Price per piece(Min 150Rs.)</label>
+                                                <input class="form-control" id="txt_priceperPiece" type="text" required="">
                                             </div>
                                             <div class="form-group">
-                                                <label for="txt_mrpperPrice" class="col-form-label pt-0"><span>*</span> MRP per piece</label>
-                                                <input class="form-control" id="txt_mrpperPrice" type="text" required="">
+                                                <label for="txt_mrpperPiece" class="col-form-label pt-0"><span>*</span> MRP per piece</label>
+                                                <input class="form-control" id="txt_mrpperPiece" type="text" required="">
                                             </div>
                                             <div class="form-group">
                                                 <label for="txt_availableQuantity" class="col-form-label pt-0"><span>*</span> Available Quantity</label>
@@ -508,23 +517,51 @@
 
                             <div class="col-xl-12">
                                 <div class="card">
+                                    @*<div class="card-header">
+                                            <h5>No. of Color</h5>
+                                        </div>*@
+                                    <div class="card-body">
+                                        <div class="digital-add needs-validation">
+                                            <label class="col-form-label"><span style="color:red">*</span> No. of Color</label>
+                                            <div class="form-group">
+                                                <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
+                                                    <label class="d-block" for="NoColor">
+                                                        <select id="NoColor" style="width:223px;" onchange="showImages()">
+                                                            <option value="0">Please select</option>
+                                                            @for (int i = 1; i <= 12; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        </select>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-12">
+
+                                <div class="card">
                                     <div class="card-header">
                                         <h5>Images</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="digital-add needs-validation">
                                             <label class="col-form-label"><span style="color:red">*</span> Images Upload</label>
+
                                             <div class="form-group">
                                                 <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
                                                     <label class="d-block" for="imgupload1">
-                                                        <input type="file" class="dropify" id="imgupload1" data-default-file="" />                                                                                                             
+                                                        <input type="file" class="dropify" id="imgupload1" data-default-file="" />
                                                     </label>
 
-                                                     
-                                                   
+
+
                                                     <label class="d-block" for="imgupload2">
                                                         <input type="file" class="dropify" id="imgupload2" data-default-file="" />
-                                                    </label>                                                    
+                                                    </label>
                                                     <label class="d-block" for="imgupload3">
                                                         <input type="file" class="dropify" id="imgupload3" data-default-file="" />
                                                     </label>
@@ -533,26 +570,25 @@
                                                     </label>
                                                 </div>
                                             </div>
+
                                             <div class="form-group">
-                                                <label class="d-block" id="Color_Id1">
-                                                    Color
-                                                    @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.FabricList, "Select Color", new { @class = "form-control select2", @id = "Color_Id1" })
-                                                </label>
-                                                <label class="d-block" for="Color_Id2">
-                                                    <span>*</span> Color
-                                                    @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.FabricList, "Select Color", new { @class = "form-control select2", @id = "Color_Id2" })
-                                                </label>
-                                                <label class="d-block" id="Color_Id3">
-                                                    <span>*</span> Color
-                                                    @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.FabricList, "Select Color", new { @class = "form-control select2", @id = "Color_Id3" })
-                                                </label>
-                                                <label class="d-block" for="Color_Id4">
-                                                    <span>*</span> Color
-                                                    @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.FabricList, "Select Color", new { @class = "form-control select2", @id = "Color_Id4" })
-                                                </label>
+                                                <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
+                                                    <label class="d-block" for="Color_Id1">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id1", @style = "width:223px" })
+                                                    </label>
+                                                    <label class="d-block" for="Color_Id2">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id2", @style = "width:223px" })
+                                                    </label>
+                                                    <label class="d-block" for="Color_Id3">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id3", @style = "width:223px" })
+                                                    </label>
+                                                    <label class="d-block" for="Color_Id4">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id4", @style = "width:223px" })
+                                                    </label>
+                                                </div>
                                             </div>
-                                           
-                                           
+
+
                                             <div class="form-group">
                                                 <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
                                                     <label class="d-block" for="imgupload5">
@@ -566,6 +602,23 @@
                                                     </label>
                                                     <label class="d-block" for="imgupload8">
                                                         <input type="file" class="dropify" id="imgupload8" data-default-file="" />
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
+                                                    <label class="d-block" for="Color_Id5">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id5", @style = "width:223px" })
+
+                                                    </label>
+                                                    <label class="d-block" for="Color_Id6">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id6", @style = "width:223px" })
+                                                    </label>
+                                                    <label class="d-block" for="Color_Id7">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id7", @style = "width:223px" })
+                                                    </label>
+                                                    <label class="d-block" for="Color_Id8">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id8", @style = "width:223px" })
                                                     </label>
                                                 </div>
                                             </div>
@@ -583,6 +636,23 @@
                                                     </label>
                                                     <label class="d-block" for="imgupload12">
                                                         <input type="file" class="dropify" id="imgupload12" data-default-file="" />
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
+                                                    <label class="d-block" id="Color_Id9">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id9", @style = "width:223px" })
+
+                                                    </label>
+                                                    <label class="d-block" for="Color_Id10">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id10", @style = "width:223px" })
+                                                    </label>
+                                                    <label class="d-block" id="Color_Id11">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id11", @style = "width:223px" })
+                                                    </label>
+                                                    <label class="d-block" for="Color_Id12">
+                                                        @Html.DropDownList("Select Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, "Select Color", new { @class = "form-control select2", @id = "Color_Id12", @style = "width:223px" })
                                                     </label>
                                                 </div>
                                             </div>
@@ -618,22 +688,22 @@
 
                                             <div class="form-group">
                                                 <label class="col-form-label"><span>*</span> Fabrics</label>
-                                                @Html.DropDownList("Select Fabric", (IEnumerable<SelectListItem>)ViewBag.FabricList, "Select Fabric", new { @class = "form-control", @id = "F_Id" })
+                                                -                                               @Html.DropDownList("Select Fabric", (IEnumerable<SelectListItem>)ViewBag.FabricList, "Select Fabric", new { @class = "form-control select2", @id = "F_Id" })
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-form-label"><span>*</span> Pattern</label>
-                                                @Html.DropDownList("Select Pattern", (IEnumerable<SelectListItem>)ViewBag.PatternList, "Select Pattern", new { @class = "form-control", @id = "P_Id" })
+                                                @Html.DropDownList("Select Pattern", (IEnumerable<SelectListItem>)ViewBag.PatternList, "Select Pattern", new { @class = "form-control select2", @id = "P_Id" })
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-form-label"><span>*</span> Saree Border</label>
-                                                @Html.DropDownList("Select Saree Border", (IEnumerable<SelectListItem>)ViewBag.SareeBorderList, "Select Saree Border", new { @class = "form-control", @id = "SB_Id" })
+                                                @Html.DropDownList("Select Saree Border", (IEnumerable<SelectListItem>)ViewBag.SareeBorderList, "Select Saree Border", new { @class = "form-control select2", @id = "SB_Id" })
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-form-label"><span>*</span>  Cloth Style</label>
-                                                @Html.DropDownList("Select Cloth Style", (IEnumerable<SelectListItem>)ViewBag.StyleList, "Select Style", new { @class = "form-control", @id = "CS_Id" })
+                                                @Html.DropDownList("Select Cloth Style", (IEnumerable<SelectListItem>)ViewBag.StyleList, "Select Style", new { @class = "form-control select2", @id = "CS_Id" })
                                             </div>
 
                                         </div>
@@ -651,32 +721,32 @@
 
                                             <div class="form-group">
                                                 <label class="col-form-label"><span>*</span> Occasion</label>
-                                                @Html.DropDownList("Select Occasion", (IEnumerable<SelectListItem>)ViewBag.OccasionTypes, "Select Occasion", new { @class = "form-control", @id = "O_Id" })
+                                                @Html.DropDownList("Select Occasion", (IEnumerable<SelectListItem>)ViewBag.OccasionTypes, "Select Occasion", new { @class = "form-control select2", @id = "O_Id" })
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-form-label"><span>*</span> Packaging Type</label>
-                                                @Html.DropDownList("Select Packing Type", (IEnumerable<SelectListItem>)ViewBag.PackagingTypes, "Select Packing Type", new { @class = "form-control", @id = "PT_Id" })
+                                                @Html.DropDownList("Select Packing Type", (IEnumerable<SelectListItem>)ViewBag.PackagingTypes, "Select Packing Type", new { @class = "form-control select2", @id = "PT_Id" })
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-form-label"><span>*</span> Saree Length</label>
-                                                @Html.DropDownList("Select Saree Length", (IEnumerable<SelectListItem>)ViewBag.SareeLength, "Select Saree Length", new { @class = "form-control", @id = "SLs_Id" })
+                                                @Html.DropDownList("Select Saree Length", (IEnumerable<SelectListItem>)ViewBag.SareeLength, "Select Saree Length", new { @class = "form-control select2", @id = "SL_Id" })
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-form-label"><span>*</span> Blouse Piece</label>
                                                 <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
-                                                    <label class="d-block" for="edo-ani">
-                                                        <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani">
+                                                    <label class="d-block" for="chk_BlouseYes">
+                                                        <input class="radio_animated" id="chk_BlouseYes" type="radio" name="rdo-ani">
                                                         Yes
                                                     </label>
-                                                    <label class="d-block" for="edo-ani1">
-                                                        <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani">
+                                                    <label class="d-block" for="chk_BlouseNo">
+                                                        <input class="radio_animated" id="chk_BlouseNo" type="radio" name="rdo-ani">
                                                         No
                                                     </label>
                                                 </div>
-                                            </div>   
+                                            </div>
 
                                         </div>
                                     </div>
@@ -703,13 +773,12 @@
             </div>
         </div>
         <style type="text/css">
-            .select2-container {
+            /*.select2-container {
                 width:23% !important
+            }*/
+            .select2-selection__clear {
+                display: none;
             }
-            .select2-selection__clear{
-                display:none
-            }
-            
         </style>
 
 
@@ -775,6 +844,7 @@
                 $(".dropify").dropify();
             });
             function showMe() {
+                debugger;
                 //var img1 = $("#imgupload1").get(0).files;
                 //var img1 = $("#imgupload2").get(0).files;
                 //var img1 = $("#imgupload3").get(0).files;
@@ -784,21 +854,54 @@
                 // Create FormData object
                 var fileData = new FormData();
 
+                var tempColorIdArray = new Array();
+
+
+
+
                 // Looping over all files and add it to FormData object
                 for (var k = 1; k <= 12; k++) {
-
                     var fileUpload = $("#imgupload" + k).get(0);
                     var files = fileUpload.files;
-                    fileData.append('', files[0]);
+                    fileData.append('ProductImages', files[0]);
+                }
+                for (var i = 1; i <= 12; i++) {
+                    var colorId = $('#Color_Id' + i).val();
+                    var colorName = $('#Color_Id' + i + ' option:selected').text();
+
+                    tempColorIdArray.push(colorId + '_' + colorName);
 
                 }
+                var ColorIdJoin = tempColorIdArray.join(",");
+                //var ColorNameJoin = tempColorNameArray.join(",");
+                fileData.append("ProductName", $('#txt_productName').val());
+                fileData.append("ProductDescription", $('#product_Description').val());
+                fileData.append("ColorIds", ColorIdJoin);
+                fileData.append("MinOrder", $('#txt_minOrder').val());
+                fileData.append("PricePerPiece", $('#txt_priceperPiece').val());
+                fileData.append("MRPPerPiece", $('#txt_mrpperPiece').val());
+                fileData.append("AvailablaQuantity", $('#txt_availableQuantity').val());
+                fileData.append("HSNCode", $('#txt_hsnCode').val());
+                fileData.append("SKUId", $('#txt_skuId').val());
+                fileData.append("FabricId", $('#F_Id').val());
+                fileData.append("PatternId", $('#P_Id').val());
+                fileData.append("SareeBorderId", $('#SB_Id').val());
+                fileData.append("StyleId", $('#CS_Id').val());
+                fileData.append("Occasion", $('#O_Id option:selected').text());
+                fileData.append("PackageType", $('#PT_Id option:selected').text());
+                fileData.append("SareeLength", $('#SL_Id option:selected').text());
+                fileData.append("CateogryId", $('#Category_Id').val());
+                fileData.append("SubCategoryId", $('#SubCategory_Id').val());
+                fileData.append("chkBlouse", $('#chk_BlouseYes').val());
+
 
                 $.ajax({
-                    url: '/Product/Manage',
+                    url: '@Url.Action("Manage","Product", new { Area = "Admin" })',
                     type: "POST",
                     contentType: false, // Not to set any content header
                     processData: false, // Not to process data
                     data: fileData,
+                    dataType: 'json',
                     success: function (result) {
                         alert(result);
                     },
@@ -819,8 +922,27 @@
                     //maximumSelectionLength: 3
                 });
             })
-            
 
+            function showImages() {
+                var ColorValue = $('#NoColor').val();
+                var formData = new FormData();
+                formData.appen("ColorValue", ColorValue);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ShowDivImages","Product")',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status) {
+                            $('#').html(data.html);
+                        }
+                    }
+
+                });
+            }
 
         </script>
 

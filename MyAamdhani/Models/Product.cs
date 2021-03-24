@@ -17,32 +17,25 @@ namespace MyAamdhani.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public Nullable<int> MinOrder { get; set; }
+        public Nullable<decimal> PricePerPiece { get; set; }
+        public Nullable<decimal> MRPPerPiece { get; set; }
+        public Nullable<int> AvailableQty { get; set; }
+        public string SKUId { get; set; }
+        public string HSNCode { get; set; }
         public Nullable<int> Type { get; set; }
-        public string UniqueKey { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDelete { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<int> CategoryId { get; set; }
         public Nullable<int> SubCategoryId { get; set; }
-        public string Image1 { get; set; }
-        public string Image2 { get; set; }
-        public string Image3 { get; set; }
-        public string Image4 { get; set; }
-        public string Image5 { get; set; }
-        public string Image6 { get; set; }
-        public string Image7 { get; set; }
-        public string Image8 { get; set; }
-        public string Image9 { get; set; }
-        public string Image10 { get; set; }
-        public string Image11 { get; set; }
-        public string Image12 { get; set; }
         public Nullable<System.Guid> UniqueId { get; set; }
         public Nullable<int> FabricId { get; set; }
         public Nullable<int> PatternId { get; set; }
         public Nullable<int> StyleId { get; set; }
         public Nullable<int> SareeBorderId { get; set; }
+        public Nullable<bool> BlousePiece { get; set; }
         public string SareeLength { get; set; }
         public string Occasion { get; set; }
         public string PackagingType { get; set; }

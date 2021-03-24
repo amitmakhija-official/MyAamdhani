@@ -97,32 +97,25 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Price" Type="decimal" Precision="20" Scale="2" />
+          <Property Name="MinOrder" Type="int" />
+          <Property Name="PricePerPiece" Type="decimal" Precision="20" Scale="2" />
+          <Property Name="MRPPerPiece" Type="decimal" Precision="20" Scale="2" />
+          <Property Name="AvailableQty" Type="int" />
+          <Property Name="SKUId" Type="nvarchar" MaxLength="50" />
+          <Property Name="HSNCode" Type="nvarchar" MaxLength="50" />
           <Property Name="Type" Type="int" />
-          <Property Name="UniqueKey" Type="nvarchar" MaxLength="100" />
           <Property Name="DateAdded" Type="datetime" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
           <Property Name="DateModified" Type="datetime" />
           <Property Name="CategoryId" Type="int" />
           <Property Name="SubCategoryId" Type="int" />
-          <Property Name="Image1" Type="nvarchar(max)" />
-          <Property Name="Image2" Type="nvarchar(max)" />
-          <Property Name="Image3" Type="nvarchar(max)" />
-          <Property Name="Image4" Type="nvarchar(max)" />
-          <Property Name="Image5" Type="nvarchar(max)" />
-          <Property Name="Image6" Type="nvarchar(max)" />
-          <Property Name="Image7" Type="nvarchar(max)" />
-          <Property Name="Image8" Type="nvarchar(max)" />
-          <Property Name="Image9" Type="nvarchar(max)" />
-          <Property Name="Image10" Type="nvarchar(max)" />
-          <Property Name="Image11" Type="nvarchar(max)" />
-          <Property Name="Image12" Type="nvarchar(max)" />
           <Property Name="UniqueId" Type="uniqueidentifier" />
           <Property Name="FabricId" Type="int" />
           <Property Name="PatternId" Type="int" />
           <Property Name="StyleId" Type="int" />
           <Property Name="SareeBorderId" Type="int" />
+          <Property Name="BlousePiece" Type="bit" />
           <Property Name="SareeLength" Type="nvarchar" MaxLength="50" />
           <Property Name="Occasion" Type="nvarchar" MaxLength="100" />
           <Property Name="PackagingType" Type="nvarchar" MaxLength="100" />
@@ -193,6 +186,19 @@
           </Key>
           <Property Name="Fabric_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Fabric_Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_ICRWithProduct">
+          <Key>
+            <PropertyRef Name="ProductRelationId" />
+          </Key>
+          <Property Name="ProductRelationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="ColorId" Type="int" />
+          <Property Name="Image" Type="nvarchar" MaxLength="500" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="DateAdded" Type="datetime" />
@@ -306,6 +312,7 @@
           <EntitySet Name="tbl_ClothStyle" EntityType="Self.tbl_ClothStyle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Color" EntityType="Self.tbl_Color" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Fabric" EntityType="Self.tbl_Fabric" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ICRWithProduct" EntityType="Self.tbl_ICRWithProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Pattern" EntityType="Self.tbl_Pattern" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_SareeBorder" EntityType="Self.tbl_SareeBorder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetail" EntityType="Self.UserDetail" Schema="dbo" store:Type="Tables" />
@@ -537,8 +544,9 @@
           <EntitySet Name="tbl_Fabric" EntityType="MyAamdhaniModel.tbl_Fabric" />
           <EntitySet Name="tbl_Pattern" EntityType="MyAamdhaniModel.tbl_Pattern" />
           <EntitySet Name="tbl_SareeBorder" EntityType="MyAamdhaniModel.tbl_SareeBorder" />
-          <EntitySet Name="Products" EntityType="MyAamdhaniModel.Product" />
           <EntitySet Name="tbl_Color" EntityType="MyAamdhaniModel.tbl_Color" />
+          <EntitySet Name="Products" EntityType="MyAamdhaniModel.Product" />
+          <EntitySet Name="tbl_ICRWithProduct" EntityType="MyAamdhaniModel.tbl_ICRWithProduct" />
         </EntityContainer>
         <EntityType Name="tbl_ClothStyle">
           <Key>
@@ -584,43 +592,6 @@
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="20" Scale="2" />
-          <Property Name="Type" Type="Int32" />
-          <Property Name="UniqueKey" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="DateAdded" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
-          <Property Name="CategoryId" Type="Int32" />
-          <Property Name="SubCategoryId" Type="Int32" />
-          <Property Name="Image1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image6" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image7" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image8" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image9" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image10" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image11" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image12" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UniqueId" Type="Guid" />
-          <Property Name="FabricId" Type="Int32" />
-          <Property Name="PatternId" Type="Int32" />
-          <Property Name="StyleId" Type="Int32" />
-          <Property Name="SareeBorderId" Type="Int32" />
-          <Property Name="SareeLength" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Occasion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PackagingType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="tbl_Color">
           <Key>
             <PropertyRef Name="Color_Id" />
@@ -628,6 +599,49 @@
           <Property Name="Color_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Color_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Color_Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MinOrder" Type="Int32" />
+          <Property Name="PricePerPiece" Type="Decimal" Precision="20" Scale="2" />
+          <Property Name="MRPPerPiece" Type="Decimal" Precision="20" Scale="2" />
+          <Property Name="AvailableQty" Type="Int32" />
+          <Property Name="SKUId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HSNCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="SubCategoryId" Type="Int32" />
+          <Property Name="UniqueId" Type="Guid" />
+          <Property Name="FabricId" Type="Int32" />
+          <Property Name="PatternId" Type="Int32" />
+          <Property Name="StyleId" Type="Int32" />
+          <Property Name="SareeBorderId" Type="Int32" />
+          <Property Name="BlousePiece" Type="Boolean" />
+          <Property Name="SareeLength" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Occasion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PackagingType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_ICRWithProduct">
+          <Key>
+            <PropertyRef Name="ProductRelationId" />
+          </Key>
+          <Property Name="ProductRelationId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="ColorId" Type="Int32" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
@@ -881,44 +895,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="MyAamdhaniModel.Product">
-              <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="PackagingType" ColumnName="PackagingType" />
-                <ScalarProperty Name="Occasion" ColumnName="Occasion" />
-                <ScalarProperty Name="SareeLength" ColumnName="SareeLength" />
-                <ScalarProperty Name="SareeBorderId" ColumnName="SareeBorderId" />
-                <ScalarProperty Name="StyleId" ColumnName="StyleId" />
-                <ScalarProperty Name="PatternId" ColumnName="PatternId" />
-                <ScalarProperty Name="FabricId" ColumnName="FabricId" />
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="Image12" ColumnName="Image12" />
-                <ScalarProperty Name="Image11" ColumnName="Image11" />
-                <ScalarProperty Name="Image10" ColumnName="Image10" />
-                <ScalarProperty Name="Image9" ColumnName="Image9" />
-                <ScalarProperty Name="Image8" ColumnName="Image8" />
-                <ScalarProperty Name="Image7" ColumnName="Image7" />
-                <ScalarProperty Name="Image6" ColumnName="Image6" />
-                <ScalarProperty Name="Image5" ColumnName="Image5" />
-                <ScalarProperty Name="Image4" ColumnName="Image4" />
-                <ScalarProperty Name="Image3" ColumnName="Image3" />
-                <ScalarProperty Name="Image2" ColumnName="Image2" />
-                <ScalarProperty Name="Image1" ColumnName="Image1" />
-                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Color">
             <EntityTypeMapping TypeName="MyAamdhaniModel.tbl_Color">
               <MappingFragment StoreEntitySet="tbl_Color">
@@ -929,6 +905,51 @@
                 <ScalarProperty Name="Color_Code" ColumnName="Color_Code" />
                 <ScalarProperty Name="Color_Name" ColumnName="Color_Name" />
                 <ScalarProperty Name="Color_Id" ColumnName="Color_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="PackagingType" ColumnName="PackagingType" />
+                <ScalarProperty Name="Occasion" ColumnName="Occasion" />
+                <ScalarProperty Name="SareeLength" ColumnName="SareeLength" />
+                <ScalarProperty Name="BlousePiece" ColumnName="BlousePiece" />
+                <ScalarProperty Name="SareeBorderId" ColumnName="SareeBorderId" />
+                <ScalarProperty Name="StyleId" ColumnName="StyleId" />
+                <ScalarProperty Name="PatternId" ColumnName="PatternId" />
+                <ScalarProperty Name="FabricId" ColumnName="FabricId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="HSNCode" ColumnName="HSNCode" />
+                <ScalarProperty Name="SKUId" ColumnName="SKUId" />
+                <ScalarProperty Name="AvailableQty" ColumnName="AvailableQty" />
+                <ScalarProperty Name="MRPPerPiece" ColumnName="MRPPerPiece" />
+                <ScalarProperty Name="PricePerPiece" ColumnName="PricePerPiece" />
+                <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ICRWithProduct">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.tbl_ICRWithProduct">
+              <MappingFragment StoreEntitySet="tbl_ICRWithProduct">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductRelationId" ColumnName="ProductRelationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
