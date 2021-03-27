@@ -14,12 +14,13 @@ namespace MyAamdhani.Models
     
     public partial class Category
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public bool IsActive { get; set; }
         public bool IsDelete { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public string ImagePath { get; set; }
+        public Nullable<System.Guid> UniqueId { get; set; }
     }
 }

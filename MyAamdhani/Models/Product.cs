@@ -20,7 +20,6 @@ namespace MyAamdhani.Models
         public Nullable<int> MinOrder { get; set; }
         public Nullable<decimal> PricePerPiece { get; set; }
         public Nullable<decimal> MRPPerPiece { get; set; }
-        public Nullable<int> AvailableQty { get; set; }
         public string SKUId { get; set; }
         public string HSNCode { get; set; }
         public Nullable<int> Type { get; set; }

@@ -50,8 +50,13 @@ namespace MyAamdhani
             bundles.Add(new ScriptBundle("~/bundles/zoom").Include(
                 "~/Scripts/zoom-gallery.js", "~/Scripts/zoom-scripts.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/admin").Include(
-                "~/Scripts/admin-customizer.js", "~/Scripts/admin-reports.js"));
+            //bundles
+            //    .Add(new ScriptBundle("~/bundles/admin").Include(
+            //    "~/Scripts/admin-customizer.js", "~/Scripts/admin-reports.js"));
+            bundles
+                .Add(new ScriptBundle("~/bundles/admin").Include(
+                "~/Scripts/admin-customizer.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/chat-menu").Include(
                 "~/Scripts/chat-menu.js"));
             bundles.Add(new ScriptBundle("~/bundles/datepicker").Include(
@@ -134,7 +139,7 @@ namespace MyAamdhani
                 
             ));
             
-            bundles.Add(new StyleBundle("~/bundles/admin").Include(
+            bundles.Add(new StyleBundle("~/bundles/admincss").Include(
                 "~/Content/admin.css"));
 
             //Chartist css

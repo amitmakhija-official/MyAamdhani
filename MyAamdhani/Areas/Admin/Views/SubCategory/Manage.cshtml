@@ -1,0 +1,127 @@
+﻿@model MyAamdhani.Models.SubCategory
+
+@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutManage.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>
+                            Add Sub Category
+                            <small>MyAamdhani Admin panel</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                        <li class="breadcrumb-item">Digital</li>
+                        <li class="breadcrumb-item active">Add Sub Category</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="row product-adding">
+
+            <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="digital-add needs-validation">
+                                <div class="form-group">
+                                    <label class="d-block" for="Category_Id">
+                                        @Html.DropDownListFor(model =>model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryList, "Select Sub Category", new { @class = "form-control" })
+
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="digital-add needs-validation">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.SubCategoryId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Sub Category Name" } })
+                                @Html.ValidationMessageFor(model => model.SubCategoryId, "", new { @class = "text-danger" })
+
+                            </div>
+
+
+                            <label class="d-block" for="ImagePath">
+                                @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "dropify", @type = "file" } })
+                            </label>
+
+                            <span style="color:red;font-weight:bold">Note:- Upload Sub Category Image to show the on Main Page.</span>
+                            @*<input type="file" id="image" />*@
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group mb-0">
+                            <div class="product-buttons text-center">
+                                @if (Model.SubCategoryId == 0)
+                                {
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                }
+                                else
+                                {
+                                    <input type="submit" value="Update" class="btn btn-primary" />
+                                }
+                                <input type="reset" class="btn btn-light" onclick="btnCancel()" value="Cancel" />
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".dropify").dropify();
+        });
+        function btnCancel() {
+            $("#SubCategoryName").val('');
+            $("#CategoryId").val(0);
+            $('.dropify-clear').click();
+        }
+
+        $("#image").addClass('dropify');
+        $("#image").attr("data-height", 300);
+        $("#image").attr("data-default-file", "http://www.adamanthr.com/wp-content/uploads/2016/04/dummy-man-570x570.png");
+        $('.dropify').dropify();
+    </script>
+}

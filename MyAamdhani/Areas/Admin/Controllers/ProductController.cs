@@ -1,4 +1,5 @@
 ﻿using MyAamdhani.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 using static MyAamdhani.Globals;
 
 namespace MyAamdhani.Areas.Admin.Controllers
@@ -71,12 +73,12 @@ namespace MyAamdhani.Areas.Admin.Controllers
 
                 //ID AND ORDERBYCOMP SHOULD BE SAME
 
-                html.Append("<th data-sort-ignore=\"true\" style=\"width:5%\">Sr. No.</th>");
+                html.Append("<th data-sort-ignore=\"true\" style=\"width:10%\">Sr. No.</th>");
 
-                html.Append("<th data-sort-ignore=\"true\" style=\"width:10%\">Image</th>");
-                if (orderbyComp[2] == "ProductName") { html.Append("<th id=\"ProductName\" class=\"" + className + "\"style=\"width:10%\">Product Name</th>"); } else { html.Append("<th id=\"ProductName\" style=\"width:10%\">Product Name</th>"); }
+                html.Append("<th data-sort-ignore=\"true\" style=\"width:20%\">Image</th>");
+                if (orderbyComp[2] == "ProductName") { html.Append("<th id=\"ProductName\" class=\"" + className + "\"style=\"width:20%\">Product Name</th>"); } else { html.Append("<th id=\"ProductName\" style=\"width:20%\">Product Name</th>"); }
                 html.Append("<th data-sort-ignore=\"true\" style=\"width:15%\">Price</th>");
-                html.Append("<th data-sort-ignore=\"true\" style=\"width:25%\">Quantity</th>");
+                html.Append("<th data-sort-ignore=\"true\" style=\"width:15%\">Quantity</th>");
                 html.Append("<th data-sort-ignore=\"true\" style=\"width:10%;text-align:center\">Active</th>");
                 html.Append("<th data-sort-ignore=\"true\" style=\"width:15%;text-align:center\">Action</th>");
 
@@ -92,14 +94,14 @@ namespace MyAamdhani.Areas.Admin.Controllers
                     {
                         sr += 1;
                         html.Append("<tr>");
-                        html.Append("<td style=\"width:5%\"><input type=\"hidden\" id = \"HDNTaskTab_" + Convert.ToString(Item.ProductId) + "\" value =\"" + Convert.ToInt32(Item.ProductId) + "\"/>" + sr + "</td>");
+                        html.Append("<td style=\"width:10%\"><input type=\"hidden\" id = \"HDNTaskTab_" + Convert.ToString(Item.ProductId) + "\" value =\"" + Convert.ToInt32(Item.ProductId) + "\"/>" + sr + "</td>");
 
-                        html.Append("<td style=\"width:10%\"> <span>" + Item.Image + "</span></td>");//" + Item.Title + "
-                        html.Append("<td style=\"width:10%\"> <span>" + Item.ProductName + "</span></td>");
+                        html.Append("<td style=\"width:15%\"> <span>" + Item.Image + "</span></td>");//" + Item.Title + "
+                        html.Append("<td style=\"width:20%\"> <span>" + Item.ProductName + "</span></td>");
 
-                        html.Append("<td class=\"product_detail_td\" style=\"width:10%\"><span>" + Item.Price + "</span></td>");
+                        html.Append("<td class=\"product_detail_td\" style=\"width:15%\"><span>" + Item.Price + "</span></td>");
 
-                        html.Append("<td class=\"product_detail_td\" style=\"width:10%\"><span>" + Item.Quantity + "</span></td>");
+                        html.Append("<td class=\"product_detail_td\" style=\"width:15%\"><span>" + Item.Quantity + "</span></td>");
 
 
                         Item.IsActive = Convert.ToString(Item.IsActive) == null || Convert.ToString(Item.IsActive) == "" || Convert.ToInt32(Item.IsActive) == 0 ? false : true;
@@ -112,7 +114,8 @@ namespace MyAamdhani.Areas.Admin.Controllers
                         //html.Append("<label class=\"iCheck-helper ichecklabel\"></label>");
                         html.Append("</td>");
                         // End Check Box
-                        html.Append("<td class=\"cstm_action_row\" style=\"width:15%;text-align:center\"><a href=\"Manage/" + Item.UniqueId + "\" class=\"btn btn-primary tooltips\" data-powertip=\"Edit\"><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></a>&nbsp;<a onclick=\"deleteProduct(this," + Item.ProductId + ")\" class=\"btn btn-danger tooltips\" data-powertip=\"Delete\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>");
+                        //html.Append("<td class=\"cstm_action_row\" style=\"width:15%;text-align:center\"><a href=\"Manage/" + Item.UniqueId + "\" class=\"btn btn-primary tooltips\" data-powertip=\"Edit\"><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></a>&nbsp;<a onclick=\"deleteProduct(this," + Item.ProductId + ")\" class=\"btn btn-danger tooltips\" data-powertip=\"Delete\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>");
+                        html.Append("<td class=\"cstm_action_row\" style=\"width:15%;text-align:center\"><a onclick=\"deleteProduct(this," + Item.ProductId + ")\" class=\"btn btn-danger tooltips\" data-powertip=\"Delete\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>");
                     }
                 }
                 else
@@ -139,7 +142,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult Manage(int? Id)
+        public ActionResult Manage(Guid? Id)
         {
             Product model = new Product();
 
@@ -237,8 +240,13 @@ namespace MyAamdhani.Areas.Admin.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult Manage(HttpPostedFileBase ProductImages, string ProductName, string ProductDescription, int FabricId, int PatternId, int SareeBorderId, int StyleId, int MinOrder, double PricePerPiece, double MRPPerPiece, int AvailablaQuantity, string HSNCode, string SKUId, string Occasion, string PackageType, string SareeLength, int CateogryId, int SubCategoryId, bool chkBlouse, string ColorIds)
+        public ActionResult Manage(HttpPostedFileBase ProductImages, string ProductName, string ProductDescription, string ImageIds, string MinOrder, string PricePerPiece, string MRPPerPiece, string HSNCode, string SKUId, string FabricId, string PatternId, string SareeBorderId, string StyleId, string Occasion, string PackageType, string SareeLength, string CateogryId, string SubCategoryId, string chkBlouse)
         {
+            XmlDocument doc = new XmlDocument();
+            doc = JsonConvert.DeserializeXmlNode("{\"ImageId\":" + ImageIds + "}", "ImagesIds");
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(doc.InnerXml));
+
             // Checking no of files injected in Request object 
             var filesCount = Request.Files.Count;
             if (Request.Files.Count > 0)
@@ -251,20 +259,15 @@ namespace MyAamdhani.Areas.Admin.Controllers
                     string fileSize = "";
                     string fileExtension = "";
                     string fileName = "";
-                    string fileNames = "";
-                    int ColorId = 0;
-                    string ColorName = "";
-                    DataTable dt = new DataTable();
+
+
 
                     if (Request.Files.Count > 0)
                     {
                         HttpFileCollectionBase files = Request.Files;
                         for (int i = 0; i < files.Count; i++)
                         {
-                            dt.Columns.Add("Images", typeof(string));
-                            dt.Columns.Add("ColorId", typeof(int));
-                            dt.Columns.Add("ColorName", typeof(string));
-                            
+
                             //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
                             //string filename = Path.GetFileName(Request.Files[i].FileName);  
                             if (files[i].ContentLength > 0)
@@ -304,125 +307,15 @@ namespace MyAamdhani.Areas.Admin.Controllers
                                 }
                             }
                         }
-                    }
+                    }                    
 
-                    if (!string.IsNullOrEmpty(ColorIds))
-                    {
-                        string[] ColorArray = ColorIds.Split(',');
-                        string[] fileArray = fileNames.Split('_');
-
-                        string pro = fileNames.Split('_')[0];
-                        if (ColorArray.Length != 0)
-                        {
-                            for (int j = 0; j < ColorArray.Length; j++)
-                            {
-                                ColorId = ColorArray[j].ToString().Split('_')[0] != "" || ColorArray[j].ToString().Split('_')[0] != null ? Convert.ToInt32(ColorArray[j].ToString().Split('_')[0]) : 0;
-                                ColorName = ColorArray[j].ToString().Split('_')[1] != "" || ColorArray[j].ToString().Split('_')[1] != "Select Color" || ColorArray[j].ToString().Split('_')[0] != null ? Convert.ToString(ColorArray[j].ToString().Split('_')[1]) : "";
-                                var ProductImageColor = fileName + "_" + ColorId;
-                                //var icr = new tbl_ICRWithProduct
-                                //{
-
-                                //};
-                            }
-                        }
-                    }
-
-                    var obj = new Product()
-                    {
-                        Name = ProductName,
-                        Description = ProductDescription,
-                        IsActive = true,
-                        IsDelete = false,
-                        CategoryId = CateogryId,
-                        SubCategoryId = SubCategoryId,
-                        MinOrder = MinOrder,
-                        PricePerPiece = Convert.ToDecimal(PricePerPiece),
-                        MRPPerPiece = Convert.ToDecimal(MRPPerPiece),
-                        AvailableQty = AvailablaQuantity,
-                        SKUId = SKUId,
-                        HSNCode = HSNCode,
-                        Occasion = Occasion,
-                        FabricId = FabricId,
-                        PatternId = PatternId,
-                        StyleId = StyleId,
-                        SareeBorderId = SareeBorderId,
-                        SareeLength = SareeLength,
-                        PackagingType = PackageType,
-                        BlousePiece = chkBlouse,
-                        Type = 0
-                    };
-                    db.Products.Add(obj);
-                    db.SaveChanges();
-
-                    DataTable dictOut = new DataTable();
-                    dictOut.Columns.Add("ProductId", typeof(int));
-                    dictOut.Columns.Add("ProductName", typeof(string));
-                    dictOut.Columns.Add("Description", typeof(string));
-                    dictOut.Columns.Add("IsActive", typeof(bool));
-                    dictOut.Columns.Add("IsDelete", typeof(bool));
-                    dictOut.Columns.Add("CategoryId", typeof(int));
-                    dictOut.Columns.Add("SubCategoryId", typeof(int));
-                    dictOut.Columns.Add("Images1", typeof(string));
-                    dictOut.Columns.Add("Images2", typeof(string));
-                    dictOut.Columns.Add("Images3", typeof(string));
-                    dictOut.Columns.Add("Images4", typeof(string));
-                    dictOut.Columns.Add("Images5", typeof(string));
-                    dictOut.Columns.Add("Images6", typeof(string));
-                    dictOut.Columns.Add("Images7", typeof(string));
-                    dictOut.Columns.Add("Images8", typeof(string));
-                    dictOut.Columns.Add("Images9", typeof(string));
-                    dictOut.Columns.Add("Images10", typeof(string));
-                    dictOut.Columns.Add("Images11", typeof(string));
-                    dictOut.Columns.Add("Images12", typeof(string));
-                    dictOut.Columns.Add("ProductColor1", typeof(string));
-                    dictOut.Columns.Add("ProductColor2", typeof(string));
-                    dictOut.Columns.Add("ProductColor3", typeof(string));
-                    dictOut.Columns.Add("ProductColor4", typeof(string));
-                    dictOut.Columns.Add("ProductColor5", typeof(string));
-                    dictOut.Columns.Add("ProductColor6", typeof(string));
-                    dictOut.Columns.Add("ProductColor7", typeof(string));
-                    dictOut.Columns.Add("ProductColor8", typeof(string));
-                    dictOut.Columns.Add("ProductColor9", typeof(string));
-                    dictOut.Columns.Add("ProductColor10", typeof(string));
-                    dictOut.Columns.Add("ProductColor11", typeof(string));
-                    dictOut.Columns.Add("ProductColor12", typeof(string));
-                    dictOut.Columns.Add("MinOrder", typeof(int));
-                    dictOut.Columns.Add("PricePerPiece", typeof(decimal));
-                    dictOut.Columns.Add("MRPPerPeice", typeof(decimal));
-                    dictOut.Columns.Add("AvailableQuantity", typeof(int));
-                    dictOut.Columns.Add("SKUId", typeof(string));
-                    dictOut.Columns.Add("HSNCode", typeof(string));
-                    dictOut.Columns.Add("Occasion", typeof(string));
-                    dictOut.Columns.Add("FabricId", typeof(int));
-                    dictOut.Columns.Add("PatternId", typeof(int));
-                    dictOut.Columns.Add("StyleId", typeof(int));
-                    dictOut.Columns.Add("SareeBorderId", typeof(int));
-                    dictOut.Columns.Add("SareeLength", typeof(string));
-                    dictOut.Columns.Add("PackagingType", typeof(string));
-                    dictOut.Columns.Add("chkBlouse", typeof(bool));
-                    dictOut.Columns.Add("Type", typeof(int));
-
-                    DataTable colorTable = new DataTable();
-
-
-                    for (int i = colorTable.Rows.Count - 1; i >= 0; i--)
-                    {
-                        DataRow dr = colorTable.Rows[i];
-                        if (Convert.ToInt32(dr["ColorId"]) == 0)
-                            dr.Delete();
-                    }
-                    colorTable.AcceptChanges();
-
-                    dictOut.Rows.Add(new object[] { 0, ProductName, ProductDescription, true, false, CateogryId, SubCategoryId, MinOrder, PricePerPiece, MRPPerPiece, AvailablaQuantity, SKUId, HSNCode, Occasion, FabricId, PatternId, StyleId, SareeBorderId, SareeLength, PackageType, chkBlouse, 0 });
-
-
-
-
-
-                    var outoputTable = pem.ManageProduct(dictOut);
+                    var value = pem.ManageProduct(ProductName, ProductDescription, Convert.ToInt32(MinOrder), Convert.ToDecimal(PricePerPiece), Convert.ToDecimal(MRPPerPiece), HSNCode, SKUId, Convert.ToInt32(FabricId), Convert.ToInt32(PatternId), Convert.ToInt32(SareeBorderId), Convert.ToInt32(StyleId), Occasion, PackageType, SareeLength, Convert.ToInt32(CateogryId), Convert.ToInt32(SubCategoryId), Convert.ToBoolean(chkBlouse), ds.Tables[0]);
 
                     // Returns message that successfully uploaded  
-                    return Json("File Uploaded Successfully!");
+                    if(value)
+                    return Json("Product Added Successfully!");
+                    else
+                        return Json("Something went Wrong");
                 }
                 catch (Exception ex)
                 {
@@ -438,61 +331,154 @@ namespace MyAamdhani.Areas.Admin.Controllers
         public ActionResult ShowDivImages(int ColorValue)
         {
             StringBuilder builder = new StringBuilder();
+
+            //Color List Box
+            var ColorDt = pem.GetColor();
+            SelectList ColorList = new SelectList((IEnumerable<object>)ColorDt, "ColorId", "ColorName");
+            if (ColorList.Count() > 0)
+            {
+                ColorList = new SelectList((IEnumerable<object>)ColorDt, "ColorId", "ColorName");
+            }
             try
             {
-                builder.Append("<div class=\"card\">");
-                builder.Append("<div class=\"card-header\">");
-                builder.Append("<h5>Images</h5>");
-                builder.Append(" </div>");
-                builder.Append("<div class=\"card-body\">");
-                builder.Append("<div class=\"digital-add needs-validation\">");
-                builder.Append("<label class=\"col-form-label\">");
-                builder.Append("<span style=\"color:red\">*</span> Images");
-                builder.Append("</label>");                
-                for (int i = 1; i <= ColorValue; ++i)
+                if (ColorValue > 0)
                 {
-                    if (i % 2 != 0)
-                    {
-
-                    }
-                    builder.Append("<div class=\"form-group\">");
-                    builder.Append("<div class=\"m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated\">");
-                    builder.Append("<label class=\"d-block\" for=\"imgupload" + i + "\">");
-                    builder.Append("<input type=\"file\" class=\"dropify\" id=\"imgupload" + i + "\" data-default-file=\"\" />");
+                    builder.Append("<div class=\"card\">");
+                    builder.Append("<div class=\"card-header\">");
+                    builder.Append("<h5>Images</h5>");
+                    builder.Append(" </div>");
+                    builder.Append("<div class=\"card-body\">");
+                    builder.Append("<div class=\"digital-add needs-validation\">");
+                    builder.Append("<label class=\"col-form-label\">");
+                    builder.Append("<span style=\"color:red\">*</span> Images");
                     builder.Append("</label>");
-                    if (i == 4 || i == 8 || i == 12)
+                    for (int k = 1; k <= 3; ++k)
                     {
-                        builder.Append("</div>");
-                        builder.Append("</div>");
-                        if (i == 4)
+                        builder.Append("<div class=\"form-group\">");
+                        builder.Append("<div class=\"m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated\">");
+                        if (k == 1)
                         {
-                            for (int j = 1; j <= 4; j++)
+                            for (int i = 1; i <= ColorValue; ++i)
                             {
-                                builder.Append("<div class=\"form-group\">");
-                                builder.Append("<div class=\"m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated\">");
-                                builder.Append("<label class=\"d-block\" for=\"Color_Id" + j + "\">");
-                                builder.Append("<select class=\"form-control\" id=\"Color_Id" + j + "\" style=\"width:223px\" />");
-                                builder.Append("</select>");
-                                builder.Append("</label>");
+                                if (i % 2 != 0)
+                                {
+                                    builder.Append("<label class=\"d-block\" for=\"imgupload" + i + "\">");
+                                    builder.Append("<input type=\"file\" class=\"dropify\" id=\"imgupload" + i + "\" data-default-file=\"\" />");
+                                    builder.Append("</label>");
+                                }
+                                if (i % 2 == 0)
+                                {
+                                    builder.Append("<label class=\"d-block\" for=\"imgupload" + i + "\">");
+                                    builder.Append("<input type=\"file\" class=\"dropify\" id=\"imgupload" + i + "\" data-default-file=\"\" />");
+                                    builder.Append("</label>");
+                                    if (i == 4 || i == 8 || i == 12)
+                                    {
+                                        builder.Append("</div>");
+                                        builder.Append("</div>");
+                                        builder.Append("<div class=\"form-group\">");
+                                        builder.Append("<div class=\"m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated\">");                                                                              
+                                    }
+                                }
+
+                                if (i == ColorValue)
+                                {
+                                    builder.Append("</div>");
+                                    builder.Append("</div>");
+                                }
+                            }
+                        }
+                        if (k == 2)
+                        {
+                            for (int i = 1; i <= ColorValue; ++i)
+                            {
+                                if (i % 2 != 0)
+                                {
+                                    builder.Append("<label class=\"d-block\" for=\"Color_Id" + i + "\">");
+                                    builder.Append("<select class=\"form-control\" style=\"width:232px\" id=\"Color_Id" + i + "\">");
+                                    builder.Append("<option value=\"0\" selected=\"selected\">Select Color</option>");
+                                    foreach (var item in ColorList)
+                                    {
+                                        builder.Append("<option value=\"" + item.Value + "\">" + item.Text + "</option>");
+                                    }
+                                    builder.Append("</select>");
+                                    builder.Append("</label>");
+                                }
+                                if (i % 2 == 0)
+                                {
+                                    builder.Append("<label class=\"d-block\" for=\"Color_Id" + i + "\">");
+                                    builder.Append("<select class=\"form-control\" style=\"width:232px\" id=\"Color_Id" + i + "\">");
+                                    builder.Append("<option value=\"0\" selected=\"selected\">Select Color</option>");
+                                    foreach (var item in ColorList)
+                                    {
+                                        builder.Append("<option value=\"" + item.Value + "\">" + item.Text + "</option>");
+                                    }
+                                    builder.Append("</select>");
+                                    builder.Append("</label>");
+                                    if (i == 4 || i == 8 || i == 12)
+                                    {
+                                        builder.Append("</div>");
+                                        builder.Append("</div>");
+                                        builder.Append("<div class=\"form-group\">");
+                                        builder.Append("<div class=\"m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated\">");
+                                    }
+                                }
+
+                                if (i == ColorValue)
+                                {
+                                    builder.Append("</div>");
+                                    builder.Append("</div>");
+                                }
+                            }
+                        }
+                        if (k == 3)
+                        {
+                            for (int i = 1; i <= ColorValue; ++i)
+                            {
+                                if (i % 2 != 0)
+                                {
+                                    builder.Append("<label class=\"d-block\" for=\"Qty_Id" + i + "\">");
+                                    builder.Append("<select class=\"form-control\" style=\"width:232px\" id=\"Qty_Id" + i + "\">");
+                                    builder.Append("<option value=\"0\" selected=\"selected\">Availalble Quantity</option>");
+                                    for (int p = 1; p <= 100; p++)
+                                    {
+                                        builder.Append("<option value=\"" + p + "\">" + p + "</option>");
+                                    }
+                                    builder.Append("</select>");
+                                    builder.Append("</label>");
+                                }
+                                if (i % 2 == 0)
+                                {
+                                    builder.Append("<label class=\"d-block\" for=\"Qty_Id" + i + "\">");
+                                    builder.Append("<select class=\"form-control\" style=\"width:232px\" id=\"Qty_Id" + i + "\">");
+                                    builder.Append("<option value=\"0\" selected=\"selected\">Availalble Quantity</option>");
+                                    for (int p = 1; p <= 100; p++)
+                                    {
+                                        builder.Append("<option value=\"" + p + "\">" + p + "</option>");
+                                    }
+                                    builder.Append("</select>");
+                                    builder.Append("</label>");
+                                    if (i == 4 || i == 8 || i == 12)
+                                    {
+                                        builder.Append("</div>");
+                                        builder.Append("</div>");
+                                        builder.Append("<div class=\"form-group\">");
+                                        builder.Append("<div class=\"m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated\">");
+                                    }
+                                }
+
+                                if (i == ColorValue)
+                                {
+                                    builder.Append("</div>");
+                                    builder.Append("</div>");
+                                }
                             }
                         }
                     }
-                    else if (i == ColorValue)
-                    {
-                        builder.Append("</div>");
-                        builder.Append("</div>");                        
-                    }
+
                 }
-                builder.Append("<label class=\"d-block\" for=\"imgupload1\">");
-                builder.Append("<input type=\"file\" class=\"dropify\" id=\"imgupload1\" data-default-file=\"\" />");
-                builder.Append("</label>");
-                builder.Append("</div>");
-                builder.Append("</div>");
-                builder.Append("</div>");
-                builder.Append("</div>");
-                return Json(new { success = true, html = builder.ToString() });
+                return Json(new { status = true, html = builder.ToString() });
             }
-            
+
             catch (Exception ex)
             {
                 throw ex;

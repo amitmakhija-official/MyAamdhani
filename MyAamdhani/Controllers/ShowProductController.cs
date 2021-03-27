@@ -21,15 +21,15 @@ namespace MyAamdhani.Controllers
             {
                 var categories = Db.Categories
                     .Where(x =>!x.IsDelete && x.IsActive)
-                    .OrderBy(x => x.Name);
+                    .OrderBy(x => x.CategoryName);
                 var list = new List<CategoryItems>();
                 foreach (var items in categories)
                 {
                     var data = new CategoryItems
                     {
                         DateAdded = items.DateAdded.GetValueOrDefault(),
-                        CategoryId = items.Id,
-                        Name = items.Name,
+                        CategoryId = items.CategoryId,
+                        Name = items.CategoryName,
                         ImagePath = items.ImagePath
 
                     };
@@ -55,7 +55,7 @@ namespace MyAamdhani.Controllers
             {
                 var products = Db.Products.Where(x => x.CategoryId == catId).OrderBy(x => x.Name).ToList();
                 var subCategory = Db.SubCategories.FirstOrDefault(x => x.CategoryId == catId);
-                    dataModel.Title= !ReferenceEquals(subCategory,null)? Db.Categories.FirstOrDefault(x => x.Id == subCategory.CategoryId).Name:"";
+                    dataModel.Title= !ReferenceEquals(subCategory,null)? Db.Categories.FirstOrDefault(x => x.CategoryId == subCategory.CategoryId).CategoryName:"";
                 if (products.Count() > 0)
                 {
                     var distinctProducts = products.Select(x => new  { x.Id,x.Type}).Distinct().ToList();

@@ -87,7 +87,7 @@ namespace MyAamdhani.Models
         {
             try
             {
-                var Category = db.Categories.Select(s => new { CategoryId = s.Id, CategoryName = s.Name }).ToList();
+                var Category = db.Categories.Select(s => new { CategoryId = s.CategoryId, CategoryName = s.CategoryName }).ToList();
                 return Category;
             }
             catch (Exception ex)
@@ -100,7 +100,7 @@ namespace MyAamdhani.Models
         {
             try
             {
-                var SubCategory = db.SubCategories.Select(s => new { SubCategoryId = s.Id, SubCategoryName = s.Name }).ToList();
+                var SubCategory = db.SubCategories.Select(s => new { SubCategoryId = s.SubCategoryId, SubCategoryName = s.SubCategoryName }).ToList();
                 return SubCategory;
             }
             catch (Exception ex)
@@ -125,7 +125,7 @@ namespace MyAamdhani.Models
             }
         }
 
-        
+
 
         public List<SelectListItem> GetLength()
         {
@@ -153,33 +153,48 @@ namespace MyAamdhani.Models
             return items;
         }
 
-        public DataTable ManageProduct(DataTable table)
+        public bool ManageProduct(string ProductName, string ProductDescription, int MinOrder, decimal PricePerPiece, decimal MRPPerPiece, string HSNCode, string SKUId, int FabricId, int PatternId, int SareeBorderId, int StyleId, string Occasion, string PackageType, string SareeLength, int CategoryId, int SubCategoryId, bool chkBlouse, DataTable table)
         {
             try
             {
-                using (SqlConnection con = new SqlConnection())
+                SqlCommand com = new SqlCommand("", (SqlConnection)db.Database.Connection);
+                com.CommandText = "exec Sp_ProductManage @ProductId, @ProductName, @ProductDescription, @MinOrder, @PricePerPiece, @MRPPerPiece, @HSNCode, @SKUId, @FabricId, @PatternId, @SareeBorderId, @StyleId, @Occasion, @PackageType, @SareeLength, @CateogryId, @SubCategoryId, @chkBlouse,@ImageData";
+                com.Parameters.AddWithValue("@ProductId", 0);
+                com.Parameters.AddWithValue("@ProductName", ProductName);
+                com.Parameters.AddWithValue("@ProductDescription", ProductDescription);
+                com.Parameters.AddWithValue("@PricePerPiece", PricePerPiece);
+                com.Parameters.AddWithValue("@MRPPerPiece", MRPPerPiece);                
+                com.Parameters.AddWithValue("@HSNCode", HSNCode);
+                com.Parameters.AddWithValue("@SKUId", SKUId);
+                com.Parameters.AddWithValue("@FabricId", FabricId);
+                com.Parameters.AddWithValue("@PatternId", PatternId);
+                com.Parameters.AddWithValue("@SareeBorderId", SareeBorderId);
+                com.Parameters.AddWithValue("@StyleId", StyleId);
+                com.Parameters.AddWithValue("@Occasion", Occasion);
+                com.Parameters.AddWithValue("@PackageType", PackageType);
+                com.Parameters.AddWithValue("@SareeLength", SareeLength);
+                com.Parameters.AddWithValue("@CateogryId", CategoryId);
+                com.Parameters.AddWithValue("@SubCategoryId", SubCategoryId);
+                com.Parameters.AddWithValue("@chkBlouse", chkBlouse);
+                com.Parameters.AddWithValue("@Manage_Type", "Insert");
+                SqlParameter param = new SqlParameter("@ImageData", SqlDbType.Structured)
                 {
-                    SqlCommand cmd = new SqlCommand("Sp_ProductManage", con);
-                    SqlParameter param = new SqlParameter("@ProductData", SqlDbType.Structured)
-                    {
-                        TypeName = "dbo.TT_Product",
-                        Value = (table.Rows.Count > 0 ? table : null)
-                    };
-                    cmd.Parameters.Add(param);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    TypeName = "dbo.Tt_ImagesValue",
+                    Value = (table.Rows.Count > 0 ? table : null)
+                };
+                com.Parameters.Add(param);
 
-                    con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter();
-                    da.SelectCommand = cmd;
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    con.Close();
-                    return dt;
+                if (com.Connection.State == ConnectionState.Closed)
+                {
+                    com.Connection.Open();
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                    return true;
                 }
+                return false;
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
