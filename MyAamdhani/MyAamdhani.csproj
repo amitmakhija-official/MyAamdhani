@@ -219,6 +219,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
+    <Compile Include="HelperClasses\CommonFunction.cs" />
     <Compile Include="HelperClasses\Constant.cs" />
     <Compile Include="HelperClasses\DBHelper.cs" />
     <Compile Include="HelperClasses\EncryptDecrypt.cs" />

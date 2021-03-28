@@ -1,4 +1,5 @@
-﻿@model MyAamdhani.Models.CategoryViewModel
+﻿@using System.Security.Cryptography.Xml
+@model MyAamdhani.Models.CategoryViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -41,7 +42,7 @@
         <hr/>
 
         <div class="row  zoom-gallery">
-            @foreach (var item in Model.CategoryItems)
+            @foreach (var item in Model.CategoryItems.ToList())
             {
                 <div class="isotopeSelector filter fashion col-lg-3 col-sm-6">
                     <div>

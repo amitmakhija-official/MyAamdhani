@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 namespace MyAamdhani.HelperClasses
@@ -34,6 +35,28 @@ namespace MyAamdhani.HelperClasses
             }
 
             return outString;
+        }
+        public static string CommaSeperated(this string number, bool showDecimal = true)
+        {
+            if (string.IsNullOrEmpty(number)) return string.Empty;
+
+            double num = 0;
+            if (double.TryParse(number, NumberStyles.Float, null, out num))
+            {
+                if (showDecimal)
+                    return String.Format("{0:n}", num);
+                else
+                    return String.Format("{0:n0}", num);
+            }
+            else return number;
+        }
+
+        public static string GetAmountDifference(decimal amount1,decimal amount2)
+        {
+            var ded = amount2 - amount1;
+            var add = amount2 + amount1;
+            var Differ = (ded / (add / 2)) * 100;
+            return Differ.ToString()+"%";
         }
         public static string AddCommaToDigits(this object str)
         {

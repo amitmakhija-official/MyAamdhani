@@ -17,8 +17,9 @@
     @Styles.Render("~/bundles/css")
 
     <!--Slick slider css-->
-    <link href="~/Content/slick.css" rel="stylesheet" />
-    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/slick")
+    @*<link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />*@
 
     <!-- Animate icon -->
     @Styles.Render("~/bundles/animate")
@@ -1247,7 +1248,7 @@
     @Scripts.Render("~/bundles/popper")
     <!-- slick js-->
     @*@Scripts.Render("~/bundles/slick")*@
-    <script src="~/Scripts/slick.js"></script>
+   
     <!-- menu js-->
     @Scripts.Render("~/bundles/menu")
     <!-- lazyload js-->
