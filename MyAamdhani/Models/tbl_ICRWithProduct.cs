@@ -18,6 +18,7 @@ namespace MyAamdhani.Models
         public Nullable<int> ProductId { get; set; }
         public Nullable<int> ColorId { get; set; }
         public string Image { get; set; }
+        public Nullable<int> Quantity { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }

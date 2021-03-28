@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<html>
+﻿
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,28 +8,45 @@
     <meta name="description" content="Multikart admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Multikart admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="../assets/images/dashboard/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="../assets/images/dashboard/favicon.png" type="image/x-icon">
-    <title>MyAamdhani - Admin Panel</title>
+    <link rel="icon" href="~/Content/Images/dashboard/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/Content/Images/dashboard/favicon.png" type="image/x-icon">
+    <title>MyAamdhani - Premium Admin Template</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+
+    @*<link href="~/Scripts/select2/select2.css" rel="stylesheet" />*@
     <!-- Font Awesome-->
-    @Styles.Render("~/bundles/css")
-    @Styles.Render("~/bundles/themify")
+    @*<link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">*@
+    <link href="~/Content/fontawesome.css" rel="stylesheet" />
+    <!-- Flag icon-->
+    @*<link rel="stylesheet" type="text/css" href="../assets/css/flag-icon.css">*@
+    <link href="~/Content/flag-icon.css" rel="stylesheet" />
+    <!-- Dropzone css-->
+    <link href="~/Content/dropzone.css" rel="stylesheet" />
+    <!-- ico-font-->
+    @*<link rel="stylesheet" type="text/css" href="../assets/css/icofont.css">*@
+    <link href="~/Content/icofont.css" rel="stylesheet" />
+    <!-- Prism css-->
+    <link href="~/Content/prism.css" rel="stylesheet" />
+    @*<link rel="stylesheet" type="text/css" href="../assets/css/prism.css">*@
+    <!-- Chartist css -->
+    @*<link rel="stylesheet" type="text/css" href="../assets/css/chartist.css">*@
+    @*<link href="~/Content/chartist.css" rel="stylesheet" />*@
+    <!-- Bootstrap css-->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    @*<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">*@
     <link href="~/Content/footable/footable.core.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.0/css/dropify.css" integrity="sha512-qUMSYO847N+tb7z309XwrpigVtsY7zyMG0dVhZqhJK5hlXVoNqOXhIRKDFNcNBCFF8nbfcCVNOhKiULMU9lFlA==" crossorigin="anonymous" />
+    <!-- App css-->
 
     <link href="~/Content/icheck/skins/flat/red.css" rel="stylesheet" />
     <link href="~/Content/icheck/skins/flat/_all.css" rel="stylesheet" />
-     <!-- Prism css-->
-    @Styles.Render("~/bundles/prism")
-    <!-- Chartist css -->
-    @*@Styles.Render("~/bundles/chartist")*@
-    <!-- App css-->
-   @Styles.Render("~/bundles/admincss")
+    <link href="~/Content/admin.css" rel="stylesheet" />
 </head>
 <body>
+
     <!-- page-wrapper Start-->
     <div class="page-wrapper">
         <!-- Page Header Start-->
@@ -44,63 +62,63 @@
                 </div>
                 <div class="nav-right col">
                     <ul class="nav-menus">
-                        <li>
-                            <form class="form-inline search-form">
-                                <div class="form-group">
-                                    <input class="form-control-plaintext" type="search" placeholder="Search.."><span class="d-sm-none mobile-search"><i data-feather="search"></i></span>
-                                </div>
-                            </form>
-                        </li>
-                        <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize-2"></i></a></li>
-                        <li class="onhover-dropdown">
+                        @*<li>
+                                <form class="form-inline search-form">
+                                    <div class="form-group">
+                                        <input class="form-control-plaintext" type="search" placeholder="Search.."><span class="d-sm-none mobile-search"><i data-feather="search"></i></span>
+                                    </div>
+                                </form>
+                            </li>
+                            <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize-2"></i></a></li>*@
+                        @*<li class="onhover-dropdown">
                             <a class="txt-dark" href="#">
-                                <h6>EN</h6>
+                            <h6>EN</h6>
                             </a>
                             <ul class="language-dropdown onhover-show-div p-20">
-                                <li><a href="#" data-lng="en"><i class="flag-icon flag-icon-is"></i> English</a></li>
-                                <li><a href="#" data-lng="es"><i class="flag-icon flag-icon-um"></i> Spanish</a></li>
-                                <li><a href="#" data-lng="pt"><i class="flag-icon flag-icon-uy"></i> Portuguese</a></li>
-                                <li><a href="#" data-lng="fr"><i class="flag-icon flag-icon-nz"></i> French</a></li>
+                            <li><a href="#" data-lng="en"><i class="flag-icon flag-icon-is"></i> English</a></li>
+                            <li><a href="#" data-lng="es"><i class="flag-icon flag-icon-um"></i> Spanish</a></li>
+                            <li><a href="#" data-lng="pt"><i class="flag-icon flag-icon-uy"></i> Portuguese</a></li>
+                            <li><a href="#" data-lng="fr"><i class="flag-icon flag-icon-nz"></i> French</a></li>
                             </ul>
-                        </li>
-                        <li class="onhover-dropdown">
+                            </li>*@
+                        @*<li class="onhover-dropdown">
                             <i data-feather="bell"></i><span class="badge badge-pill badge-primary pull-right notification-badge">3</span><span class="dot"></span>
                             <ul class="notification-dropdown onhover-show-div p-0">
-                                <li>Notification <span class="badge badge-pill badge-primary pull-right">3</span></li>
-                                <li>
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <h6 class="mt-0"><span><i class="shopping-color" data-feather="shopping-bag"></i></span>Your order ready for Ship..!</h6>
-                                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer.</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <h6 class="mt-0 txt-success"><span><i class="download-color font-success" data-feather="download"></i></span>Download Complete</h6>
-                                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer.</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <h6 class="mt-0 txt-danger"><span><i class="alert-color font-danger" data-feather="alert-circle"></i></span>250 MB trash files</h6>
-                                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer.</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="txt-dark"><a href="#">All</a> notification</li>
+                            <li>Notification <span class="badge badge-pill badge-primary pull-right">3</span></li>
+                            <li>
+                            <div class="media">
+                            <div class="media-body">
+                            <h6 class="mt-0"><span><i class="shopping-color" data-feather="shopping-bag"></i></span>Your order ready for Ship..!</h6>
+                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer.</p>
+                            </div>
+                            </div>
+                            </li>
+                            <li>
+                            <div class="media">
+                            <div class="media-body">
+                            <h6 class="mt-0 txt-success"><span><i class="download-color font-success" data-feather="download"></i></span>Download Complete</h6>
+                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer.</p>
+                            </div>
+                            </div>
+                            </li>
+                            <li>
+                            <div class="media">
+                            <div class="media-body">
+                            <h6 class="mt-0 txt-danger"><span><i class="alert-color font-danger" data-feather="alert-circle"></i></span>250 MB trash files</h6>
+                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer.</p>
+                            </div>
+                            </div>
+                            </li>
+                            <li class="bg-light txt-dark"><a href="#">All</a> notification</li>
                             </ul>
-                        </li>
-                        <li><a href="#"><i class="right_side_toggle" data-feather="message-square"></i><span class="dot"></span></a></li>
+                            </li>*@
+                        @*<li><a href="#"><i class="right_side_toggle" data-feather="message-square"></i><span class="dot"></span></a></li>*@
                         <li class="onhover-dropdown">
-                            <div class="media align-items-center">
+                            <div class="media align-items-center" style="float:right">
                                 <img class="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded" src="~/Content/Images/dashboard/man.png" alt="header-user">
                                 <div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>
                             </div>
-                            <ul class="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
+                            <ul class="profile-dropdown onhover-show-div p-20">
                                 <li><a href="#"><i data-feather="user"></i>Edit Profile</a></li>
                                 <li><a href="#"><i data-feather="mail"></i>Inbox</a></li>
                                 <li><a href="#"><i data-feather="lock"></i>Lock Screen</a></li>
@@ -121,12 +139,10 @@
                 <div class="main-header-left d-none d-lg-block">
                     <div class="logo-wrapper"><a href="index.html"><img class="blur-up lazyloaded" src="~/Content/Images/dashboard/multikart-logo.png" alt=""></a></div>
                 </div>
-
                 <div class="sidebar custom-scrollbar">
                     <div class="sidebar-user text-center">
                         <div>
-                            <img class="img-60 rounded-circle lazyloaded blur-up" src="~/Content/Images/dashboard/man.png" alt="#">
-                            <img />
+                            <img class="img-60 rounded-circle" src="~/Content/Images/dashboard/man.png" alt="#">
                         </div>
                         <h6 class="mt-3 f-14">JOHN</h6>
                         <p>general manager.</p>
@@ -144,7 +160,7 @@
                                     <ul class="sidebar-submenu">
                                         <li><a href="@Url.Action("Index","Category")"><i class="fa fa-circle"></i>Category</a></li>
                                         <li><a href="@Url.Action("Index","SubCategory")"><i class="fa fa-circle"></i>Sub Category</a></li>
-                                        <li><a href="@Url.Action("Index","Product")"><i class="fa fa-circle"></i>Product List</a></li>                                        
+                                        <li><a href="@Url.Action("Index","Product")"><i class="fa fa-circle"></i>Product List</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -155,7 +171,7 @@
                                     <ul class="sidebar-submenu">
                                         <li><a href="category-digital.html"><i class="fa fa-circle"></i>Category</a></li>
                                         <li><a href="category-digitalsub.html"><i class="fa fa-circle"></i>Sub Category</a></li>
-                                        <li><a href="product-listdigital.html"><i class="fa fa-circle"></i>Product List</a></li>                                        
+                                        <li><a href="product-listdigital.html"><i class="fa fa-circle"></i>Product List</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -247,7 +263,7 @@
                             <div class="people-list friend-list">
                                 <ul class="list">
                                     <li class="clearfix">
-                                        <img class="rounded-circle user-image" src="~/Content/Images/dashboard/user.png" alt="">
+                                        <img class="rounded-circle user-image blur-up lazyloaded" src="~/Content/Images/dashboard/user.png" alt="">
                                         <div class="status-circle online"></div>
                                         <div class="about">
                                             <div class="name">Vincent Porter</div>
@@ -255,7 +271,7 @@
                                         </div>
                                     </li>
                                     <li class="clearfix">
-                                        <img class="rounded-circle user-image" src="~/Content/Images/dashboard/user1.jpg" alt="">
+                                        <img class="rounded-circle user-image blur-up lazyloaded" src="~/Content/Images/dashboard/user1.jpg" alt="">
                                         <div class="status-circle away"></div>
                                         <div class="about">
                                             <div class="name">Ain Chavez</div>
@@ -263,7 +279,7 @@
                                         </div>
                                     </li>
                                     <li class="clearfix">
-                                        <img class="rounded-circle user-image" src="~/Content/Images/dashboard/user2.jpg" alt="">
+                                        <img class="rounded-circle user-image blur-up lazyloaded" src="~/Content/Images/dashboard/user2.jpg" alt="">
                                         <div class="status-circle online"></div>
                                         <div class="about">
                                             <div class="name">Kori Thomas</div>
@@ -271,7 +287,7 @@
                                         </div>
                                     </li>
                                     <li class="clearfix">
-                                        <img class="rounded-circle user-image" src="~/Content/Images/dashboard/user3.jpg" alt="">
+                                        <img class="rounded-circle user-image blur-up lazyloaded" src="~/Content/Images/dashboard/user3.jpg" alt="">
                                         <div class="status-circle online"></div>
                                         <div class="about">
                                             <div class="name">Erica Hughes</div>
@@ -279,7 +295,7 @@
                                         </div>
                                     </li>
                                     <li class="clearfix">
-                                        <img class="rounded-circle user-image" src="~/Content/Images/dashboard/man.png" alt="">
+                                        <img class="rounded-circle user-image blur-up lazyloaded" src="~/Content/Images/dashboard/user4.jpg" alt="">
                                         <div class="status-circle offline"></div>
                                         <div class="about">
                                             <div class="name">Ginger Johnston</div>
@@ -287,7 +303,7 @@
                                         </div>
                                     </li>
                                     <li class="clearfix">
-                                        <img class="rounded-circle user-image" src="~/Content/Images/dashboard/user5.jpg" alt="">
+                                        <img class="rounded-circle user-image blur-up lazyloaded" src="~/Content/Images/dashboard/user5.jpg" alt="">
                                         <div class="status-circle away"></div>
                                         <div class="about">
                                             <div class="name">Prasanth Anand</div>
@@ -295,7 +311,7 @@
                                         </div>
                                     </li>
                                     <li class="clearfix">
-                                        <img class="rounded-circle user-image" src="~/Content/Images/dashboard/designer.jpg" alt="">
+                                        <img class="rounded-circle user-image blur-up lazyloaded" src="~/Content/Images/dashboard/designer.jpg" alt="">
                                         <div class="status-circle online"></div>
                                         <div class="about">
                                             <div class="name">Hileri Jecno</div>
@@ -309,13 +325,15 @@
                 </div>
             </div>
             <!-- Right sidebar Ends-->
-            @RenderBody()
+            <div class="page-body">
+                @RenderBody()
+            </div>
             <!-- footer start-->
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6 footer-copyright">
-                            <p class="mb-0">Copyright @DateTime.Now.Year © MyAamdhani All rights reserved.</p>
+                            <p class="mb-0">Copyright 2019 © Multikart All rights reserved.</p>
                         </div>
                         <div class="col-md-6">
                             <p class="pull-right mb-0">Hand crafted & made with<i class="fa fa-heart"></i></p>
@@ -326,85 +344,78 @@
             <!-- footer end-->
         </div>
     </div>
-    <div class="modal fade" id="Mdl_DeleteMAD" tabindex="-1" aria-hidden="true" role="dialog" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <img src="~/images/SplashLogo2.png" style="height:50px; width:90px" />
-                    <input type="hidden" id="hdnDeleteId" />
-                </div>
-                <div class="modal-body" style="text-align:center">
-                    <div id="dynamic_delbody"></div>
+    <style type="text/css">
+        /*.select2-container {
+            width:23% !important
+        }*/
+        /*.select2-selection__clear {
+            display: none;
+        }*/
+    </style>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="UpdateStatuss" data-dismiss="modal" onclick="DeleteOk()">Yes</button>
 
-                    <button type="button" class="btn btn-secondary" id="updateCancel" onclick="DeleteCancel()">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="Mdl_UpdateStatus" tabindex="-1" aria-hidden="true" role="dialog" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <img src="~/images/SplashLogo2.png" style="height:50px; width:90px" />
-                    <input type="hidden" id="hdnUpdateId" />
-                    <input type="hidden" id="hdnStatus" />
-                    <input type="hidden" id="hdnDeleteId" />
-                </div>
-                <div class="modal-body" id="Mdl_body" style="text-align:center">
-                    <div id="dynamic_body"></div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="UpdateStatuss" data-dismiss="modal" onclick="UpdateStatusOk()">Yes</button>
-
-                    <button type="button" class="btn btn-secondary" onclick="UpdateStatusCancel()">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-      <!-- latest jquery-->
-    @Scripts.Render("~/bundles/jquery")
+    <!-- latest jquery-->
+    @*<script src="../assets/js/jquery-3.3.1.min.js"></script>*@
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <!-- Bootstrap js-->
-    @Scripts.Render("~/bundles/popper")
-    @Scripts.Render("~/bundles/bootstrap")
+    @*<script src="../assets/js/popper.min.js"></script>*@
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    @*<script src="../assets/js/bootstrap.js"></script>*@
     <!-- feather icon js-->
-    @Scripts.Render("~/bundles/feather")
+    <script src="~/Scripts/icons/feather-icon/feather.min.js"></script>
+    <script src="~/Scripts/icons/feather-icon/feather-icon.js"></script>
+
+    @*<script src="../assets/js/icons/feather-icon/feather.min.js"></script>
+        <script src="../assets/js/icons/feather-icon/feather-icon.js"></script>*@
     <!-- Sidebar jquery-->
-    @Scripts.Render("~/bundles/menu")
-    @Scripts.Render("~/bundles/sidebar")
-    @*@Scripts.Render("~/bundles/chart")*@
+    @*<script src="../assets/js/sidebar-menu.js"></script>*@
+    <script src="~/Scripts/sidebar-menu.js"></script>
     <!-- lazyload js-->
-    @Scripts.Render("~/bundles/lazysizes")
-    <!--copycode js-->
-    @Scripts.Render("~/bundles/copycode")
-    <!--counter js-->
-    @Scripts.Render("~/bundles/counter")
-    <!--peity chart js-->
-    @Scripts.Render("~/bundles/peity")
-    <!--sparkline chart js-->
-    @Scripts.Render("~/bundles/sparkline")
+    @*<script src="../assets/js/lazysizes.min.js"></script>*@
+    <script src="~/Scripts/lazysizes.min.js"></script>
+
     <!--Customizer admin-->
-    @Scripts.Render("~/bundles/admin")
+    @*<script src="../assets/js/admin-customizer.js"></script>*@
+    <script src="~/Scripts/admin-customizer.js"></script>
     <!--dashboard custom js-->
-    @*@Scripts.Render("~/bundles/dashboard")*@
+    @*<script src="~/Scripts/dashboard/default.js"></script>*@
+
+    @*<script src="../assets/js/dashboard/default.js"></script>*@
     <!--right sidebar js-->
-    @Scripts.Render("~/bundles/chat-menu")
-    <!--height equal js-->
-    @Scripts.Render("~/bundles/height-equal")
-    <!-- lazyload js-->
-            @*@Scripts.Render("~/bundles/lazysizes")*@
-            <script src="~/Scripts/footable/footable.all.min.js"></script>
-        <script src="~/Scripts/icheck/icheck.js"></script>
+    @*<script src="../assets/js/chat-menu.js"></script>*@
+    <script src="~/Scripts/chat-menu.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.0/js/dropify.min.js" integrity="sha512-5lwTm2lltwGLuFpI0jqcCxGS4Y7cJn3ylGb0BTJty5xGt2lqT9/efUhQV1dyOXpQ/PbvmE6EUP+zRIPGiccFng==" crossorigin="anonymous"></script>
+    <!-- lazyload js-->
+    <script src="~/Scripts/icheck/icheck.js"></script>
+
+    <!--dropzone js-->
+
+    <script src="~/Scripts/dropzone/dropzone.js"></script>
+    <script src="~/Scripts/dropzone/dropzone-script.js"></script>
+    @*<script src="../assets/js/dropzone/dropzone.js"></script>
+        <script src="../assets/js/dropzone/dropzone-script.js"></script>*@
+    <!--ckeditor js-->
+    @*<script src="~/Scripts/editor/ckeditor/ckeditor.js"></script>
+        <script src="~/Scripts/editor/ckeditor/styles.js"></script>
+        <script src="~/Scripts/editor/ckeditor/adapters/jquery.js"></script>
+        <script src="~/Scripts/editor/ckeditor/ckeditor.custom.js"></script>*@
+    @*<script src="../assets/js/editor/ckeditor/ckeditor.js"></script>
+        <script src="../assets/js/editor/ckeditor/styles.js"></script>
+        <script src="../assets/js/editor/ckeditor/adapters/jquery.js"></script>
+        <script src="../assets/js/editor/ckeditor/ckeditor.custom.js"></script>*@
+    <!--Customizer admin-->
+    @*<script src="~/Scripts/admin-customizer.js"></script>*@
+    <script src="~/Scripts/admin-customizer.js"></script>
+
     <!--script admin-->
-    @Scripts.Render("~/bundles/admin-script")
+    @*<script src="../assets/js/admin-script.js"></script>*@
+    <script src="~/Scripts/admin-script.js"></script>
 
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
+
+
+

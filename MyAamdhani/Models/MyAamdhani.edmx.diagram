@@ -4,30 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7d443d79edee40f1b41f7b2cafee2769" Name="Diagram1">
-        <EntityTypeShape EntityType="MyAamdhaniModel.Category" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="10fa6044713948c29ee32ebdedd61563" Name="Diagram1">
         <EntityTypeShape EntityType="MyAamdhaniModel.City" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.Country" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.Customer" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.LogingHistory" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.MenuTab" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.ProductColor" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.ProductRating" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.Product" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.SEO" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.State" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.SubCategory" Width="1.5" PointX="2.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_ClothStyle" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Color" Width="1.5" PointX="11.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Fabric" Width="1.5" PointX="8.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_ICRWithProduct" Width="1.5" PointX="11.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Pattern" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_RelationsProductColor" Width="1.5" PointX="13.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_SareeBorder" Width="1.5" PointX="13.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.UserDetail" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.ProductRating" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.SEO" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.State" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_ClothStyle" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Color" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Fabric" Width="1.5" PointX="2.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Pattern" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_SareeBorder" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.UserDetail" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.User" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.ValidateLogin" Width="1.5" PointX="13.75" PointY="10.75" IsExpanded="true" />
-        <AssociationConnector Association="MyAamdhaniModel.FK__UserDetai__UserI__398D8EEE" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.ValidateLogin" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="MyAamdhaniModel.FK__UserDetai__UserI__1273C1CD" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.Product" Width="1.5" PointX="7.375" PointY="13.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_ICRWithProduct" Width="1.5" PointX="12.375" PointY="4.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.Category" Width="1.5" PointX="13.375" PointY="11.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.SubCategory" Width="1.5" PointX="14.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

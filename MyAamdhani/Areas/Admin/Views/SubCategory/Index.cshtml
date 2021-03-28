@@ -11,17 +11,18 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="page-header-left">
-                        <input type="text" id="ProductSearch" class="form-control" placeholder="Search..." style="max-width:100%;border-radius:10px" />
+                        <input type="text" id="CategorySearch" class="form-control" placeholder="Search..." style="max-width:100%;border-radius:10px" />
                         <span class="input-group-btn">
-                            <button class="btn" style="color:white;padding-right:10px;padding-left:10px;border-radius:10px" onclick="searchByProductName()">
-                            <i class="search-icon-black"></i></button>
+                            <button class="btn" style="color:white;padding-right:10px;padding-left:10px;border-radius:10px" onclick="searchByCategory()">
+                                <i class="search-icon-black"></i>
+                            </button>
                         </span>
                     </div>
                 </div>
                 <div class="col-lg-4">
                 </div>
                 <div class="col-lg-4">
-                    <a class="btn-primary btn pull-right" href="@Url.Action("Manage", "Product")">Add New Product</a>
+                    <a class="btn-primary btn pull-right" href="@Url.Action("Manage", "Category",new { Id = Guid.Parse("00000000-0000-0000-0000-000000000000") })">Add New Category</a>
                     @*<ol class="breadcrumb pull-right">
                             <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
                             <li class="breadcrumb-item">Digital</li>
@@ -43,11 +44,11 @@
 
                     <div class="card-body">
 
-                        <div id="divProduct" class="table-responsive">
+                        <div id="divCategory" class="table-responsive">
 
                         </div>
                         <br />
-                        <div id="divProductPaging" style="padding:0px 10px 10px 0px;">
+                        <div id="divCategoryPaging" style="padding:0px 10px 10px 0px;">
                         </div>
                     </div>
                 </div>
@@ -74,11 +75,11 @@
             var msg = '@TempData["Msg"]';
             if (success == 'True') { Toastrtimer(true, msg); }
             else if (success == 'False') { Toastrtimer(false, msg); }
-            if ($('#ProductSearch').val() == '') {
-                SearchFilter(1, '', '')
+            if ($('#CategorySearch').val() == '') {
+                SearchFilter(1, '')
             }
-            else if ($('#ProductSearch').val() != '') {
-                SearchFilter(1, $('#ProductSearch').val(), '')
+            else if ($('#CategorySearch').val() != '') {
+                SearchFilter(1, $('#CategorySearch').val())
             }
             $('th.footable-sortable').click(function (e) {
                 if ($(this).hasClass('footable-sorted')) // asc
@@ -92,11 +93,41 @@
             $('.dvloader').fadeOut();
         });
 
+        function DeleteCancel() {
+            $('#Mdl_DeleteMAD').modal('hide');
+        }
+
+        function deleteCategory(ref, CategoryId) {
+            var Category = $(ref).parent().parent().children()[2].innerText;
+            $('#hdnDeleteId').val(CategoryId);
+            $('#dynamic_delbody').html("Are you sure you want to delete '" + Category + "' Category?");
+            $('#Mdl_DeleteMAD').modal('show');
+        }
+
+        function DeleteOk() {
+            var delId = $('#hdnDeleteId').val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteCategory","Category")',
+                data: "CategoryId=" + delId,
+                success: function (data) {
+                    if (data.success == true) {
+                        SearchFilter(1, '');
+                    }
+                    window.location.href = '@Url.Action("Index","Category")'
+                    $('.iCheck-helper').iCheck({
+                        checkboxClass: 'icheckbox_flat-red',
+                        radioClass: 'iradio_flat-red'
+                    });
+                }
+            });
+        }
+
         function SearchFilter(pageNum, Filter) {
 
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("BindProductList", "Product")',
+                url: '@Url.Action("BindSubCategoryList", "SubCategory")',
                 data: {
                     'pageNo': pageNum,
                     'whereQuery': '',
@@ -106,8 +137,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.status) {
-                        $("#divProduct").html(data.html);
-                        $("#divProductPaging").html(data.htmlPaging);
+                        $("#divCategory").html(data.html);
+                        $("#divCategoryPaging").html(data.htmlPaging);
                     }
 
                     $('.iCheck-helper').iCheck({
@@ -116,11 +147,11 @@
                     });
                     $('.iCheck-helper').on("click", function () {
 
-                        var ProductId = $(this).siblings()[0].id.split('_')[1];
-                        var ProductName = $(this).siblings()[0].id.split('_')[2];
+                        var CategoryId = $(this).siblings()[0].id.split('_')[1];
+                        var CategoryName = $(this).siblings()[0].id.split('_')[2];
                         var Status = $(this).siblings()[0].checked;
-                        $('#dynamic_body').html("Are you sure you want to Change the Status of '" + ProductName + "' Product ?");
-                        $('#hdnUpdateId').val(ProductId);
+                        $('#dynamic_body').html("Are you sure you want to Change the Status of '" + CategoryName + "' Category ?");
+                        $('#hdnUpdateId').val(CategoryId);
                         $('#hdnStatus').val(Status);
                         $('#Mdl_UpdateStatus').modal('show');
                     });

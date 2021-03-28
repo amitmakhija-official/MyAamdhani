@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'footable';
-    src: url('../fonts/footable/footable.eot');
-    src: url('../fonts/footable/footable.eot?#iefix') format('embedded-opentype'), url('../fonts/footable/footable.woff') format('woff'), url('../fonts/footable/footable.ttf') format('truetype'), url('../fonts/footable/footable.svg#footable') format('svg');
+    src: url('../footable/footable.eot');
+    src: url('../footable/footable.eot?#iefix') format('embedded-opentype'), url('../footable/footable.woff') format('woff'), url('../footable/footable.ttf') format('truetype'), url('../footable/footable.svg#footable') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -9,7 +9,7 @@
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   @font-face {
     font-family: 'footable';
-    src: url('fonts/footable.svg#footable') format('svg');
+    src: url('../footable/footable.svg#footable') format('svg');
     font-weight: normal;
     font-style: normal;
   }

@@ -206,8 +206,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomValidatorsController.cs" />
@@ -231,6 +233,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryEntityModel.cs" />
     <Compile Include="Models\City.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
@@ -270,9 +273,6 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductColor.cs">
-      <DependentUpon>MyAamdhani.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProductEntityModel.cs" />
     <Compile Include="Models\ProductRating.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
@@ -289,6 +289,7 @@
     <Compile Include="Models\SubCategory.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SubCategoryEntityModel.cs" />
     <Compile Include="Models\tbl_ClothStyle.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
@@ -302,9 +303,6 @@
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_Pattern.cs">
-      <DependentUpon>MyAamdhani.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_RelationsProductColor.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_SareeBorder.cs">
@@ -356,6 +354,7 @@
     <Content Include="Content\flag-icon.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\footable\footable.core.css" />
+    <Content Include="Content\footable\footable.svg" />
     <Content Include="Content\icheck\skins\flat\red%402x.png" />
     <Content Include="Content\icheck\skins\flat\red.css" />
     <Content Include="Content\icheck\skins\flat\red.png" />
@@ -1225,6 +1224,7 @@
     <Content Include="Content\Images\icon\quick-view.png" />
     <Content Include="Content\Images\icon\react.jpg" />
     <Content Include="Content\Images\icon\react.png" />
+    <Content Include="Content\Images\icon\search-icon-black.png" />
     <Content Include="Content\Images\icon\search.png" />
     <Content Include="Content\Images\icon\service1.png" />
     <Content Include="Content\Images\icon\service1.svg" />
@@ -3552,6 +3552,13 @@
     <Content Include="Models\MyAamdhani.edmx.diagram">
       <DependentUpon>MyAamdhani.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\footable\footable.eot" />
+    <Content Include="Content\footable\footable.woff" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Manage.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutManage.cshtml" />
+    <Content Include="Areas\Admin\Views\SubCategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SubCategory\Manage.cshtml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
