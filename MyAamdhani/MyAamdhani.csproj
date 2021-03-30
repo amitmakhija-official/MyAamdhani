@@ -212,6 +212,7 @@
     <Compile Include="Areas\Admin\Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CustomValidatorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -3602,6 +3603,7 @@
     <Content Include="Views\ShowProduct\ShowCategory.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\ShowProduct\ProductDetails.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3609,7 +3611,6 @@
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CustomValidators\" />
-    <Folder Include="Views\ssee\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
