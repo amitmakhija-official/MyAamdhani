@@ -47,6 +47,8 @@ namespace MyAamdhani.Models
         public virtual DbSet<tbl_ICRWithProduct> tbl_ICRWithProduct { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<SubCategory> SubCategories { get; set; }
+        public virtual DbSet<CartItem> CartItems { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
     
         public virtual ObjectResult<Sp_CheckAvailability_Result> Sp_CheckAvailability(string email, string phoneNumber)
         {
@@ -149,6 +151,91 @@ namespace MyAamdhani.Models
                 new ObjectParameter("Address", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Sp_UserManage", userIdParameter, emailParameter, userNameParameter, phoneNumberParameter, passwordParameter, userTypeParameter, menuRightsParameter, manageTypeParameter, firstNameParameter, lastNameParameter, fatherNameParameter, imageLogoParameter, dOBParameter, genderParameter, addressParameter);
+        }
+    
+        public virtual int Sp_ProductManage(Nullable<int> productId, string productName, string productDescription, Nullable<int> minOrder, Nullable<decimal> pricePerPiece, Nullable<decimal> mRPPerPiece, string hSNCode, string sKUId, Nullable<int> fabricId, Nullable<int> patternId, Nullable<int> sareeBorderId, Nullable<int> styleId, string occasion, string packageType, string sareeLength, Nullable<int> cateogryId, Nullable<int> subCategoryId, Nullable<bool> chkBlouse, Nullable<int> type, string manage_Type)
+        {
+            var productIdParameter = productId.HasValue ?
+                new ObjectParameter("ProductId", productId) :
+                new ObjectParameter("ProductId", typeof(int));
+    
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
+    
+            var productDescriptionParameter = productDescription != null ?
+                new ObjectParameter("ProductDescription", productDescription) :
+                new ObjectParameter("ProductDescription", typeof(string));
+    
+            var minOrderParameter = minOrder.HasValue ?
+                new ObjectParameter("MinOrder", minOrder) :
+                new ObjectParameter("MinOrder", typeof(int));
+    
+            var pricePerPieceParameter = pricePerPiece.HasValue ?
+                new ObjectParameter("PricePerPiece", pricePerPiece) :
+                new ObjectParameter("PricePerPiece", typeof(decimal));
+    
+            var mRPPerPieceParameter = mRPPerPiece.HasValue ?
+                new ObjectParameter("MRPPerPiece", mRPPerPiece) :
+                new ObjectParameter("MRPPerPiece", typeof(decimal));
+    
+            var hSNCodeParameter = hSNCode != null ?
+                new ObjectParameter("HSNCode", hSNCode) :
+                new ObjectParameter("HSNCode", typeof(string));
+    
+            var sKUIdParameter = sKUId != null ?
+                new ObjectParameter("SKUId", sKUId) :
+                new ObjectParameter("SKUId", typeof(string));
+    
+            var fabricIdParameter = fabricId.HasValue ?
+                new ObjectParameter("FabricId", fabricId) :
+                new ObjectParameter("FabricId", typeof(int));
+    
+            var patternIdParameter = patternId.HasValue ?
+                new ObjectParameter("PatternId", patternId) :
+                new ObjectParameter("PatternId", typeof(int));
+    
+            var sareeBorderIdParameter = sareeBorderId.HasValue ?
+                new ObjectParameter("SareeBorderId", sareeBorderId) :
+                new ObjectParameter("SareeBorderId", typeof(int));
+    
+            var styleIdParameter = styleId.HasValue ?
+                new ObjectParameter("StyleId", styleId) :
+                new ObjectParameter("StyleId", typeof(int));
+    
+            var occasionParameter = occasion != null ?
+                new ObjectParameter("Occasion", occasion) :
+                new ObjectParameter("Occasion", typeof(string));
+    
+            var packageTypeParameter = packageType != null ?
+                new ObjectParameter("PackageType", packageType) :
+                new ObjectParameter("PackageType", typeof(string));
+    
+            var sareeLengthParameter = sareeLength != null ?
+                new ObjectParameter("SareeLength", sareeLength) :
+                new ObjectParameter("SareeLength", typeof(string));
+    
+            var cateogryIdParameter = cateogryId.HasValue ?
+                new ObjectParameter("CateogryId", cateogryId) :
+                new ObjectParameter("CateogryId", typeof(int));
+    
+            var subCategoryIdParameter = subCategoryId.HasValue ?
+                new ObjectParameter("SubCategoryId", subCategoryId) :
+                new ObjectParameter("SubCategoryId", typeof(int));
+    
+            var chkBlouseParameter = chkBlouse.HasValue ?
+                new ObjectParameter("chkBlouse", chkBlouse) :
+                new ObjectParameter("chkBlouse", typeof(bool));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            var manage_TypeParameter = manage_Type != null ?
+                new ObjectParameter("Manage_Type", manage_Type) :
+                new ObjectParameter("Manage_Type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Sp_ProductManage", productIdParameter, productNameParameter, productDescriptionParameter, minOrderParameter, pricePerPieceParameter, mRPPerPieceParameter, hSNCodeParameter, sKUIdParameter, fabricIdParameter, patternIdParameter, sareeBorderIdParameter, styleIdParameter, occasionParameter, packageTypeParameter, sareeLengthParameter, cateogryIdParameter, subCategoryIdParameter, chkBlouseParameter, typeParameter, manage_TypeParameter);
         }
     }
 }

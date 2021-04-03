@@ -48,5 +48,20 @@ namespace MyAamdhani
             Women_Ethnic_Wear = 1
 
         }
+
+        public enum OrderStatus
+        {
+            Pending= 0,
+            Confirmed= 1,
+            Shipped= 2,
+            Dispatched = 3,
+            OutForDelivery = 4
+        }
+        public enum PaymentType
+        {
+            COD = 1,
+            DebitCard = 2,
+            UPI = 3,
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace MyAamdhani.Controllers
             {
                 var categories = Db.Categories
                     .Where(x => !x.IsDelete && x.IsActive)
-                    .OrderBy(x => x.CategoryName);
+                    .OrderBy(x => x.CategoryId);
                 var list = new List<CategoryItems>();
                 foreach (var items in categories)
                 {
@@ -68,6 +68,7 @@ namespace MyAamdhani.Controllers
 
                         if (!ReferenceEquals(product, null))
                         {
+                            var image = GetProductImageAndColors(product.Id);
                             var data = new SubCategoryItems
                             {
                                 DateAdded = product.DateAdded.GetValueOrDefault(),
@@ -75,7 +76,7 @@ namespace MyAamdhani.Controllers
                                 ProductId = product.Id,
                                 Name = product.Name,
                                 ProductUniqueKey = product.UniqueId.GetValueOrDefault(),
-                                ImagePath = "//placehold.it/150x60"
+                                ImagePath = image.Count()>0? image.FirstOrDefault()?.ImagePath :"//placehold.it/150x60"
                             };
                             list.Add(data);
                         }
@@ -90,21 +91,25 @@ namespace MyAamdhani.Controllers
             }
             return View(dataModel);
         }
+        [HttpGet]
         public ActionResult ShowCategory(int subCatId)
         {
             var dataModel = new SubCategoryViewModel();
             try
             {
+                var subCategory = Db.SubCategories.FirstOrDefault();
                 var Products = Db.Products.Where(x => x.SubCategoryId == subCatId).OrderBy(x => x.Name).ToList();
                 var list = new List<SubCategoryItems>();
                 foreach (var items in Products)
                 {
+                    var image = GetProductImageAndColors(items.Id);
                     var data = new SubCategoryItems
                     {
-                        DateAdded = items.DateAdded.GetValueOrDefault(),
+                        
+                    DateAdded = items.DateAdded.GetValueOrDefault(),
                         SubCategoryId = items.Id,
                         Name = items.Name,
-                        ImagePath = "//placehold.it/150x60",
+                        ImagePath = image.Count() > 0 ? image.FirstOrDefault()?.ImagePath : "//placehold.it/150x60",
                         ProductUniqueKey = items.UniqueId.GetValueOrDefault()
                     };
                     list.Add(data);
@@ -126,10 +131,14 @@ namespace MyAamdhani.Controllers
             var Details = new ProductDetails();
             try
             {
+                if (string.IsNullOrEmpty(prodKey))
+                    return View(Details);
                 var product = Db.Products.FirstOrDefault(x =>
                     x.UniqueId.ToString() == prodKey && x.IsActive == true && x.IsDelete == false);
                 if (!ReferenceEquals(product, null))
                 {
+                    var fabric= Db.tbl_Fabric.FirstOrDefault(x=>x.Fabric_Id==product.FabricId && x.IsActive==true);
+                    Details.Fabric = !ReferenceEquals(fabric, null) ? fabric.Fabric_Name : string.Empty;
                     Details.ImageList = GetProductImageAndColors(product.Id);
                     if (Details.ImageList.Count()>0)
                     {
@@ -159,8 +168,8 @@ namespace MyAamdhani.Controllers
             try
             {
                 var query =
-                    $@"select icr.ProductId, pc.colorcode [Color],icr.Image [ImagePath] from tbl_ICRWithProduct icr
-                        left join ProductColor pc on icr.colorid=pc.id where icr.productid={productId}";
+                    $@"select icr.ProductId, pc.color_code [Color],icr.Image [ImagePath] from tbl_ICRWithProduct icr
+                        left join tbl_Color pc on icr.colorid=pc.color_Id where icr.productid={productId}";
                 Con.Open();
                 imageList = Con.Query<Images>(query, commandTimeout: 0);
 

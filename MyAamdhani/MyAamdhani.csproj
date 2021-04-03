@@ -227,10 +227,15 @@
     <Compile Include="HelperClasses\DBHelper.cs" />
     <Compile Include="HelperClasses\EncryptDecrypt.cs" />
     <Compile Include="HelperClasses\Helpers.cs" />
+    <Compile Include="HelperClasses\RepoBase.cs" />
+    <Compile Include="HelperClasses\RepoHelper.cs" />
     <Compile Include="HelperClasses\SecurityClass.cs" />
     <Compile Include="HelperClasses\SessionHandler.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CampaignModel.cs" />
+    <Compile Include="Models\CartItem.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Category.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
@@ -271,6 +276,9 @@
       <DependentUpon>MyAamdhani.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAamdhaniCommon.cs" />
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>MyAamdhani.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Product.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
@@ -2723,6 +2731,7 @@
     <Content Include="fonts\ico\icofont.eot" />
     <Content Include="fonts\ico\icofont.ttf" />
     <Content Include="fonts\ico\icofont.woff" />
+    <Content Include="LoaderImage\Ellipsis.gif" />
     <Content Include="Models\MyAamdhani.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MyAamdhani.edmx</DependentUpon>
@@ -2742,6 +2751,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chat-menu.js" />
+    <Content Include="Scripts\custom-js\CommonFunction.js" />
+    <Content Include="Scripts\custom-js\ProductDetails.Js" />
     <Content Include="Scripts\date-picker.js" />
     <Content Include="Scripts\editor\ckeditor\ckeditor\plugins\scayt\CHANGELOG.md" />
     <Content Include="Scripts\editor\ckeditor\ckeditor\plugins\scayt\LICENSE.md" />
@@ -3532,6 +3543,7 @@
     <Content Include="Scripts\slick.js" />
     <Content Include="Scripts\snow.js" />
     <Content Include="Scripts\sticky-kit.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\timer.js" />
     <Content Include="Scripts\touchspin\input-groups.min.js" />
     <Content Include="Scripts\touchspin\touchspin.js" />

@@ -214,3 +214,37 @@ INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded]
 INSERT [dbo].[SubCategory] ([Id], [Name], [CategoryId], [ImagePath], [DateAdded], [DateUpdated], [IsActive], [IsDelete]) VALUES (12, 'Shirt', 1, '../Content/Images/img/1.jpg', CAST('2020-03-10T21:37:32.733' AS DateTime), CAST('2020-03-10T21:37:32.733' AS DateTime), 1, 0)
 
 -----------------------------------------------------------------------------
+
+
+---4 april 2021
+
+
+CREATE TABLE [dbo].[CartItem](
+	[Id] [int] IDENTITY(1,1) Primary Key NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[Quantity] [int] NOT NULL,
+	[Json] [nvarchar](max) NULL,
+	[UnitPrice] [decimal](20, 2) NULL,
+	[UserId] [int] NOT NULL,
+	[DateAdded] [datetime] NULL,
+	[DateModified] [datetime] NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsDelete] [bit] NOT NULL,
+)
+
+
+CREATE TABLE [dbo].[Orders](
+	[OrderId] [int] IDENTITY(1,1) primary key NOT NULL,
+	[UserId] [int] NOT NULL,
+	[Shipping Address] [nvarchar](max) NULL,
+	[BillingAddress] [nvarchar](max) NULL,
+	[Pincode] [bigint] NULL,
+	[Mobile] [nvarchar](max) NULL,
+	[DateAdded] [datetime] NULL,
+	[DateModified] [datetime] NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsDelete] [bit] NOT NULL,
+	[CancelReason] [nvarchar](max) NULL,
+	[Status] [int] NULL,
+	[PaymentType] [int] NULL,
+ )
