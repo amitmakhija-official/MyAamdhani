@@ -1,4 +1,4 @@
-﻿@model MyAamdhani.Models.Category
+﻿@model MyAamdhani.Models.tbl_Color
 
 @{
     ViewBag.Title = "Manage";
@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm("Manage", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Manage", "Color", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -17,17 +17,17 @@
                 <div class="col-lg-6">
                     <div class="page-header-left">
                         <h3>
-                            Add Category
+                            Add Color
                             <small>MyAamdhani Admin panel</small>
                         </h3>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <ol class="breadcrumb pull-right">
+                    @*<ol class="breadcrumb pull-right">
                         <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
                         <li class="breadcrumb-item">Digital</li>
                         <li class="breadcrumb-item active">Add Product</li>
-                    </ol>
+                    </ol>*@
                 </div>
             </div>
         </div>
@@ -54,27 +54,23 @@
                             </div>*@
 
             @Html.HiddenFor(model => model.UniqueId)
-            @Html.HiddenFor(model => model.CategoryId)
+            @Html.HiddenFor(model => model.Color_Id)
 
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="digital-add needs-validation">
                             <div class="form-group">
-                                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Category Name" } })
-                                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Color_Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Color Name" } })
+                                @Html.ValidationMessageFor(model => model.Color_Name, "", new { @class = "text-danger" })
 
                             </div>
 
 
-                            <label class="d-block" for="ImagePath">
-                                @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "dropify", @type = "file" } })
-                            </label>
-
-                            <span style="color:red;font-weight:bold">Note:- Upload Category Image to show the on Main Page.</span>
-                            @*<input type="file" id="image" />*@
-
-
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Color_Code, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Color Code" } })
+                                @Html.ValidationMessageFor(model => model.Color_Code, "", new { @class = "text-danger" })
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -108,20 +104,14 @@
 
 @section Scripts{
     <script type="text/javascript">
-        $(document).ready(function () {
-            $(".dropify").dropify();
+        $(document).ready(function () {            
         });
         function btnCancel() {
-            $("#CategoryName").val('');
-            $('.dropify-clear').click();
+            $("#Color_Name").val('');            
         }
 
-        $("#image").addClass('dropify');
-        $("#image").attr("data-height", 300);
-        var catId = $("#CategoryId").val();
-        if (catId > 0) {
-            $("#ImagePath").attr("data-default-file", '@Model.ImagePath');
-        }
+        
+    
 
         $('.dropify').dropify();
     </script>

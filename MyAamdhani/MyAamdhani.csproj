@@ -207,6 +207,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ColorController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubCategoryController.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Models\City.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ColorEntityModel.cs" />
     <Compile Include="Models\CommonFunctions.cs" />
     <Compile Include="Models\Country.cs">
       <DependentUpon>MyAamdhani.tt</DependentUpon>
@@ -362,6 +364,7 @@
     <Content Include="Content\icheck\skins\flat\_all.css" />
     <Content Include="Content\icheck\skins\line\line%402x.png" />
     <Content Include="Content\icofont.css" />
+    <Content Include="Content\Images\1.png" />
     <Content Include="Content\Images\2.jpg" />
     <Content Include="Content\Images\20.jpg" />
     <Content Include="Content\Images\21.jpg" />
@@ -3560,6 +3563,8 @@
     <Content Include="Areas\Admin\Views\Shared\_LayoutManage.cshtml" />
     <Content Include="Areas\Admin\Views\SubCategory\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SubCategory\Manage.cshtml" />
+    <Content Include="Areas\Admin\Views\Color\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Color\Manage.cshtml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -3608,6 +3613,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Content\Images\Category\" />
+    <Folder Include="Content\Images\SubCategory\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CustomValidators\" />

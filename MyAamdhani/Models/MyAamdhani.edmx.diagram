@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="MyAamdhaniModel.SEO" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.State" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.tbl_ClothStyle" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Color" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Fabric" Width="1.5" PointX="2.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Pattern" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyAamdhaniModel.tbl_SareeBorder" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
@@ -26,6 +25,7 @@
         <EntityTypeShape EntityType="MyAamdhaniModel.tbl_ICRWithProduct" Width="1.5" PointX="12.375" PointY="4.75" />
         <EntityTypeShape EntityType="MyAamdhaniModel.Category" Width="1.5" PointX="13.375" PointY="11.75" />
         <EntityTypeShape EntityType="MyAamdhaniModel.SubCategory" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MyAamdhaniModel.tbl_Color" Width="1.5" PointX="0.75" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

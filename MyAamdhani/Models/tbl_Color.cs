@@ -21,5 +21,6 @@ namespace MyAamdhani.Models
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
+        public Nullable<System.Guid> UniqueId { get; set; }
     }
 }

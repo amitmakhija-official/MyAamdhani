@@ -44,7 +44,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
                 string orderBy = "Order By ProductName asc";
                 string className = "footable-sorted";
                 if (pageNo != 1)
-                    skip = Convert.ToInt32(pageNo - 1) * 1;
+                    skip = (Convert.ToInt32(pageNo - 1) * 1) + 1;
 
                 string[] orderbyComp = orderBy.Split(' ');
 
@@ -96,7 +96,8 @@ namespace MyAamdhani.Areas.Admin.Controllers
                         html.Append("<tr>");
                         html.Append("<td style=\"width:10%\"><input type=\"hidden\" id = \"HDNTaskTab_" + Convert.ToString(Item.ProductId) + "\" value =\"" + Convert.ToInt32(Item.ProductId) + "\"/>" + sr + "</td>");
 
-                        html.Append("<td style=\"width:15%\"> <span>" + Item.Image + "</span></td>");//" + Item.Title + "
+                        html.Append("<td style=\"width:15%\"><img alt=\"" + Item.ProductName + "\" style=\"height:80px\" src =\"" + Item.Image + "\" /></td>");
+
                         html.Append("<td style=\"width:20%\"> <span>" + Item.ProductName + "</span></td>");
 
                         html.Append("<td class=\"product_detail_td\" style=\"width:15%\"><span>" + Item.Price + "</span></td>");
@@ -140,9 +141,37 @@ namespace MyAamdhani.Areas.Admin.Controllers
                 return Json(new { status = false });
             }
         }
+        public ActionResult GetSubCategoryAccCategory(int CategoryId)
+        {
+            List<SubCategory_GetAllName> subCategoryList = new List<SubCategory_GetAllName>();
+            try
+            {
+                var catId = Convert.ToInt32(CategoryId);
+                var subCategory = db.SubCategories
+                               .Where(t => t.CategoryId == catId).ToList();
+
+                if (subCategory.Count() > 0)
+                {
+                    foreach (var item in subCategory)
+                    {
+                        subCategoryList.Add(new SubCategory_GetAllName
+                        {
+                            SubCategoryId = item.SubCategoryId,
+                            SubCategoryName = item.SubCategoryName
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var error = ex.ToString();
+                return Json(new { status = false, list = new SubCategory_GetAllName() }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { status = true, list = subCategoryList }, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
-        public ActionResult Manage(Guid? Id)
+        public ActionResult Manage(Guid Id)
         {
             Product model = new Product();
 
@@ -180,17 +209,17 @@ namespace MyAamdhani.Areas.Admin.Controllers
             ViewBag.CategoryList = CategoryList;
 
             //SubCategory List Box
-            var SubCategoryDt = pem.GetSubCategory();
-            SelectList SubCategoryList = new SelectList((IEnumerable<object>)SubCategoryDt, "SubCategoryId", "SubCategoryName");
-            if (SubCategoryList.Count() > 0)
-            {
-                SubCategoryList = new SelectList((IEnumerable<object>)SubCategoryDt, "SubCategoryId", "SubCategoryName");
-            }
-            else
-            {
-                SubCategoryList = new SelectList((IEnumerable<object>)SubCategoryDt, "SubCategoryId", "SubCategoryName", SubCategoryList.Count() == 0 ? "0" : "Select Sub Category");
-            }
-            ViewBag.SubCategoryList = SubCategoryList;
+            //var SubCategoryDt = pem.GetSubCategory();
+            //SelectList SubCategoryList = new SelectList((IEnumerable<object>)SubCategoryDt, "SubCategoryId", "SubCategoryName");
+            //if (SubCategoryList.Count() > 0)
+            //{
+            //    SubCategoryList = new SelectList((IEnumerable<object>)SubCategoryDt, "SubCategoryId", "SubCategoryName");
+            //}
+            //else
+            //{
+            //    SubCategoryList = new SelectList((IEnumerable<object>)SubCategoryDt, "SubCategoryId", "SubCategoryName", SubCategoryList.Count() == 0 ? "0" : "Select Sub Category");
+            //}
+            //ViewBag.SubCategoryList = SubCategoryList;
 
 
             //Color List Box
@@ -246,6 +275,13 @@ namespace MyAamdhani.Areas.Admin.Controllers
             doc = JsonConvert.DeserializeXmlNode("{\"ImageId\":" + ImageIds + "}", "ImagesIds");
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(doc.InnerXml));
+                        
+            //DataTable workTable = new DataTable();
+
+            //DataColumn workCol = workTable.Columns.Add("ID", typeof(Int32));
+            
+
+            //workTable.Columns.Add("ImageName", typeof(String));
 
             // Checking no of files injected in Request object 
             var filesCount = Request.Files.Count;
@@ -288,32 +324,32 @@ namespace MyAamdhani.Areas.Admin.Controllers
                                         {
                                             var file = Request.Files[i];
 
-                                            string currentDateTime = DateTime.Now.ToString("dd/MM/yyyy/hh/mm/ss/tt");
-                                            currentDateTime = currentDateTime.Replace("/", "");
-                                            fileName = currentDateTime + Path.GetExtension(file.FileName);
+                                            var FolderName = "Products";
+                                            var FileName = ProductName.Replace(" ", "_") + "_" + DateTime.Now.Ticks;
+                                            var path = Server.MapPath("~/Content/Images/" + FolderName + "/" + FileName + "" + fileExtension);
 
-                                            var FolderName = "";
-
-                                            var path = Path.Combine(Server.MapPath("" + FolderName + "/"), fileName);
+                                            ds.Tables[0].Rows[i]["Image"] = "Content/Images/" + FolderName + "/" + FileName + "" + fileExtension;
 
                                             if (System.IO.File.Exists(path))
                                             {
                                                 System.IO.File.Delete(path);
                                             }
                                             file.SaveAs(path);
+
                                         }
                                     }
 
                                 }
                             }
                         }
-                    }                    
+                    }                   
+
 
                     var value = pem.ManageProduct(ProductName, ProductDescription, Convert.ToInt32(MinOrder), Convert.ToDecimal(PricePerPiece), Convert.ToDecimal(MRPPerPiece), HSNCode, SKUId, Convert.ToInt32(FabricId), Convert.ToInt32(PatternId), Convert.ToInt32(SareeBorderId), Convert.ToInt32(StyleId), Occasion, PackageType, SareeLength, Convert.ToInt32(CateogryId), Convert.ToInt32(SubCategoryId), Convert.ToBoolean(chkBlouse), ds.Tables[0]);
 
                     // Returns message that successfully uploaded  
-                    if(value)
-                    return Json("Product Added Successfully!");
+                    if (value)
+                        return Json("Product Added Successfully!");
                     else
                         return Json("Something went Wrong");
                 }
@@ -376,7 +412,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
                                         builder.Append("</div>");
                                         builder.Append("</div>");
                                         builder.Append("<div class=\"form-group\">");
-                                        builder.Append("<div class=\"m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated\">");                                                                              
+                                        builder.Append("<div class=\"m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated\">");
                                     }
                                 }
 

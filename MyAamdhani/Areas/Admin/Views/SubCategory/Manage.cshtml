@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Manage", "SubCategory", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -34,6 +34,9 @@
     </div>
     <!-- Container-fluid Ends-->
 
+    @Html.HiddenFor(model => model.UniqueId)
+    @Html.HiddenFor(model => model.CategoryId)
+
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row product-adding">
@@ -44,7 +47,7 @@
                             <div class="digital-add needs-validation">
                                 <div class="form-group">
                                     <label class="d-block" for="Category_Id">
-                                        @Html.DropDownListFor(model =>model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryList, "Select Sub Category", new { @class = "form-control" })
+                                        @Html.DropDownListFor(model =>model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryList, "Select Category", new { @class = "form-control" })
 
                                     </label>
                                 </div>
@@ -58,8 +61,8 @@
                     <div class="card-body">
                         <div class="digital-add needs-validation">
                             <div class="form-group">
-                                @Html.EditorFor(model => model.SubCategoryId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Sub Category Name" } })
-                                @Html.ValidationMessageFor(model => model.SubCategoryId, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.SubCategoryName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Sub Category Name" } })
+                                @Html.ValidationMessageFor(model => model.SubCategoryName, "", new { @class = "text-danger" })
 
                             </div>
 
@@ -122,6 +125,10 @@
         $("#image").addClass('dropify');
         $("#image").attr("data-height", 300);
         $("#image").attr("data-default-file", "http://www.adamanthr.com/wp-content/uploads/2016/04/dummy-man-570x570.png");
+        var subCatId = '@Model.SubCategoryId';
+        if (subCatId > 0) {
+            $("#ImagePath").attr("data-default-file", '@Model.ImagePath');
+        }
         $('.dropify').dropify();
     </script>
 }

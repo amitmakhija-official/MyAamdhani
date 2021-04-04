@@ -11,9 +11,9 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="page-header-left">
-                        <input type="text" id="CategorySearch" class="form-control" placeholder="Search..." style="max-width:100%;border-radius:10px" />
+                        <input type="text" id="SubCategorySearch" class="form-control" placeholder="Search..." style="max-width:100%;border-radius:10px" />
                         <span class="input-group-btn">
-                            <button class="btn" style="color:white;padding-right:10px;padding-left:10px;border-radius:10px" onclick="searchByCategory()">
+                            <button class="btn" style="color:white;padding-right:10px;padding-left:10px;border-radius:10px" onclick="searchBySubCategory()">
                                 <i class="search-icon-black"></i>
                             </button>
                         </span>
@@ -22,7 +22,7 @@
                 <div class="col-lg-4">
                 </div>
                 <div class="col-lg-4">
-                    <a class="btn-primary btn pull-right" href="@Url.Action("Manage", "Category",new { Id = Guid.Parse("00000000-0000-0000-0000-000000000000") })">Add New Category</a>
+                    <a class="btn-primary btn pull-right" href="@Url.Action("Manage", "SubCategory",new { Id = Guid.Parse("00000000-0000-0000-0000-000000000000") })">Add New Sub Category</a>
                     @*<ol class="breadcrumb pull-right">
                             <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
                             <li class="breadcrumb-item">Digital</li>
@@ -44,11 +44,11 @@
 
                     <div class="card-body">
 
-                        <div id="divCategory" class="table-responsive">
+                        <div id="divSubCategory" class="table-responsive">
 
                         </div>
                         <br />
-                        <div id="divCategoryPaging" style="padding:0px 10px 10px 0px;">
+                        <div id="divSubCategoryPaging" style="padding:0px 10px 10px 0px;">
                         </div>
                     </div>
                 </div>
@@ -75,11 +75,11 @@
             var msg = '@TempData["Msg"]';
             if (success == 'True') { Toastrtimer(true, msg); }
             else if (success == 'False') { Toastrtimer(false, msg); }
-            if ($('#CategorySearch').val() == '') {
+            if ($('#SubCategorySearch').val() == '') {
                 SearchFilter(1, '')
             }
-            else if ($('#CategorySearch').val() != '') {
-                SearchFilter(1, $('#CategorySearch').val())
+            else if ($('#SubCategorySearch').val() != '') {
+                SearchFilter(1, $('#SubCategorySearch').val())
             }
             $('th.footable-sortable').click(function (e) {
                 if ($(this).hasClass('footable-sorted')) // asc
@@ -97,10 +97,10 @@
             $('#Mdl_DeleteMAD').modal('hide');
         }
 
-        function deleteCategory(ref, CategoryId) {
-            var Category = $(ref).parent().parent().children()[2].innerText;
-            $('#hdnDeleteId').val(CategoryId);
-            $('#dynamic_delbody').html("Are you sure you want to delete '" + Category + "' Category?");
+        function deleteSubCategory(ref, SubCategoryId) {
+            var SubCategory = $(ref).parent().parent().children()[2].innerText;
+            $('#hdnDeleteId').val(SubCategoryId);
+            $('#dynamic_delbody').html("Are you sure you want to delete '" + SubCategory + "' SubCategory?");
             $('#Mdl_DeleteMAD').modal('show');
         }
 
@@ -108,13 +108,13 @@
             var delId = $('#hdnDeleteId').val();
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("DeleteCategory","Category")',
-                data: "CategoryId=" + delId,
+                url: '@Url.Action("DeleteSubCategory","SubCategory")',
+                data: "SubCategoryId=" + delId,
                 success: function (data) {
                     if (data.success == true) {
                         SearchFilter(1, '');
                     }
-                    window.location.href = '@Url.Action("Index","Category")'
+                    window.location.href = '@Url.Action("Index","SubCategory")'
                     $('.iCheck-helper').iCheck({
                         checkboxClass: 'icheckbox_flat-red',
                         radioClass: 'iradio_flat-red'
@@ -137,8 +137,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.status) {
-                        $("#divCategory").html(data.html);
-                        $("#divCategoryPaging").html(data.htmlPaging);
+                        $("#divSubCategory").html(data.html);
+                        $("#divSubCategoryPaging").html(data.htmlPaging);
                     }
 
                     $('.iCheck-helper').iCheck({
@@ -147,11 +147,11 @@
                     });
                     $('.iCheck-helper').on("click", function () {
 
-                        var CategoryId = $(this).siblings()[0].id.split('_')[1];
-                        var CategoryName = $(this).siblings()[0].id.split('_')[2];
+                        var SubCategoryId = $(this).siblings()[0].id.split('_')[1];
+                        var SubCategoryName = $(this).siblings()[0].id.split('_')[2];
                         var Status = $(this).siblings()[0].checked;
-                        $('#dynamic_body').html("Are you sure you want to Change the Status of '" + CategoryName + "' Category ?");
-                        $('#hdnUpdateId').val(CategoryId);
+                        $('#dynamic_body').html("Are you sure you want to Change the Status of '" + SubCategoryName + "' SubCategory ?");
+                        $('#hdnUpdateId').val(SubCategoryId);
                         $('#hdnStatus').val(Status);
                         $('#Mdl_UpdateStatus').modal('show');
                     });
@@ -180,6 +180,30 @@
                 }
             });
         };
+        function UpdateStatusOk() {
+            var updateId = $('#hdnUpdateId').val();
+            var status = $('#hdnStatus').val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateStatus","SubCategory")',
+                data: "SubCategoryId=" + updateId + "&status=" + status,
+                success: function (data) {
+                    var scs = data.success;
+                    var msg = data.msg;
+                    if (scs == true) {
+                        SearchFilter(1, '');
+                        //Toastrtimer(data.success, data.msg);
+                    }
+                    else {
+                        SearchFilter(1, '');
+                    }
+                    $('.iCheck-helper').iCheck({
+                        checkboxClass: 'icheckbox_flat-red',
+                        radioClass: 'iradio_flat-red'
+                    });
+                }
+            })
+        }
 
     </script>
 }

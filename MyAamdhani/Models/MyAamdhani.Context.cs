@@ -36,7 +36,6 @@ namespace MyAamdhani.Models
         public virtual DbSet<SEO> SEOs { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<tbl_ClothStyle> tbl_ClothStyle { get; set; }
-        public virtual DbSet<tbl_Color> tbl_Color { get; set; }
         public virtual DbSet<tbl_Fabric> tbl_Fabric { get; set; }
         public virtual DbSet<tbl_Pattern> tbl_Pattern { get; set; }
         public virtual DbSet<tbl_SareeBorder> tbl_SareeBorder { get; set; }
@@ -47,6 +46,7 @@ namespace MyAamdhani.Models
         public virtual DbSet<tbl_ICRWithProduct> tbl_ICRWithProduct { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<SubCategory> SubCategories { get; set; }
+        public virtual DbSet<tbl_Color> tbl_Color { get; set; }
     
         public virtual ObjectResult<Sp_CheckAvailability_Result> Sp_CheckAvailability(string email, string phoneNumber)
         {

@@ -7,10 +7,10 @@ using System.Web;
 
 namespace MyAamdhani.Models
 {
-    public class CategoryEntityModel
+    public class ColorEntityModel
     {
         MyAamdhaniEntities db = new MyAamdhaniEntities();
-        public int ManageCategory(Category model, string ManageType)
+        public int ManageColor(tbl_Color model, string ManageType)
         {
             int response = 0;
 
@@ -19,11 +19,11 @@ namespace MyAamdhani.Models
                 using (SqlConnection connection = new SqlConnection(db.Database.Connection.ConnectionString))
                 {
                     connection.Open();
-                    SqlCommand cmd = new SqlCommand("Sp_CategoryManage", connection);
-                    cmd.Parameters.AddWithValue("@CategoryId", model.CategoryId);
-                    cmd.Parameters.AddWithValue("@CategoryName", model.CategoryName);
-                    cmd.Parameters.AddWithValue("@ImagePath", model.ImagePath);
-                    cmd.Parameters.AddWithValue("@action", ManageType);
+                    SqlCommand cmd = new SqlCommand("Sp_ColorManage", connection);
+                    cmd.Parameters.AddWithValue("@ColorId", model.Color_Id);
+                    cmd.Parameters.AddWithValue("@ColorName", model.Color_Name);
+                    cmd.Parameters.AddWithValue("@ColorCode", model.Color_Code);
+                    cmd.Parameters.AddWithValue("@ManageType", ManageType);
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     response = cmd.ExecuteNonQuery();
@@ -36,10 +36,10 @@ namespace MyAamdhani.Models
                 using (SqlConnection connection = new SqlConnection(db.Database.Connection.ConnectionString))
                 {
                     connection.Open();
-                    SqlCommand cmd = new SqlCommand("Sp_CategoryManage", connection);
-                    cmd.Parameters.AddWithValue("@CategoryName", model.CategoryName);
-                    cmd.Parameters.AddWithValue("@ImagePath", model.ImagePath);
-                    cmd.Parameters.AddWithValue("@action", ManageType);
+                    SqlCommand cmd = new SqlCommand("Sp_ColorManage", connection);
+                    cmd.Parameters.AddWithValue("@ColorName", model.Color_Name);
+                    cmd.Parameters.AddWithValue("@ColorCode", model.Color_Code);
+                    cmd.Parameters.AddWithValue("@ManageType", ManageType);
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     response = cmd.ExecuteNonQuery();
@@ -49,7 +49,7 @@ namespace MyAamdhani.Models
             }
             return response;
         }
-        public List<SelectAllCategory> GetCategory(int skip, int take, string whereQuery, string SortQuery)
+        public List<SelectAllColor> GetAllColors(int skip, int take, string whereQuery, string SortQuery)
         {
             try
             {
@@ -57,13 +57,13 @@ namespace MyAamdhani.Models
                 using (SqlConnection connection = new SqlConnection(db.Database.Connection.ConnectionString))
                 {
                     connection.Open();
-                    using (SqlCommand cmd = new SqlCommand("Sp_CategoryManage", connection))
+                    using (SqlCommand cmd = new SqlCommand("Sp_ColorManage", connection))
                     {
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
                         adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                         adapter.SelectCommand.CommandTimeout = 0;
-                        adapter.SelectCommand.Parameters.Add(new SqlParameter("@action", "GetAllCategory"));
+                        adapter.SelectCommand.Parameters.Add(new SqlParameter("@action", "GetAllColors"));
                         adapter.SelectCommand.Parameters.Add(new SqlParameter("@WhereQuery", whereQuery));
                         adapter.SelectCommand.Parameters.Add(new SqlParameter("@SortQuery", SortQuery));
                         adapter.SelectCommand.Parameters.Add(new SqlParameter("@RowFrom", skip));
@@ -73,42 +73,42 @@ namespace MyAamdhani.Models
                     }
                     connection.Close();
                 }
-                List<SelectAllCategory> categoryList = new List<SelectAllCategory>();
-                categoryList = new List<SelectAllCategory>(from DataRow dr in dt.Rows
-                                                           select new SelectAllCategory()
-                                                           {
-                                                               CategoryId = Convert.ToInt32(dr["CategoryId"]),
-                                                               //DateAdded = Convert.ToDateTime(dr["NoticeDate"]).ToString("yyyy-MM-dd"),//Need to Convert.ToString() in App
-                                                               Image = Convert.ToString(dr["Image"]),
-                                                               CategoryName = Convert.ToString(dr["CategoryName"]),
-                                                               IsActive = Convert.ToBoolean(dr["IsActive"]),
-                                                               RCount = Convert.ToInt32(dr["RCount"]),
-                                                               rownum = Convert.ToInt32(dr["rownum"]),
-                                                               UniqueId = !string.IsNullOrEmpty(Convert.ToString(dr["UniqueId"])) ? Guid.Parse(Convert.ToString(dr["UniqueId"])) : Guid.Parse("00000000-0000-0000-0000-000000000000"),
-                                                           }).ToList();
-                return categoryList;
+                List<SelectAllColor> colorList = new List<SelectAllColor>();
+                colorList = new List<SelectAllColor>(from DataRow dr in dt.Rows
+                                                     select new SelectAllColor()
+                                                     {
+                                                         ColorId = Convert.ToInt32(dr["ColorId"]),
+                                                         //DateAdded = Convert.ToDateTime(dr["NoticeDate"]).ToString("yyyy-MM-dd"),//Need to Convert.ToString() in App
+                                                         ColorName = Convert.ToString(dr["ColorName"]),
+                                                         ColorCode = Convert.ToString(dr["ColorCode"]),
+                                                         IsActive = Convert.ToBoolean(dr["IsActive"]),
+                                                         RCount = Convert.ToInt32(dr["RCount"]),
+                                                         rownum = Convert.ToInt32(dr["rownum"]),
+                                                         UniqueId = !string.IsNullOrEmpty(Convert.ToString(dr["UniqueId"])) ? Guid.Parse(Convert.ToString(dr["UniqueId"])) : Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                                     }).ToList();
+                return colorList;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public Category CategorySelectCategoryById(Guid Id)
+        public tbl_Color ColorSelectColorById(Guid Id)
         {
-            Category model = new Category();
+            tbl_Color model = new tbl_Color();
             try
             {
                 DataTable dt = new DataTable();
                 using (SqlConnection connection = new SqlConnection(db.Database.Connection.ConnectionString))
                 {
                     connection.Open();
-                    using (SqlCommand cmd = new SqlCommand("Sp_CategoryManage", connection))
+                    using (SqlCommand cmd = new SqlCommand("Sp_ColorManage", connection))
                     {
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
                         adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                         adapter.SelectCommand.CommandTimeout = 0;
-                        adapter.SelectCommand.Parameters.Add(new SqlParameter("@action", "GetCategoryById"));
+                        adapter.SelectCommand.Parameters.Add(new SqlParameter("@action", "GetColorById"));
                         adapter.SelectCommand.Parameters.Add(new SqlParameter("@UniqueId", Id));
                         adapter.Fill(dt);
 
@@ -119,9 +119,9 @@ namespace MyAamdhani.Models
                 {
                     foreach (DataRow row in dt.Rows)
                     {
-                        model.CategoryId = Convert.ToInt32(row["CategoryId"]);
-                        model.CategoryName = Convert.ToString(row["CategoryName"]);
-                        model.ImagePath = Convert.ToString(row["Image"]);
+                        model.Color_Id = Convert.ToInt32(row["Color_Id"]);
+                        model.Color_Name = Convert.ToString(row["Color_Name"]);
+                        model.Color_Code = Convert.ToString(row["Color_Code"]);
                         model.IsActive = Convert.ToBoolean(row["IsActive"]);
                         model.UniqueId = !string.IsNullOrEmpty(Convert.ToString(row["UniqueId"])) ? Guid.Parse(Convert.ToString(row["UniqueId"])) : Guid.Parse("00000000-0000-0000-0000-000000000000");
 
@@ -135,15 +135,15 @@ namespace MyAamdhani.Models
             }
             return model;
         }
-        public bool UpdateStatus(int CategoryId, bool Status)
+        public bool UpdateStatus(int ColorId, bool Status)
         {
             try
             {
-                SqlParameter CategoryIdParam = new SqlParameter("@CategoryId", CategoryId);
+                SqlParameter ColorIdParam = new SqlParameter("@ColorId", ColorId);
                 SqlParameter IsActiveParam = new SqlParameter("@IsActive", Status);
                 SqlParameter actionParam = new SqlParameter("@action", "StatusUpdate");
                 int Response;
-                Response = db.Database.ExecuteSqlCommand("EXECUTE Sp_CategoryManage @CategoryId,@IsActive,@action", CategoryIdParam, IsActiveParam, actionParam);
+                Response = db.Database.ExecuteSqlCommand("EXECUTE Sp_ColorManage @ColorId,@IsActive,@action", ColorIdParam, IsActiveParam, actionParam);
                 if (Response > 0)
                     return true;
                 else
@@ -155,14 +155,14 @@ namespace MyAamdhani.Models
                 throw ex;
             }
         }
-        public int DeleteCategory(int CategoryId)
+        public int DeleteColor(int ColorId)
         {
             try
             {
-                SqlParameter categoryIdParam = new SqlParameter("@CategoryId", CategoryId);
-                SqlParameter actionParam = new SqlParameter("@actionParam", "Delete");
+                SqlParameter colorIdParam = new SqlParameter("@ColorId", ColorId);
+                SqlParameter actionParam = new SqlParameter("@action", "Delete");
                 int Response;
-                Response = db.Database.ExecuteSqlCommand("EXECUTE Sp_CategoryManage @CategoryId,@action", categoryIdParam, actionParam);
+                Response = db.Database.ExecuteSqlCommand("EXECUTE Sp_ColorManage @ColorId,@action", colorIdParam, actionParam);
                 return Response;
 
             }
@@ -173,12 +173,12 @@ namespace MyAamdhani.Models
             }
         }
     }
-   
-    public class SelectAllCategory
+
+    public class SelectAllColor
     {
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
-        public string Image { get; set; }
+        public int ColorId { get; set; }
+        public string ColorName { get; set; }
+        public string ColorCode { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         public int rownum { get; set; }

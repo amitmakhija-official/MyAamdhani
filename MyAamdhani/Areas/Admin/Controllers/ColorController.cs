@@ -12,9 +12,9 @@ using System.IO;
 
 namespace MyAamdhani.Areas.Admin.Controllers
 {
-    public class CategoryController : Controller
+    public class ColorController : Controller
     {
-        CategoryEntityModel cem = new CategoryEntityModel();
+        ColorEntityModel cem = new ColorEntityModel();
         private MyAamdhaniEntities db = new MyAamdhaniEntities();
         MyAamdhaniCommon common = new MyAamdhaniCommon();
 
@@ -27,23 +27,23 @@ namespace MyAamdhani.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult BindCategoryList(string whereQuery, string orderByQuery, int pageNo, string Search)
+        public ActionResult BindColorList(string whereQuery, string orderByQuery, int pageNo, string Search)
         {
             try
             {
 
                 if (!string.IsNullOrEmpty(Search))
-                    whereQuery = "and (C.CategoryName like like '%" + Search + "%')";
+                    whereQuery = "and (C.ColorName like like '%" + Search + "%')";
 
                 else
                     whereQuery = string.Empty;
 
                 StringBuilder htmlPaging = new StringBuilder();
-                List<SelectAllCategory> resSelectAllCategory = new List<SelectAllCategory>();
+                List<SelectAllColor> resSelectAllColor = new List<SelectAllColor>();
                 int skip = 0;
                 int take = 10;
 
-                string orderBy = "Order By CategoryName asc";
+                string orderBy = "Order By ColorName asc";
                 string className = "footable-sorted";
                 if (pageNo != 1)
                     skip = (Convert.ToInt32(pageNo - 1) * 1) + 1;
@@ -63,10 +63,10 @@ namespace MyAamdhani.Areas.Admin.Controllers
                         className = "footable-sorted";
                 }
 
-                resSelectAllCategory = cem.GetCategory(skip, take, whereQuery, orderBy).ToList();
+                resSelectAllColor = cem.GetAllColors(skip, take, whereQuery, orderBy).ToList();
 
 
-                DataTable dt = common.ToDataTable(resSelectAllCategory);
+                DataTable dt = common.ToDataTable(resSelectAllColor);
                 StringBuilder html = new StringBuilder();
 
                 html.Append("<table class=\"footable table toggle-arrow-tiny no-paging table-hover table-bordered\" data-paging=\"false\">");
@@ -77,8 +77,8 @@ namespace MyAamdhani.Areas.Admin.Controllers
 
                 html.Append("<th data-sort-ignore=\"true\" style=\"width:10%\">Sr. No.</th>");
 
-                html.Append("<th data-sort-ignore=\"true\" style=\"width:20%\">Image</th>");
-                if (orderbyComp[2] == "ProductName") { html.Append("<th id=\"ProductName\" class=\"" + className + "\"style=\"width:20%\">Product Name</th>"); } else { html.Append("<th id=\"ProductName\" style=\"width:20%\">Product Name</th>"); }
+                html.Append("<th data-sort-ignore=\"true\" style=\"width:20%\">Color Code</th>");
+                if (orderbyComp[2] == "ColorName") { html.Append("<th id=\"ColorName\" class=\"" + className + "\"style=\"width:20%\">Color Name</th>"); } else { html.Append("<th id=\"ColorName\" style=\"width:20%\">Color Name</th>"); }
                 //html.Append("<th data-sort-ignore=\"true\" style=\"width:15%\">Price</th>");
                 //html.Append("<th data-sort-ignore=\"true\" style=\"width:15%\">Quantity</th>");
                 html.Append("<th data-sort-ignore=\"true\" style=\"width:10%;text-align:center\">Active</th>");
@@ -89,29 +89,30 @@ namespace MyAamdhani.Areas.Admin.Controllers
 
                 html.Append("<tbody>");
 
-                if (resSelectAllCategory != null && resSelectAllCategory.Count() > 0)
+                if (resSelectAllColor != null && resSelectAllColor.Count() > 0)
                 {
                     int sr = 0;
-                    foreach (var Item in resSelectAllCategory)
+                    foreach (var Item in resSelectAllColor)
                     {
                         sr += 1;
                         html.Append("<tr>");
-                        html.Append("<td style=\"width:10%\"><input type=\"hidden\" id = \"HDNTaskTab_" + Convert.ToString(Item.CategoryId) + "\" value =\"" + Convert.ToInt32(Item.CategoryId) + "\"/>" + sr + "</td>");
+                        html.Append("<td style=\"width:10%\"><input type=\"hidden\" id = \"HDNTaskTab_" + Convert.ToString(Item.ColorId) + "\" value =\"" + Convert.ToInt32(Item.ColorId) + "\"/>" + sr + "</td>");
 
-                        html.Append("<td style=\"width:15%\"><img style=\"height:80px\" alt=\"Category Image\" src =\"" + Item.Image + "\" /></td>");//" + Item.Title + "
-                        html.Append("<td style=\"width:20%\"> <span>" + Item.CategoryName + "</span></td>");
+                        html.Append("<td style=\"width:20%\"> <span>" + Item.ColorCode + "</span></td>");
+
+                        html.Append("<td style=\"width:20%\"> <span>" + Item.ColorName + "</span></td>");
 
                         Item.IsActive = Convert.ToString(Item.IsActive) == null || Convert.ToString(Item.IsActive) == "" || Convert.ToInt32(Item.IsActive) == 0 ? false : true;
 
                         html.Append("<td style=\"text-align:center\">");
                         if (Item.IsActive)
-                            html.Append("<input class=\"iCheck-helper\" type = \"checkbox\" name=\"chkActivation\" onclick=\"UpdateStatus(" + Item.CategoryId + ",'" + Item.IsActive + "')\" type = \"checkbox\" checked id=\"chk_" + Item.CategoryId + "_" + Item.CategoryName + "\">");
+                            html.Append("<input class=\"iCheck-helper\" type = \"checkbox\" name=\"chkActivation\" onclick=\"UpdateStatus(" + Item.ColorId + ",'" + Item.IsActive + "')\" type = \"checkbox\" checked id=\"chk_" + Item.ColorId + "_" + Item.ColorName + "\">");
                         else
-                            html.Append("<input class=\"iCheck-helper\" type = \"checkbox\" name=\"chkActivation\" onclick=\"UpdateStatus(" + Item.CategoryId + ",'" + Item.IsActive + "')\" type = \"checkbox\" id=\"chk_" + Item.CategoryId + "_" + Item.CategoryName + "\">");
+                            html.Append("<input class=\"iCheck-helper\" type = \"checkbox\" name=\"chkActivation\" onclick=\"UpdateStatus(" + Item.ColorId + ",'" + Item.IsActive + "')\" type = \"checkbox\" id=\"chk_" + Item.ColorId + "_" + Item.ColorName + "\">");
                         //html.Append("<label class=\"iCheck-helper ichecklabel\"></label>");
                         html.Append("</td>");
                         // End Check Box
-                        html.Append("<td class=\"cstm_action_row\" style=\"width:15%;text-align:center\"><a href=\"Manage/" + Item.UniqueId + "\" class=\"btn btn-primary tooltips\" data-powertip=\"Edit\"><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></a>&nbsp;<a onclick=\"deleteCategory(this," + Item.CategoryId + ")\" class=\"btn btn-danger tooltips\" data-powertip=\"Delete\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>");
+                        html.Append("<td class=\"cstm_action_row\" style=\"width:15%;text-align:center\"><a href=\"Manage/" + Item.UniqueId + "\" class=\"btn btn-primary tooltips\" data-powertip=\"Edit\"><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></a>&nbsp;<a onclick=\"deleteColor(this," + Item.ColorId + ")\" class=\"btn btn-danger tooltips\" data-powertip=\"Delete\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>");
 
                     }
                 }
@@ -128,7 +129,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
                 html.Append("</table>");
                 var PaginHtml = string.Empty;
 
-                if (resSelectAllCategory.Count() > 0)
+                if (resSelectAllColor.Count() > 0)
                     PaginHtml = common.GetPaging(dt, pageNo, "", Search);
                 return Json(new { status = true, html = html.ToString(), htmlPaging = PaginHtml.ToString() });
             }
@@ -166,23 +167,23 @@ namespace MyAamdhani.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryId,CategoryName,IsActive,IsDelete,DateAdded,DateUpdated,ImagePath")] Category category)
+        public ActionResult Create([Bind(Include = "ColorId,ColorName,IsActive,IsDelete,DateAdded,DateUpdated")] tbl_Color model)
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                db.tbl_Color.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(model);
         }
 
         [HttpGet]
         [Route("{Id?}")]
         public ActionResult Manage(Guid Id)
         {
-            Category model = new Category();
+            tbl_Color model = new tbl_Color();
             if (Id == null)
             {
                 return HttpNotFound();
@@ -192,8 +193,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
             if (Id != null && Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
                 ViewBag.PageType = "Edit";
-                model = cem.CategorySelectCategoryById(Id);
-                model.ImagePath = MyAamdhaniCommon.siteURL + "/" + model.ImagePath;
+                model = cem.ColorSelectColorById(Id);
                 return View(model);
             }
             else if (Id == Guid.Parse("00000000-0000-0000-0000-000000000000") && Id != null)
@@ -211,98 +211,63 @@ namespace MyAamdhani.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("{id?}")]
-        public ActionResult Manage([Bind(Include = "UniqueId,CategoryId,CategoryName,ImagePath")] Category model, HttpPostedFileBase file)
+        public ActionResult Manage([Bind(Include = "UniqueId,ColorId,ColorName,ColorCode")] tbl_Color model)
         {
             if (ModelState.IsValid)
             {
-                var filesCount = Request.Files.Count;
-                if (Request.Files.Count > 0)
+                try
                 {
-                    try
+
+                    if (model.Color_Id == 0)
                     {
-                        //  Get all files from Request object  
-                        int sizeofFile = 0;
-                        string fileSize = "";
-                        string fileExtension = "";
-
-                        if (Request.Files.Count > 0)
-                        {
-                            HttpFileCollectionBase files = Request.Files;
-                            if (files[0].ContentLength > 0)
-                            {
-                                sizeofFile = (files[0].ContentLength / 1024);
-                                if (sizeofFile > 1024)
-                                    fileSize = (sizeofFile / 1024).ToString() + " MB";
-                                else
-                                    fileSize = fileSize.ToString() + " KB";
-
-                                fileExtension = Path.GetExtension(files[0].FileName);
-                                
-                                if ((sizeofFile < 1024 * 20) && (fileExtension == ".png" || fileExtension == ".jpg" || fileExtension == ".jpeg" || fileExtension == ".tiff" || fileExtension == ".gif" || fileExtension == ".GIF" || fileExtension == ".PNG" || fileExtension == ".JPEG" || fileExtension == ".TIFF" || fileExtension == ".JPG" || fileExtension == ".JPEG"))
-                                {
-                                    var FolderName = "Category";
-                                    var FileName = model.CategoryName.Replace(" ", "_")+"_"+DateTime.Now.Ticks;
-                                    var path = Server.MapPath("~/Content/Images/" + FolderName + "/"+ FileName + "" + fileExtension);
-
-                                    if (System.IO.File.Exists(path))
-                                    {
-                                        System.IO.File.Delete(path);
-                                    }
-                                    files[0].SaveAs(path);
-                                    model.ImagePath = "Content/" + FolderName + "/" + FileName + "" + fileExtension;
-                                }
-                            }
-                        }
-                        if (model.CategoryId == 0)
-                        {
-                            int response = cem.ManageCategory(model, "Insert");
-                            if (response > 0)
-                                TempData["SuccessMsg"] = "Category Added Successfully";
-                        }
-                        else
-                        {
-                            int response = cem.ManageCategory(model, "Update");
-                            if (response > 0)
-                                TempData["SuccessMsg"] = "Category Update Successfully";
-                        }
-                        //db.Entry(category.State = System.Data.Entity.EntityState.Modified;
-                        //db.SaveChanges();
-                        return RedirectToAction("Index");
-
+                        int response = cem.ManageColor(model, "Insert");
+                        if (response > 0)
+                            TempData["SuccessMsg"] = "Color Added Successfully";
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        return View();
+                        int response = cem.ManageColor(model, "Update");
+                        if (response > 0)
+                            TempData["SuccessMsg"] = "Category Update Successfully";
                     }
+                    //db.Entry(category.State = System.Data.Entity.EntityState.Modified;
+                    //db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+                catch (Exception ex)
+                {
+                    return View();
                 }
             }
             return View();
         }
 
-        // GET: Admin/Categories/Delete/5
-        public ActionResult DeleteCategory(int CategoryId)
+
+        // GET: Admin/Color/Delete/5
+        public ActionResult DeleteColor(int ColorId)
         {
-            if (Convert.ToString(CategoryId) == null)
+            if (ColorId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             using (var db = new MyAamdhaniEntities())
             {
-                if (CategoryId != 0)
+                if (ColorId != 0)
                 {
-                    int Response = cem.DeleteCategory(CategoryId);
+                    int Response = cem.DeleteColor(ColorId);
 
                     if (Response > 0)
                     {
                         TempData["SuccessMsg"] = true;
-                        TempData["Msg"] = "Category Deleted Sucessfully";
-                        return Json(new { sucess = true, msg = "Category Deleted Successfully" });
+                        TempData["Msg"] = "Color Deleted Sucessfully";
+                        return Json(new { sucess = true, msg = "Color Deleted Successfully" });
                     }
                     else
                     {
                         TempData["SuccessMsg"] = false;
-                        TempData["Msg"] = "Category is in use can't Deleted";
-                        return Json(new { sucess = false, msg = "Category is in use can't Deleted" });
+                        TempData["Msg"] = "Color is in use can't Deleted";
+                        return Json(new { sucess = false, msg = "Color is in use can't Deleted" });
                     }
                 }
                 else
@@ -313,20 +278,21 @@ namespace MyAamdhani.Areas.Admin.Controllers
                 }
             }
         }
+
         [HttpPost]
-        public ActionResult UpdateStatus(int CategoryId, bool status)
+        public ActionResult UpdateStatus(int ColorId, bool status)
         {
             try
             {
                 using (var db = new MyAamdhaniEntities())
                 {
-                    if (CategoryId != 0)
+                    if (ColorId != 0)
                     {
-                        bool response = cem.UpdateStatus(CategoryId, status);
+                        bool response = cem.UpdateStatus(ColorId, status);
 
                         if (response)
                         {
-                            return Json(new { success = true, msg = "Category Updated Successfully" });
+                            return Json(new { success = true, msg = "Color Updated Successfully" });
                         }
                         else
                         {
@@ -345,6 +311,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
                 throw;
             }
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

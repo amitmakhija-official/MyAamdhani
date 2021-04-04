@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -10,6 +11,7 @@ namespace MyAamdhani.Models
 {
     public class MyAamdhaniCommon
     {
+        public static string siteURL = ConfigurationManager.AppSettings["siteURL"];
         public DataTable ToDataTable<T>(List<T> items)
         {
             try

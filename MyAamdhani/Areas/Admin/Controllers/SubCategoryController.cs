@@ -17,7 +17,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
         SubCategoryEntityModel scem = new SubCategoryEntityModel();
         private MyAamdhaniEntities db = new MyAamdhaniEntities();
         MyAamdhaniCommon common = new MyAamdhaniCommon();
-        SubCategory model = new SubCategory();
+        ProductEntityModel pem = new ProductEntityModel();
 
         // GET: Admin/Categories
         public ActionResult Index()
@@ -46,7 +46,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
                 string orderBy = "Order By SubCategoryName asc";
                 string className = "footable-sorted";
                 if (pageNo != 1)
-                    skip = Convert.ToInt32(pageNo - 1) * 1;
+                    skip = (Convert.ToInt32(pageNo - 1) * 1) + 1;
 
                 string[] orderbyComp = orderBy.Split(' ');
 
@@ -79,7 +79,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
 
                 html.Append("<th data-sort-ignore=\"true\" style=\"width:20%\">Image</th>");
                 if (orderbyComp[2] == "ProductName") { html.Append("<th id=\"SubCategoryName\" class=\"" + className + "\"style=\"width:20%\">Sub Category Name</th>"); } else { html.Append("<th id=\"SubCategoryName\" style=\"width:20%\">Sub Category Name</th>"); }
-                
+
                 html.Append("<th data-sort-ignore=\"true\" style=\"width:10%;text-align:center\">Active</th>");
                 html.Append("<th data-sort-ignore=\"true\" style=\"width:15%;text-align:center\">Action</th>");
 
@@ -97,7 +97,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
                         html.Append("<tr>");
                         html.Append("<td style=\"width:10%\"><input type=\"hidden\" id = \"HDNTaskTab_" + Convert.ToString(Item.SubCategoryId) + "\" value =\"" + Convert.ToInt32(Item.SubCategoryId) + "\"/>" + sr + "</td>");
 
-                        html.Append("<td style=\"width:15%\"> <span>" + Item.Image + "</span></td>");//" + Item.Title + "
+                        html.Append("<td style=\"width:15%\"><img alt=\"Sub Category Image\" style=\"height:80px\" src =\"" + Item.Image + "\" /></td>");
                         html.Append("<td style=\"width:20%\"> <span>" + Item.SubCategoryName + "</span></td>");
 
                         Item.IsActive = Convert.ToString(Item.IsActive) == null || Convert.ToString(Item.IsActive) == "" || Convert.ToInt32(Item.IsActive) == 0 ? false : true;
@@ -139,44 +139,6 @@ namespace MyAamdhani.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Categories/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
-        }
-
-        // GET: Admin/Categories/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Admin/Categories/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryId,CategoryName,IsActive,IsDelete,DateAdded,DateUpdated,ImagePath")] Category category)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Categories.Add(category);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(category);
-        }
-
         [HttpGet]
         [Route("{Id?}")]
         public ActionResult Manage(Guid Id)
@@ -186,15 +148,44 @@ namespace MyAamdhani.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.PageType = "Add";
-
+            SubCategory model = new SubCategory();
             if (Id != null && Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
+                //Category List Box
+                var CategoryDt = pem.GetCategory();
+                SelectList CategoryList = new SelectList((IEnumerable<object>)CategoryDt, "CategoryId", "CategoryName");
+                if (CategoryList.Count() > 0)
+                {
+                    CategoryList = new SelectList((IEnumerable<object>)CategoryDt, "CategoryId", "CategoryName");
+                }
+                else
+                {
+                    CategoryList = new SelectList((IEnumerable<object>)CategoryDt, "CategoryId", "CategoryName", CategoryList.Count() == 0 ? "0" : "Select  Category");
+                }
+                ViewBag.CategoryList = CategoryList;
+
                 ViewBag.PageType = "Edit";
                 model = scem.SubCategorySelectSubCategoryById(Id);
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View(model);
             }
+            else if (Id != null && Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            {
+                //Category List Box
+                var CategoryDt = pem.GetCategory();
+                SelectList CategoryList = new SelectList((IEnumerable<object>)CategoryDt, "CategoryId", "CategoryName");
+                if (CategoryList.Count() > 0)
+                {
+                    CategoryList = new SelectList((IEnumerable<object>)CategoryDt, "CategoryId", "CategoryName");
+                }
+                else
+                {
+                    CategoryList = new SelectList((IEnumerable<object>)CategoryDt, "CategoryId", "CategoryName", CategoryList.Count() == 0 ? "0" : "Select  Category");
+                }
+                ViewBag.CategoryList = CategoryList;
 
-            return View(model);
+                return View(model);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // POST: Admin/Categories/Edit/5
@@ -203,7 +194,7 @@ namespace MyAamdhani.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("{id?}")]
-        public ActionResult Manage([Bind(Include = "UniqueId,SubCategoryId,CategoryId,SubCategoryName,ImagePath")] SubCategory Subcategory, HttpPostedFileBase file)
+        public ActionResult Manage([Bind(Include = "UniqueId,SubCategoryId,CategoryId,SubCategoryName,ImagePath")] SubCategory model, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -216,7 +207,6 @@ namespace MyAamdhani.Areas.Admin.Controllers
                         int sizeofFile = 0;
                         string fileSize = "";
                         string fileExtension = "";
-                        string fileName = "";
                         if (Request.Files.Count > 0)
                         {
                             HttpFileCollectionBase files = Request.Files;
@@ -231,15 +221,16 @@ namespace MyAamdhani.Areas.Admin.Controllers
 
                                 if ((sizeofFile < 1024 * 20) && (fileExtension == ".png" || fileExtension == ".jpg" || fileExtension == ".jpeg" || fileExtension == ".tiff" || fileExtension == ".gif" || fileExtension == ".GIF" || fileExtension == ".PNG" || fileExtension == ".JPEG" || fileExtension == ".TIFF" || fileExtension == ".JPG" || fileExtension == ".JPEG"))
                                 {
-                                    var FolderName = "";
-
-                                    var path = Path.Combine(Server.MapPath("" + FolderName + "/"), fileName);
+                                    var FolderName = "SubCategory";
+                                    var FileName = model.SubCategoryName.Replace(" ", "_") + "_" + DateTime.Now.Ticks;
+                                    var path = Server.MapPath("~/Content/Images/" + FolderName + "/" + FileName + "" + fileExtension);
 
                                     if (System.IO.File.Exists(path))
                                     {
                                         System.IO.File.Delete(path);
                                     }
                                     file.SaveAs(path);
+                                    model.ImagePath = "Content/" + FolderName + "/" + FileName + "" + fileExtension;
                                 }
                             }
                         }
@@ -301,6 +292,38 @@ namespace MyAamdhani.Areas.Admin.Controllers
                     TempData["Msg"] = "Something went Wrong";
                     return Json(new { sucess = false, msg = "Something went Wrong" });
                 }
+            }
+        }
+        [HttpPost]
+        public ActionResult UpdateStatus(int SubCategoryId, bool status)
+        {
+            try
+            {
+                using (var db = new MyAamdhaniEntities())
+                {
+                    if (SubCategoryId != 0)
+                    {
+                        bool response = scem.UpdateStatus(SubCategoryId, status);
+
+                        if (response)
+                        {
+                            return Json(new { success = true, msg = "Sub Category Updated Successfully" });
+                        }
+                        else
+                        {
+                            return Json(new { success = false, msg = "Something Went Wrong" });
+                        }
+                    }
+                    else
+                    {
+                        return Json(new { success = false, msg = "Something Went Wrong" });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 

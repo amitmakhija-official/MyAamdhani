@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <label class="d-block" for="Category_Id">
                                     @Html.DropDownList("Select Category", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "Select Category", new { @class = "form-control", @id = "Category_Id" })
-
+                                    <span id="CategoryError" class="text-danger" style="display:none"></span>
                                 </label>
                                 @*<label class="col-form-label"><span>*</span> Categories</label>
                                     <select class="custom-select" required="">
@@ -53,6 +53,12 @@
                                     <option value="4">Application</option>
                                     <option value="5">Websites</option>
                                     </select>*@
+                            </div>
+                            <div class="form-group">
+                                <label class="d-block" for="SubCategory_Id">
+                                    @Html.DropDownList("Select Sub-Category", new List<SelectListItem> { }, "Select Sub-Category", new { @class = "form-control", @id = "SubCategory_Id" })
+                                    <span id="SubCategoryError" class="text-danger" style="display:none"></span>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -74,21 +80,17 @@
 
 
 
-                            <div class="form-group">
-                                <label class="d-block" for="SubCategory_Id">
-                                    @Html.DropDownList("Select Sub-Category", (IEnumerable<SelectListItem>)ViewBag.SubCategoryList, "Select Sub-Category", new { @class = "form-control", @id = "SubCategory_Id" })
 
-                                </label>
-                                @*<label class="col-form-label"><span>*</span> Sub-Categories</label>
-                                    <select class="custom-select" required="">
-                                    <option value="">--Select--</option>
-                                    <option value="1">eBooks</option>
-                                    <option value="2">Graphic Design</option>
-                                    <option value="3">3D Impact</option>
-                                    <option value="4">Application</option>
-                                    <option value="5">Websites</option>
-                                    </select>*@
-                            </div>
+                            @*<label class="col-form-label"><span>*</span> Sub-Categories</label>
+                                <select class="custom-select" required="">
+                                <option value="">--Select--</option>
+                                <option value="1">eBooks</option>
+                                <option value="2">Graphic Design</option>
+                                <option value="3">3D Impact</option>
+                                <option value="4">Application</option>
+                                <option value="5">Websites</option>
+                                </select>*@
+
 
                             <div class="form-group">
                                 <label class="col-form-label">Sort Summary</label>
@@ -206,9 +208,9 @@
                                         <select id="NoColor" style="width:968px;" onchange="showImages()" class="form-control">
                                             <option value="1" selected="selected">1</option>
                                             @for (int i = 2; i <= 12; i++)
-                                        {
-                                        <option value="@i">@i</option>
-                                        }
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
                                         </select>
                                     </label>
                                 </div>
@@ -447,159 +449,215 @@
 <input type="hidden" id="hdnColorValue" />
 
 @section Scripts{
-<script type="text/javascript">
-            $(document).ready(function () {
-                var ColorValue = $('#NoColor').val();
-                var formData = new FormData();
-                formData.append("ColorValue", ColorValue);
-                if (ColorValue == 0) {
-                    $("#divShowUploadImages").addClass("hide");
-                }
-                else {
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("ShowDivImages","Product")',
-                        data: formData,
-                        dataType: 'json',
-                        contentType: false,
-                        processData: false,
-                        success: function (data) {
-                            if (data.status) {
-                                $("#divShowUploadImages").addClass("show");
-                                $('#divShowUploadImages').html(data.html);
-                                $(".dropify").dropify();
-                            }
-                        }
-
-                    });
-                }
-                $(".dropify").dropify();
-            });
-            function showMe() {
-                debugger;
-                //var img1 = $("#imgupload1").get(0).files;
-                //var img1 = $("#imgupload2").get(0).files;
-                //var img1 = $("#imgupload3").get(0).files;
-                //var img1 = $("#imgupload4").get(0).files;
-                //var img1 = $("#imgupload5").get(0).files;
-
-                // Create FormData object
-                var fileData = new FormData();
-
-                var tempColorIdArray = new Array();
-
-                var TempArr = [];
-                var ColorValue = $('#NoColor').val();
-                $('#hdnColorValue').val(1);
-                if (ColorValue > 0) {
-                    // Looping over all files and add it to FormData object
-                    for (var i = 1; i <= ColorValue; i++) {
-                        if ($("#imgupload" + i).get(0).files.length == 0 && $('#Color_Id' + i).val() == 0) {
-                            console.log('No Files Selected');
-                            $('#hdnColorValue').val(0);
-                        }
-                    }
-                }
-
-                if ($('#hdnColorValue').val() == 1) {
-                    // Looping over all files and add it to FormData object
-                    for (var i = 1; i <= ColorValue; i++) {
-                        if ($("#imgupload" + i).get(0).files.length != 0 && $('#Color_Id' + i).val() != 0) {
-                            var colorId = $('#Color_Id' + i).val();
-                            var qty = $('#Qty_Id' + i).val();
-                            var fileUpload = $("#imgupload" + i).get(0);
-                            var files = fileUpload.files;
-                            fileData.append('ProductImages', files[0]);
-
-                            var tmp = {
-                                'ColorId': colorId,
-                                'Image': files[0].name,
-                            };
-                            TempArr.push(tmp);
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ColorValue = $('#NoColor').val();
+            var formData = new FormData();
+            formData.append("ColorValue", ColorValue);
+            if (ColorValue == 0) {
+                $("#divShowUploadImages").addClass("hide");
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ShowDivImages","Product")',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status) {
+                            $("#divShowUploadImages").addClass("show");
+                            $('#divShowUploadImages').html(data.html);
+                            $(".dropify").dropify();
                         }
                     }
 
-                    //var ColorIdJoin = tempColorIdArray.join(",");
-                    //var ColorNameJoin = tempColorNameArray.join(",");
-                    fileData.append("ProductName", $('#txt_productName').val());
-                    fileData.append("ProductDescription", $('#product_Description').val());
-                    fileData.append("ImageIds", JSON.stringify(TempArr));
-                    fileData.append("MinOrder", $('#txt_minOrder').val());
-                    fileData.append("PricePerPiece", $('#txt_priceperPiece').val());
-                    fileData.append("MRPPerPiece", $('#txt_mrpperPiece').val());
-                    fileData.append("HSNCode", $('#txt_hsnCode').val());
-                    fileData.append("SKUId", $('#txt_skuId').val());
-                    fileData.append("FabricId", $('#F_Id').val());
-                    fileData.append("PatternId", $('#P_Id').val());
-                    fileData.append("SareeBorderId", $('#SB_Id').val());
-                    fileData.append("StyleId", $('#CS_Id').val());
-                    fileData.append("Occasion", $('#O_Id option:selected').text());
-                    fileData.append("PackageType", $('#PT_Id option:selected').text());
-                    fileData.append("SareeLength", $('#SL_Id option:selected').text());
-                    fileData.append("CateogryId", $('#Category_Id').val());
-                    fileData.append("SubCategoryId", $('#SubCategory_Id').val());
-                    fileData.append("chkBlouse", $('#chk_BlouseYes').val());
+                });
+            }
+            $(".dropify").dropify();
+        });
+        function showMe() {
+            debugger;
+            //var img1 = $("#imgupload1").get(0).files;
+            //var img1 = $("#imgupload2").get(0).files;
+            //var img1 = $("#imgupload3").get(0).files;
+            //var img1 = $("#imgupload4").get(0).files;
+            //var img1 = $("#imgupload5").get(0).files;
 
-                    for (var pair of fileData.entries()) {
-                        console.log(pair[0] + " - " + pair[1]);
+            // Create FormData object
+            var fileData = new FormData();
+
+            var tempColorIdArray = new Array();
+
+            var TempArr = [];
+            var ColorValue = $('#NoColor').val();
+            $('#hdnColorValue').val(1);
+            if (ColorValue > 0) {
+                // Looping over all files and add it to FormData object
+                for (var i = 1; i <= ColorValue; i++) {
+                    if ($("#imgupload" + i).get(0).files.length == 0 && $('#Color_Id' + i).val() == 0) {
+                        console.log('No Files Selected');
+                        $('#hdnColorValue').val(0);
                     }
-
-
-                    $.ajax({
-                        url: '@Url.Action("Manage","Product", new { Area = "Admin" })',
-                        type: "POST",
-                        contentType: false, // Not to set any content header
-                        processData: false, // Not to process data
-                        data: fileData,
-                        dataType: 'json',
-                        success: function (result) {
-                            alert(result);
-                        },
-                        error: function (err) {
-                            alert(err.statusText);
-                        }
-                    });
                 }
             }
 
-            //  Multi select drop down list
-            //$('.select2').each(function () {
-            //    $(this)
-            //    .wrap('<div class="position-relative"></div>')
-            //    .select2({
-            //        dropdownParent: $(this).parent(),
-            //        allowClear: true,
-            //        closeOnSelect: true,
-            //        //maximumSelectionLength: 3
-            //    });
-            //})
+            if ($('#hdnColorValue').val() == 1) {
+                // Looping over all files and add it to FormData object
+                for (var i = 1; i <= ColorValue; i++) {
+                    if ($("#imgupload" + i).get(0).files.length != 0 && $('#Color_Id' + i).val() != 0) {
+                        var colorId = $('#Color_Id' + i).val();
+                        var qty = $('#Qty_Id' + i).val();
+                        var fileUpload = $("#imgupload" + i).get(0);
+                        var files = fileUpload.files;
+                        fileData.append('ProductImages', files[0]);
 
-            function showImages() {
-                var ColorValue = $('#NoColor').val();
-                var formData = new FormData();
-                formData.append("ColorValue", ColorValue);
-                if (ColorValue == 0) {
-                    $("#divShowUploadImages").addClass("hide");
+                        var tmp = {
+                            'ColorId': colorId,
+                            'Image': files[0].name,
+                            'Qty': qty
+                        };
+                        TempArr.push(tmp);
+                    }
                 }
-                else {
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("ShowDivImages","Product")',
-                        data: formData,
-                        dataType: 'json',
-                        contentType: false,
-                        processData: false,
-                        success: function (data) {
-                            if (data.status) {
-                                $("#divShowUploadImages").addClass("show");
-                                $('#divShowUploadImages').html(data.html);
-                                $(".dropify").dropify();
-                            }
-                        }
 
-                    });
+                //var ColorIdJoin = tempColorIdArray.join(",");
+                //var ColorNameJoin = tempColorNameArray.join(",");
+                fileData.append("ProductName", $('#txt_productName').val());
+                fileData.append("ProductDescription", $('#product_Description').val());
+                fileData.append("ImageIds", JSON.stringify(TempArr));
+                fileData.append("MinOrder", $('#txt_minOrder').val());
+                fileData.append("PricePerPiece", $('#txt_priceperPiece').val());
+                fileData.append("MRPPerPiece", $('#txt_mrpperPiece').val());
+                fileData.append("HSNCode", $('#txt_hsnCode').val());
+                fileData.append("SKUId", $('#txt_skuId').val());
+                fileData.append("FabricId", $('#F_Id').val());
+                fileData.append("PatternId", $('#P_Id').val());
+                fileData.append("SareeBorderId", $('#SB_Id').val());
+                fileData.append("StyleId", $('#CS_Id').val());
+                fileData.append("Occasion", $('#O_Id option:selected').text());
+                fileData.append("PackageType", $('#PT_Id option:selected').text());
+                fileData.append("SareeLength", $('#SL_Id option:selected').text());
+                fileData.append("CateogryId", $('#Category_Id').val());
+                fileData.append("SubCategoryId", $('#SubCategory_Id').val());
+                fileData.append("chkBlouse", $('#chk_BlouseYes').val());
+
+                for (var pair of fileData.entries()) {
+                    console.log(pair[0] + " - " + pair[1]);
+                }
+
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Manage","Product", new { Area = "Admin" })',
+                    
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    dataType: 'json',
+                    success: function (result) {
+                        alert(result);
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            }
+        }
+
+        //  Multi select drop down list
+        //$('.select2').each(function () {
+        //    $(this)
+        //    .wrap('<div class="position-relative"></div>')
+        //    .select2({
+        //        dropdownParent: $(this).parent(),
+        //        allowClear: true,
+        //        closeOnSelect: true,
+        //        //maximumSelectionLength: 3
+        //    });
+        //})
+
+        function showImages() {
+            var ColorValue = $('#NoColor').val();
+            var formData = new FormData();
+            formData.append("ColorValue", ColorValue);
+            if (ColorValue == 0) {
+                $("#divShowUploadImages").addClass("hide");
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ShowDivImages","Product")',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status) {
+                            $("#divShowUploadImages").addClass("show");
+                            $('#divShowUploadImages').html(data.html);
+                            $(".dropify").dropify();
+                        }
+                    }
+
+                });
+            }
+        }
+        $("#SubCategory_Id").on("change", function () {
+            if ($('#SubCategory_Id').val() == 0) {
+                if ($('#Category_Id').val() == 0) {
+                    $('#SubCategoryError').text('First Select Category then can Select Sub Category');
+                    $('#SubCategoryError').css("display", "block");
+                }
+                else if ($('#Category_Id').val() > 0 && $('#SubCategory_Id').val() == 0) {
+                    $('#SubCategoryError').text('SubCategory is Required');
+                    $('#SubCategoryError').css("display", "block");
                 }
             }
+            else if ($('#SubCategory_Id').val() > 0) {
+                $('#SubCategoryError').css("display", "none");
+            }
+        });
 
-</script>
+        $("#Category_Id").on("change", function () {
+            debugger;
+            if ($('#Category_Id').val() == 0) {
+                $('#CategoryError').text('Category is Required');
+                $('#CategoryError').css("display", "block");
+                var dropdown = $('#SubCategory_Id');
+                dropdown.empty();
+                dropdown.append('<option value="0">Select Sub Category</option>');
+
+                $('#SubCategoryError').text('First Select Category Then can Select Sub Category');
+                $('#SubCategoryError').css("display", "block");
+            }
+            else {
+                $('#CategoryError').css("display", "none");
+                var CatId = $('#Category_Id').val();
+                $list = $('#SubCategory_Id');
+
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetSubCategoryAccCategory","Product")',
+                    dataType: 'json',
+                    data: { CategoryId: this.value },
+                    success: function (data) {
+                        //alert(data.list);
+                        $('#SubCategoryError').text('Sub Category is Required');
+                        $('#SubCategoryError').css("display", "block");
+                        $list.empty();
+                        $list.append('<option value="">Select Sub Category</option>');
+                        $.each(data.list, function (i, item) {
+                            $list.append("<option value=" + item.SubCategoryId + ">" + item.SubCategoryName + "</option>");
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+        });
+
+
+    </script>
 }

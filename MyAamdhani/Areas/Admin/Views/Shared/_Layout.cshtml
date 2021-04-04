@@ -21,12 +21,12 @@
 
     <link href="~/Content/icheck/skins/flat/red.css" rel="stylesheet" />
     <link href="~/Content/icheck/skins/flat/_all.css" rel="stylesheet" />
-     <!-- Prism css-->
+    <!-- Prism css-->
     @Styles.Render("~/bundles/prism")
     <!-- Chartist css -->
     @*@Styles.Render("~/bundles/chartist")*@
     <!-- App css-->
-   @Styles.Render("~/bundles/admincss")
+    @Styles.Render("~/bundles/admincss")
 </head>
 <body>
     <!-- page-wrapper Start-->
@@ -144,7 +144,7 @@
                                     <ul class="sidebar-submenu">
                                         <li><a href="@Url.Action("Index","Category")"><i class="fa fa-circle"></i>Category</a></li>
                                         <li><a href="@Url.Action("Index","SubCategory")"><i class="fa fa-circle"></i>Sub Category</a></li>
-                                        <li><a href="@Url.Action("Index","Product")"><i class="fa fa-circle"></i>Product List</a></li>                                        
+                                        <li><a href="@Url.Action("Index","Product")"><i class="fa fa-circle"></i>Product</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -153,9 +153,9 @@
                                         <span>Home & Living</span> <i class="fa fa-angle-right pull-right"></i>
                                     </a>
                                     <ul class="sidebar-submenu">
-                                        <li><a href="category-digital.html"><i class="fa fa-circle"></i>Category</a></li>
-                                        <li><a href="category-digitalsub.html"><i class="fa fa-circle"></i>Sub Category</a></li>
-                                        <li><a href="product-listdigital.html"><i class="fa fa-circle"></i>Product List</a></li>                                        
+                                        <li><a href="@Url.Action("Index","Color")"><i class="fa fa-circle"></i>Color</a></li>
+                                        @*<li><a href="category-digitalsub.html"><i class="fa fa-circle"></i>Sub Category</a></li>
+                                            <li><a href="product-listdigital.html"><i class="fa fa-circle"></i>Product List</a></li>*@
                                     </ul>
                                 </li>
                             </ul>
@@ -330,7 +330,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <img src="~/images/SplashLogo2.png" style="height:50px; width:90px" />
+                    <img src="~/Content/Images/tools/banner.jpg" style="height:50px; width:90px" />
                     <input type="hidden" id="hdnDeleteId" />
                 </div>
                 <div class="modal-body" style="text-align:center">
@@ -350,7 +350,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <img src="~/images/SplashLogo2.png" style="height:50px; width:90px" />
+                    <img src="~/Content/Images/tools/banner.jpg" style="height:50px; width:90px" />
                     <input type="hidden" id="hdnUpdateId" />
                     <input type="hidden" id="hdnStatus" />
                     <input type="hidden" id="hdnDeleteId" />
@@ -367,8 +367,8 @@
             </div>
         </div>
     </div>
-    
-      <!-- latest jquery-->
+
+    <!-- latest jquery-->
     @Scripts.Render("~/bundles/jquery")
     <!-- Bootstrap js-->
     @Scripts.Render("~/bundles/popper")
@@ -398,9 +398,9 @@
     <!--height equal js-->
     @Scripts.Render("~/bundles/height-equal")
     <!-- lazyload js-->
-            @*@Scripts.Render("~/bundles/lazysizes")*@
-            <script src="~/Scripts/footable/footable.all.min.js"></script>
-        <script src="~/Scripts/icheck/icheck.js"></script>
+    @*@Scripts.Render("~/bundles/lazysizes")*@
+    <script src="~/Scripts/footable/footable.all.min.js"></script>
+    <script src="~/Scripts/icheck/icheck.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.0/js/dropify.min.js" integrity="sha512-5lwTm2lltwGLuFpI0jqcCxGS4Y7cJn3ylGb0BTJty5xGt2lqT9/efUhQV1dyOXpQ/PbvmE6EUP+zRIPGiccFng==" crossorigin="anonymous"></script>
     <!--script admin-->
     @Scripts.Render("~/bundles/admin-script")

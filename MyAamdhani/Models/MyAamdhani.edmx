@@ -181,6 +181,7 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="DateModified" Type="datetime" />
+          <Property Name="UniqueId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="tbl_Fabric">
           <Key>
@@ -467,18 +468,6 @@
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="tbl_Color">
-          <Key>
-            <PropertyRef Name="Color_Id" />
-          </Key>
-          <Property Name="Color_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Color_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Color_Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="DateAdded" Type="DateTime" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="tbl_Fabric">
           <Key>
             <PropertyRef Name="Fabric_Id" />
@@ -595,7 +584,6 @@
           <EntitySet Name="SEOs" EntityType="Self.SEO" />
           <EntitySet Name="States" EntityType="Self.State" />
           <EntitySet Name="tbl_ClothStyle" EntityType="Self.tbl_ClothStyle" />
-          <EntitySet Name="tbl_Color" EntityType="Self.tbl_Color" />
           <EntitySet Name="tbl_Fabric" EntityType="Self.tbl_Fabric" />
           <EntitySet Name="tbl_Pattern" EntityType="Self.tbl_Pattern" />
           <EntitySet Name="tbl_SareeBorder" EntityType="Self.tbl_SareeBorder" />
@@ -638,6 +626,7 @@
           <EntitySet Name="tbl_ICRWithProduct" EntityType="MyAamdhaniModel.tbl_ICRWithProduct" />
           <EntitySet Name="Categories" EntityType="MyAamdhaniModel.Category" />
           <EntitySet Name="SubCategories" EntityType="MyAamdhaniModel.SubCategory" />
+          <EntitySet Name="tbl_Color" EntityType="MyAamdhaniModel.tbl_Color" />
         </EntityContainer>
         <ComplexType Name="Sp_CheckAvailability_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -731,6 +720,19 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="ImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UniqueId" Type="Guid" />
+        </EntityType>
+        <EntityType Name="tbl_Color">
+          <Key>
+            <PropertyRef Name="Color_Id" />
+          </Key>
+          <Property Name="Color_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Color_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Color_Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="UniqueId" Type="Guid" />
         </EntityType>
       </Schema>
@@ -850,19 +852,6 @@
               <MappingFragment StoreEntitySet="tbl_ClothStyle">
                 <ScalarProperty Name="Style_Id" ColumnName="Style_Id" />
                 <ScalarProperty Name="Style_Name" ColumnName="Style_Name" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Color">
-            <EntityTypeMapping TypeName="MyAamdhaniModel.tbl_Color">
-              <MappingFragment StoreEntitySet="tbl_Color">
-                <ScalarProperty Name="Color_Id" ColumnName="Color_Id" />
-                <ScalarProperty Name="Color_Name" ColumnName="Color_Name" />
-                <ScalarProperty Name="Color_Code" ColumnName="Color_Code" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
@@ -1069,6 +1058,20 @@
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
                 <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Color">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.tbl_Color">
+              <MappingFragment StoreEntitySet="tbl_Color">
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Color_Code" ColumnName="Color_Code" />
+                <ScalarProperty Name="Color_Name" ColumnName="Color_Name" />
+                <ScalarProperty Name="Color_Id" ColumnName="Color_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

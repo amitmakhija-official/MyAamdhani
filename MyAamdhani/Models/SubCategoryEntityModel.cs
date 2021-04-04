@@ -20,11 +20,12 @@ namespace MyAamdhani.Models
                 {
                     connection.Open();
                     SqlCommand cmd = new SqlCommand("Sp_SubCategoryManage", connection);
+                    cmd.Parameters.AddWithValue("@action", ManageType);
                     cmd.Parameters.AddWithValue("@SubCategoryId", model.SubCategoryId);
                     cmd.Parameters.AddWithValue("@CategoryId", model.CategoryId);
                     cmd.Parameters.AddWithValue("@SubCategoryName", model.SubCategoryName);
                     cmd.Parameters.AddWithValue("@ImagePath", model.ImagePath);
-                    cmd.Parameters.AddWithValue("@ManageType", ManageType);
+                    cmd.Parameters.AddWithValue("@UniqueId", model.UniqueId);
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     response = cmd.ExecuteNonQuery();
@@ -37,15 +38,15 @@ namespace MyAamdhani.Models
                 using (SqlConnection connection = new SqlConnection(db.Database.Connection.ConnectionString))
                 {
                     connection.Open();
-                    SqlCommand cmd = new SqlCommand("Sp_CategoryManage", connection);
+                    SqlCommand cmd = new SqlCommand("Sp_SubCategoryManage", connection);
+                    cmd.Parameters.AddWithValue("@action", ManageType);
                     cmd.Parameters.AddWithValue("@CategoryId", model.CategoryId);
                     cmd.Parameters.AddWithValue("@SubCategoryName", model.SubCategoryName);
                     cmd.Parameters.AddWithValue("@ImagePath", model.ImagePath);
-                    cmd.Parameters.AddWithValue("@ManageType", ManageType);
 
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.ExecuteNonQuery();
-                    response = Convert.ToInt32(cmd.Parameters["@SubCategoryId"].Value);
+                    response = cmd.ExecuteNonQuery();
+                    //response = Convert.ToInt32(cmd.Parameters["@SubCategoryId"].Value);
                     connection.Close();
                 }
             }
@@ -77,19 +78,19 @@ namespace MyAamdhani.Models
                 }
                 List<SelectAllSubCategory> subCategoryList = new List<SelectAllSubCategory>();
                 subCategoryList = new List<SelectAllSubCategory>(from DataRow dr in dt.Rows
-                                                           select new SelectAllSubCategory()
-                                                           {
-                                                               SubCategoryId = Convert.ToInt32(dr["SubCategoryId"]),
-                                                               CategoryId = Convert.ToInt32(dr["CategoryId"]),
-                                                               //DateAdded = Convert.ToDateTime(dr["NoticeDate"]).ToString("yyyy-MM-dd"),//Need to Convert.ToString() in App
-                                                               Image = Convert.ToString(dr["Image"]),
-                                                               CategoryName = Convert.ToString(dr["CategoryName"]),
-                                                               SubCategoryName = Convert.ToString(dr["SubCategoryName"]),
-                                                               IsActive = Convert.ToBoolean(dr["IsActive"]),
-                                                               RCount = Convert.ToInt32(dr["RCount"]),
-                                                               rownum = Convert.ToInt32(dr["rownum"]),
-                                                               UniqueId = !string.IsNullOrEmpty(Convert.ToString(dr["UniqueId"])) ? Guid.Parse(Convert.ToString(dr["UniqueId"])) : Guid.Parse("00000000-0000-0000-0000-000000000000"),
-                                                           }).ToList();
+                                                                 select new SelectAllSubCategory()
+                                                                 {
+                                                                     SubCategoryId = Convert.ToInt32(dr["SubCategoryId"]),
+                                                                     CategoryId = Convert.ToInt32(dr["CategoryId"]),
+                                                                     //DateAdded = Convert.ToDateTime(dr["NoticeDate"]).ToString("yyyy-MM-dd"),//Need to Convert.ToString() in App
+                                                                     Image = Convert.ToString(dr["Image"]),
+                                                                     //CategoryName = Convert.ToString(dr["CategoryName"]),
+                                                                     SubCategoryName = Convert.ToString(dr["SubCategoryName"]),
+                                                                     IsActive = Convert.ToBoolean(dr["IsActive"]),
+                                                                     RCount = Convert.ToInt32(dr["RCount"]),
+                                                                     rownum = Convert.ToInt32(dr["rownum"]),
+                                                                     UniqueId = !string.IsNullOrEmpty(Convert.ToString(dr["UniqueId"])) ? Guid.Parse(Convert.ToString(dr["UniqueId"])) : Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                                                 }).ToList();
                 return subCategoryList;
             }
             catch (Exception ex)
@@ -126,7 +127,7 @@ namespace MyAamdhani.Models
                         model.SubCategoryId = Convert.ToInt32(row["SubCategoryId"]);
                         model.CategoryId = Convert.ToInt32(row["CategoryId"]);
                         model.SubCategoryName = Convert.ToString(row["SubCategoryName"]);
-                        model.ImagePath = Convert.ToString(row["ImagePath"]);
+                        model.ImagePath = Convert.ToString(row["Image"]);
                         model.IsActive = Convert.ToBoolean(row["IsActive"]);
                         model.UniqueId = !string.IsNullOrEmpty(Convert.ToString(row["UniqueId"])) ? Guid.Parse(Convert.ToString(row["UniqueId"])) : Guid.Parse("00000000-0000-0000-0000-000000000000");
 
@@ -140,14 +141,35 @@ namespace MyAamdhani.Models
             }
             return model;
         }
+        public bool UpdateStatus(int SubCategoryId, bool Status)
+        {
+            try
+            {
+                SqlParameter SubCategoryIdParam = new SqlParameter("@SubCategoryId", SubCategoryId);
+                SqlParameter IsActiveParam = new SqlParameter("@IsActive", Status);
+                SqlParameter actionParam = new SqlParameter("@action", "StatusUpdate");
+                int Response;
+                Response = db.Database.ExecuteSqlCommand("EXECUTE Sp_SubCategoryManage @SubCategoryId,@IsActive,@action", SubCategoryIdParam, IsActiveParam, actionParam);
+                if (Response > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public int DeleteSubCategory(int SubCategoryId)
         {
             try
             {
                 SqlParameter subCategoryIdParam = new SqlParameter("@SubCategoryId", SubCategoryId);
-                SqlParameter isDeleteParam = new SqlParameter("@IsDeleted", true);
+                SqlParameter actionParam = new SqlParameter("@actionParam", "Delete");
+
                 int Response;
-                Response = db.Database.ExecuteSqlCommand("EXECUTE SubCategory_Delete @SubCategoryId,@IsDeleted", subCategoryIdParam, isDeleteParam);
+                Response = db.Database.ExecuteSqlCommand("EXECUTE Sp_SubCategoryManage @SubCategoryId,@action", subCategoryIdParam, actionParam);
                 return Response;
 
             }
@@ -158,6 +180,12 @@ namespace MyAamdhani.Models
             }
         }
     }
+    public class SubCategory_GetAllName
+    {
+        public int SubCategoryId { get; set; }
+        public string SubCategoryName { get; set; }
+    }
+
     public class SelectAllSubCategory
     {
         public int SubCategoryId { get; set; }
