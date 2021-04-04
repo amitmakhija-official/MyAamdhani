@@ -5,6 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MyAamdhaniModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Json" Type="nvarchar(max)" />
+          <Property Name="UnitPrice" Type="decimal" Precision="20" Scale="2" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -77,6 +92,24 @@
           <Property Name="Roles" Type="nvarchar" MaxLength="250" />
           <Property Name="ViewInRights" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Shipping Address" Type="nvarchar(max)" />
+          <Property Name="BillingAddress" Type="nvarchar(max)" />
+          <Property Name="Pincode" Type="bigint" />
+          <Property Name="Mobile" Type="nvarchar(max)" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CancelReason" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PaymentType" Type="int" />
         </EntityType>
         <EntityType Name="ProductRating">
           <Key>
@@ -181,7 +214,6 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="DateModified" Type="datetime" />
-          <Property Name="UniqueId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="tbl_Fabric">
           <Key>
@@ -312,6 +344,28 @@
           <Parameter Name="RowFrom" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="RowTo" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="Sp_ProductManage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductId" Type="int" Mode="In" />
+          <Parameter Name="ProductName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProductDescription" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="MinOrder" Type="int" Mode="In" />
+          <Parameter Name="PricePerPiece" Type="decimal" Mode="In" />
+          <Parameter Name="MRPPerPiece" Type="decimal" Mode="In" />
+          <Parameter Name="HSNCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="SKUId" Type="nvarchar" Mode="In" />
+          <Parameter Name="FabricId" Type="int" Mode="In" />
+          <Parameter Name="PatternId" Type="int" Mode="In" />
+          <Parameter Name="SareeBorderId" Type="int" Mode="In" />
+          <Parameter Name="StyleId" Type="int" Mode="In" />
+          <Parameter Name="Occasion" Type="nvarchar" Mode="In" />
+          <Parameter Name="PackageType" Type="nvarchar" Mode="In" />
+          <Parameter Name="SareeLength" Type="nvarchar" Mode="In" />
+          <Parameter Name="CateogryId" Type="int" Mode="In" />
+          <Parameter Name="SubCategoryId" Type="int" Mode="In" />
+          <Parameter Name="chkBlouse" Type="bit" Mode="In" />
+          <Parameter Name="Type" Type="int" Mode="In" />
+          <Parameter Name="Manage_Type" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="Sp_UserManage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserId" Type="int" Mode="In" />
           <Parameter Name="Email" Type="nvarchar" Mode="In" />
@@ -330,12 +384,14 @@
           <Parameter Name="Address" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="MyAamdhaniModelStoreContainer">
+          <EntitySet Name="CartItem" EntityType="Self.CartItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogingHistory" EntityType="Self.LogingHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuTab" EntityType="Self.MenuTab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductRating" EntityType="Self.ProductRating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SEO" EntityType="Self.SEO" Schema="dbo" store:Type="Tables" />
@@ -468,6 +524,18 @@
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="tbl_Color">
+          <Key>
+            <PropertyRef Name="Color_Id" />
+          </Key>
+          <Property Name="Color_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Color_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Color_Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="tbl_Fabric">
           <Key>
             <PropertyRef Name="Fabric_Id" />
@@ -584,6 +652,7 @@
           <EntitySet Name="SEOs" EntityType="Self.SEO" />
           <EntitySet Name="States" EntityType="Self.State" />
           <EntitySet Name="tbl_ClothStyle" EntityType="Self.tbl_ClothStyle" />
+          <EntitySet Name="tbl_Color" EntityType="Self.tbl_Color" />
           <EntitySet Name="tbl_Fabric" EntityType="Self.tbl_Fabric" />
           <EntitySet Name="tbl_Pattern" EntityType="Self.tbl_Pattern" />
           <EntitySet Name="tbl_SareeBorder" EntityType="Self.tbl_SareeBorder" />
@@ -626,7 +695,30 @@
           <EntitySet Name="tbl_ICRWithProduct" EntityType="MyAamdhaniModel.tbl_ICRWithProduct" />
           <EntitySet Name="Categories" EntityType="MyAamdhaniModel.Category" />
           <EntitySet Name="SubCategories" EntityType="MyAamdhaniModel.SubCategory" />
-          <EntitySet Name="tbl_Color" EntityType="MyAamdhaniModel.tbl_Color" />
+          <EntitySet Name="CartItems" EntityType="MyAamdhaniModel.CartItem" />
+          <FunctionImport Name="Sp_ProductManage">
+            <Parameter Name="ProductId" Mode="In" Type="Int32" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="ProductDescription" Mode="In" Type="String" />
+            <Parameter Name="MinOrder" Mode="In" Type="Int32" />
+            <Parameter Name="PricePerPiece" Mode="In" Type="Decimal" />
+            <Parameter Name="MRPPerPiece" Mode="In" Type="Decimal" />
+            <Parameter Name="HSNCode" Mode="In" Type="String" />
+            <Parameter Name="SKUId" Mode="In" Type="String" />
+            <Parameter Name="FabricId" Mode="In" Type="Int32" />
+            <Parameter Name="PatternId" Mode="In" Type="Int32" />
+            <Parameter Name="SareeBorderId" Mode="In" Type="Int32" />
+            <Parameter Name="StyleId" Mode="In" Type="Int32" />
+            <Parameter Name="Occasion" Mode="In" Type="String" />
+            <Parameter Name="PackageType" Mode="In" Type="String" />
+            <Parameter Name="SareeLength" Mode="In" Type="String" />
+            <Parameter Name="CateogryId" Mode="In" Type="Int32" />
+            <Parameter Name="SubCategoryId" Mode="In" Type="Int32" />
+            <Parameter Name="chkBlouse" Mode="In" Type="Boolean" />
+            <Parameter Name="Type" Mode="In" Type="Int32" />
+            <Parameter Name="Manage_Type" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Orders" EntityType="MyAamdhaniModel.Order" />
         </EntityContainer>
         <ComplexType Name="Sp_CheckAvailability_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -722,18 +814,38 @@
           <Property Name="ImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="UniqueId" Type="Guid" />
         </EntityType>
-        <EntityType Name="tbl_Color">
+        <EntityType Name="CartItem">
           <Key>
-            <PropertyRef Name="Color_Id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Color_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Color_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Color_Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Json" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="20" Scale="2" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
-          <Property Name="UniqueId" Type="Guid" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Shipping_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BillingAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Pincode" Type="Int64" />
+          <Property Name="Mobile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CancelReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PaymentType" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -852,6 +964,19 @@
               <MappingFragment StoreEntitySet="tbl_ClothStyle">
                 <ScalarProperty Name="Style_Id" ColumnName="Style_Id" />
                 <ScalarProperty Name="Style_Name" ColumnName="Style_Name" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Color">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.tbl_Color">
+              <MappingFragment StoreEntitySet="tbl_Color">
+                <ScalarProperty Name="Color_Id" ColumnName="Color_Id" />
+                <ScalarProperty Name="Color_Name" ColumnName="Color_Name" />
+                <ScalarProperty Name="Color_Code" ColumnName="Color_Code" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
@@ -1061,17 +1186,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Color">
-            <EntityTypeMapping TypeName="MyAamdhaniModel.tbl_Color">
-              <MappingFragment StoreEntitySet="tbl_Color">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+          <EntitySetMapping Name="CartItems">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.CartItem">
+              <MappingFragment StoreEntitySet="CartItem">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Json" ColumnName="Json" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_ProductManage" FunctionName="MyAamdhaniModel.Store.Sp_ProductManage" />
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="MyAamdhaniModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Color_Code" ColumnName="Color_Code" />
-                <ScalarProperty Name="Color_Name" ColumnName="Color_Name" />
-                <ScalarProperty Name="Color_Id" ColumnName="Color_Id" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
+                <ScalarProperty Name="Shipping_Address" ColumnName="Shipping Address" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

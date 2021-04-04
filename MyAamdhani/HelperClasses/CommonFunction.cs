@@ -113,6 +113,25 @@ namespace MyAamdhani.Helper
             }
             return list;
         }
+        public static List<SelectListItem> GetSize()
+        {
+            var list = new List<SelectListItem>();
+            try
+            {
+                list.Add(new SelectListItem { Text = "Select Size", Value = "", Selected = true });
+                list.Add(new SelectListItem { Text = "Small", Value = "S" });
+                list.Add(new SelectListItem { Text = "Medium", Value = "M" });
+                list.Add(new SelectListItem { Text = "Large", Value = "L" });
+                list.Add(new SelectListItem { Text = "X-Large", Value = "XL" });
+                list.Add(new SelectListItem { Text = "2X-Large", Value = "XXL" });
+                list.Add(new SelectListItem { Text = "3X-Large", Value = "XXXL" });
+            }
+            catch (Exception)
+            {
+                //
+            }
+            return list;
+        }
         public static List<SelectListItem> MaritalStatus()
         {
             var list = new List<SelectListItem>();
@@ -383,10 +402,32 @@ namespace MyAamdhani.Helper
 
         public static string GetAmountDifference(decimal amount1, decimal amount2)
         {
-            var ded = amount2 - amount1;
-            var add = amount2 + amount1;
-            var Differ = (ded / (add / 2)) * 100;
-            return Differ.ToString() + "%";
+            decimal differ = 0m;
+            if (amount1!=0 && amount2!=0)
+            {
+                var ded = amount2 - amount1;
+                var add = amount2 + amount1;
+                differ = (ded / (add / 2)) * 100;
+            }
+          
+            return differ.ToString() + "%";
+        }
+        public static List<SelectListItem> CountListDropdown(int MaxLimit = 20)
+        {
+            var list = new List<SelectListItem>();
+            try
+            {
+                for (int i = 0; i < MaxLimit; i++)
+                {
+                    var selected = i + 1 == 1 ? true : false;
+                    list.Add(new SelectListItem { Text = (i + 1).ToString(), Value = (i + 1).ToString(), Selected = selected });
+                }
+            }
+            catch (Exception)
+            {
+                //
+            }
+            return list;
         }
     }
 }

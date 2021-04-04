@@ -36,7 +36,7 @@
 </head>
 
 <body>
-@Html.Partial("~/Views/Shared/_Header.cshtml")
+    @Html.Partial("~/Views/Shared/_Header.cshtml")
     <div>
         @RenderBody()
 
@@ -1247,7 +1247,8 @@
     <!-- popper js-->
     @Scripts.Render("~/bundles/popper")
     <!-- slick js-->
-    @Scripts.Render("~/bundles/slick")   
+    @*@Scripts.Render("~/bundles/slick")*@
+    <script src="~/Scripts/slick.js"></script>
     <!-- menu js-->
     @Scripts.Render("~/bundles/menu")
     <!-- lazyload js-->
@@ -1277,7 +1278,7 @@
             document.getElementById("search-overlay").style.display = "none";
         }
     </script>
-
+    <script src="~/Scripts/sweetalert.min.js"></script>
 </body>
 
 </html>
